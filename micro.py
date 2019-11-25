@@ -137,19 +137,21 @@ def write_adr(mode: str, inp: str, ex: bool = False):
         tmp = f'{inp}.out.l' if inp != 'R' else 'R.out, ALU.=r, ALU.out'
         print(f'{tmp}, MDR.in, WR, WMFC')
 
-    # TODO stopped here
     elif mode == '@X(R)':
-        # get x
-        print('PC.out, ALU.=r, ALU.out, MAR.in, RD')
+        if ex:
+            # get x
+            print('PC.out, ALU.=r, ALU.out, MAR.in, RD')
 
-        # pc++
-        print('PC.out, ALU.r+1')
-        print('ALU.out, PC.in, WMFC')
+            # pc++
+            print('PC.out, ALU.r+1')
+            print('ALU.out, PC.in, WMFC')
 
-        # inp = x+R
-        print(f'MDR.out, {inp}.in.r')
-        print(f'R.out, {inp}.out.l, ALU.r+l')
+            # tmp = x+R
+            print(f'MDR.out, TMP1.in.r')
+            print(f'R.out, TMP1.out.l, ALU.r+l')
 
-        # get inp
-        print(f'ALU.out, MAR.in, RD, WMFC')
-        print(f'MDR.out, {inp}.in.r')
+            # get inp
+            print(f'ALU.out, MAR.in')
+
+        tmp = f'{inp}.out.l' if inp != 'R' else 'R.out, ALU.=r, ALU.out'
+        print(f'{tmp}, MDR.in, WR, WMFC')
