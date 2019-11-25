@@ -114,17 +114,30 @@ def write_adr(mode: str, inp: str, ex: bool = False):
             tmp = f'{inp}.out.r' if inp != 'R' else 'R.out, ALU.=r, ALU.out'
             print(f'{tmp}, MDR.in, WR, WMFC')
 
-    # TODO stopped here
     elif mode == '@(R)+':
-        print('R.out, ALU.=r, ALU.out, MAR.in, RD')
-        print(f'MAR.out, ALU.r+1, ALU.out, R.in, WMFC')
-        print(f'MDR.out, {inp}.in.r')
+        if ex:
+            if inp == 'R':
+                print('R(first).out, ALU.=r, MAR.in')
+                print('R(second).out, ALU.=r, ALU.out, MDR.in, WR')
+            else:
+                print('R.out, ALU.=r, MAR.in')
+                print(f'{inp}.out.l, MDR.in')
+
+            print('R.out, ALU.r+1')
+            print('ALU.out, R.in, WMFC')
+
+        else:
+            print(f'{inp}.out.l, MDR.in, WR, WMFC')
 
     elif mode == '@-(R)':
-        print(f'R.out, ALU.r-1, ALU.out, {inp}.in.l')
-        print(f'{inp}.out.l, R.in, MAR.in, RD, WMFC')
-        print(f'MDR.out, {inp}.in.r')
+        if ex:
+            print(f'R.out, ALU.r-1, ALU.out, TMP1.in.l, MAR.in')
+            print(f'TMP1.out.l, R.in')
 
+        tmp = f'{inp}.out.l' if inp != 'R' else 'R.out, ALU.=r, ALU.out'
+        print(f'{tmp}, MDR.in, WR, WMFC')
+
+    # TODO stopped here
     elif mode == '@X(R)':
         # get x
         print('PC.out, ALU.=r, ALU.out, MAR.in, RD')
