@@ -1,0 +1,19 @@
+Two bus arch 
+IR - done (PDP11)
+
+remonda: 4. Instruction Set Architecture
+
+mahmoud: 
+1. Team Number
+2. Members Names
+
+5. Micro-Instructions
+7. Clock Cycles Analysis
+8. CPI Analysis
+
+shawky:
+evram:
+
+6. Memory Access Analysis
+3. Bus System Schematic
+assembler
