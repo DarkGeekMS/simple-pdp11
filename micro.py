@@ -291,11 +291,24 @@ MDR.out, PC.in
 R6.out, ALU.r+1
 ALU.out, R6.in, MAR.in'''
 
-intt = '''
-'''
+intt = '''R6.out, ALU.r-1
+ALU.out, R6.in, MAR.in
+FLAGS.out, ALU.=r, ALU.out, MDR.in
+R6.out, ALU.=r, ALU.out, MAR.in, RD, WMFC
+R6.out, ALU.r-1
+ALU.out, R6.in, MAR.in
+PC.out, ALU.=r, ALU.out, MDR.in
+R6.out, ALU.=r, ALU.out, MAR.in, RD, WMFC
+PC.in, HARDWARE_ADDRESS'''
 
-iret = '''
-'''
+iret = '''R6.out, ALU.=r, ALU.out, MAR.in, RD, WMFC
+MDR.out, PC.in
+R6.out, ALU.r+1
+ALU.out, R6.in, MAR.in
+R6.out, ALU.=r, ALU.out, MAR.in, RD, WMFC
+MDR.out, FLAGS.in
+R6.out, ALU.r+1
+ALU.out, R6.in, MAR.in'''
 
 for (name, code) in [('HLT', 'HLT'), ('NOP', 'END'),
                      ('JSR X(R)', jsr),
