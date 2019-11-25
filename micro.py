@@ -275,11 +275,33 @@ for (name, cond) in [('BR', None),
     print(fetch)
     # TODO
 
+jsr = '''PC.out, ALU.=r, ALU.out, MAR.in, RD
+PC.out, ALU.r+1
+ALU.out, PC.in, WMFC
+MDR.out, TMP1.in.r
+R.out, TMP1.out.l, ALU.r+l
+ALU.out, TMP1.in.l
+R6.out, ALU.r-1
+ALU.out, R6.in, MAR.in
+PC.out, ALU.=r, ALU.out, MDR.in, WR, WMFC
+TM1.out.l, PC.in'''
+
+rts = '''R6.out, ALU.=r, ALU.out, MAR.in, RD, WMFC
+MDR.out, PC.in
+R6.out, ALU.r+1
+ALU.out, R6.in, MAR.in'''
+
+intt = '''
+'''
+
+iret = '''
+'''
+
 for (name, code) in [('HLT', 'HLT'), ('NOP', 'END'),
-                     ('JSR X(R)', 'TODO'),
-                     ('RTS', 'TODO'),
-                     ('INT', 'TODO'),
-                     ('IRET', 'TODO')]:
+                     ('JSR X(R)', jsr),
+                     ('RTS', rts),
+                     ('INT', intt),
+                     ('IRET', iret)]:
     print()
     print('-'*15)
     print(name)
