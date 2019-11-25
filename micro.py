@@ -1,7 +1,3 @@
-addressing = ['R', '(R)+', '-(R)', 'X(R)', '@R',
-              '@(R)+', '@-(R)', '@X(R)']
-
-
 fetch = '''PC.out, ALU.=r, ALU.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in, WMFC
@@ -155,3 +151,56 @@ def write_adr(mode: str, inp: str, ex: bool = False):
 
         tmp = f'{inp}.out.l' if inp != 'R' else 'R.out, ALU.=r, ALU.out'
         print(f'{tmp}, MDR.in, WR, WMFC')
+
+
+def mov(src, dst):
+    pass
+
+
+def add(src, dst, func='ALU.r+l'):
+    pass
+
+
+def adc(src, dst):
+    return add(src, dst, 'ALU.r+l+c')
+
+
+def sub(src, dst):
+    return add(src, dst, 'ALU.r-l')
+
+
+def subc(src, dst):
+    return add(src, dst, 'ALU.r-l-c')
+
+
+def andd(src, dst):
+    return add(src, dst, 'ALU.r^l')
+
+
+def orr(src, dst):
+    return add(src, dst, 'ALU.r|l')
+
+
+def xnor(src, dst):
+    return add(src, dst, 'ALU.rXNORl')
+
+
+def cmpp(src, dst):
+    pass
+
+
+modes = ['R', '(R)+', '-(R)', 'X(R)', '@R',
+              '@(R)+', '@-(R)', '@X(R)']
+
+for (instr, instr_name) in [(mov, 'MOV'), (add, 'ADD'), (adc, 'ADC'),
+                            (sub, 'SUB'), (subc, 'SUBC'), (andd, 'AND'),
+                            (orr, 'OR'), (xnor, 'XNOR'), (cmpp, 'CMP')]:
+    for src in modes:
+        for dst in modes:
+            print()
+            print('-'*15)
+            print(instr_name, src, dst)
+            print('-'*15)
+
+            print(fetch)
+            instr(src, dst)
