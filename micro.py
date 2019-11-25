@@ -1,7 +1,8 @@
 fetch = '''PC.out, ALU.=r, ALU.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in, WMFC
-MDR.out, ALU.=r, ALU.out, IR.in'''
+MDR.out, ALU.=r, ALU.out, IR.in
+'''
 
 
 def fetch_adr(mode: str, tmp: str):
@@ -204,3 +205,85 @@ for (instr, instr_name) in [(mov, 'MOV'), (add, 'ADD'), (adc, 'ADC'),
 
             print(fetch)
             instr(src, dst)
+
+
+def inc(dst):
+    pass
+
+
+def dec(dst):
+    pass
+
+
+def clr(dst):
+    pass
+
+
+def inv(dst):
+    pass
+
+
+def lsr(dst):
+    pass
+
+
+def ror(dst):
+    pass
+
+
+def rrc(dst):
+    pass
+
+
+def asr(dst):
+    pass
+
+
+def lsl(dst):
+    pass
+
+
+def rol(dst):
+    pass
+
+
+def rlc(dst):
+    pass
+
+
+for (instr, instr_name) in [(inc, 'INC'), (dec, 'DEC'), (clr, 'CLR'),
+                            (inv, 'INV'), (lsr, 'LSR'), (ror, 'ROR'), (rrc, 'RRC'),
+                            (asr, 'ASR'), (lsl, 'LSL'), (rol, 'ROL'), (rlc, 'RLC')]:
+    for dst in modes:
+        print()
+        print('-'*15)
+        print(instr_name, dst)
+        print('-'*15)
+
+        print(fetch)
+        instr(dst)
+
+for (name, cond) in [('BR', None),
+                     ('BEQ', 'Z=1'), ('BNE', 'Z=0'),
+                     ('BLO', 'C=0'), ('BLS', 'C=0 or Z=1'),
+                     ('BHI', 'C=1'), ('BHS', 'C=1 or Z=1')]:
+    print()
+    print('-'*15)
+    print(name, '<OFFSET>')
+    print('-'*15)
+
+    print(fetch)
+    # TODO
+
+for (name, code) in [('HLT', 'HLT'), ('NOP', 'END'),
+                     ('JSR X(R)', 'TODO'),
+                     ('RTS', 'TODO'),
+                     ('INT', 'TODO'),
+                     ('IRET', 'TODO')]:
+    print()
+    print('-'*15)
+    print(name)
+    print('-'*15)
+
+    print(fetch)
+    print(code)
