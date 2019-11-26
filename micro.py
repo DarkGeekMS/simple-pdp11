@@ -1,10 +1,3 @@
-fetch = '''PC.out, ALU.=r, ALU.out, MAR.in, RD
-PC.out, ALU.r+1
-ALU.out, PC.in, WMFC
-MDR.out, ALU.=r, ALU.out, IR.in
-'''
-
-
 def fetch_adr(mode: str, tmp: str):
     if mode == 'R':
         return 'R'
@@ -154,13 +147,7 @@ def write_adr(mode: str, inp: str, ex: bool = False):
 
 def mov(src, dst):
     tmp1 = fetch_adr(src, 'TMP1')
-    tmp2 = fetch_adr(dst, 'TMP2')
-
-    if tmp1 == 'R' and tmp2 == 'R':
-        print('R(src).out, TMP1.in.r')
-        print('R(dst).in, TMP1.out.l')
-    elif tmp1 == 'R':
-        print('R.out, ')
+    write_adr(dst, tmp1, True)
 
 
 def add(src, dst, func='ALU.r+l'):
@@ -193,23 +180,6 @@ def xnor(src, dst):
 
 def cmpp(src, dst):
     pass
-
-
-modes = ['R', '(R)+', '-(R)', 'X(R)', '@R',
-              '@(R)+', '@-(R)', '@X(R)']
-
-for (instr, instr_name) in [(mov, 'MOV'), (add, 'ADD'), (adc, 'ADC'),
-                            (sub, 'SUB'), (subc, 'SUBC'), (andd, 'AND'),
-                            (orr, 'OR'), (xnor, 'XNOR'), (cmpp, 'CMP')]:
-    for src in modes:
-        for dst in modes:
-            print()
-            print('-'*15)
-            print(instr_name, src, dst)
-            print('-'*15)
-
-            print(fetch)
-            instr(src, dst)
 
 
 def inc(dst):
@@ -256,30 +226,6 @@ def rlc(dst):
     pass
 
 
-for (instr, instr_name) in [(inc, 'INC'), (dec, 'DEC'), (clr, 'CLR'),
-                            (inv, 'INV'), (lsr, 'LSR'), (ror, 'ROR'), (rrc, 'RRC'),
-                            (asr, 'ASR'), (lsl, 'LSL'), (rol, 'ROL'), (rlc, 'RLC')]:
-    for dst in modes:
-        print()
-        print('-'*15)
-        print(instr_name, dst)
-        print('-'*15)
-
-        print(fetch)
-        instr(dst)
-
-for (name, cond) in [('BR', None),
-                     ('BEQ', 'Z=1'), ('BNE', 'Z=0'),
-                     ('BLO', 'C=0'), ('BLS', 'C=0 or Z=1'),
-                     ('BHI', 'C=1'), ('BHS', 'C=1 or Z=1')]:
-    print()
-    print('-'*15)
-    print(name, '<OFFSET>')
-    print('-'*15)
-
-    print(fetch)
-    # TODO
-
 jsr = '''PC.out, ALU.=r, ALU.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in, WMFC
@@ -315,6 +261,57 @@ MDR.out, FLAGS.in
 R6.out, ALU.r+1
 ALU.out, R6.in, MAR.in'''
 
+#############################
+
+fetch = '''PC.out, ALU.=r, ALU.out, MAR.in, RD
+PC.out, ALU.r+1
+ALU.out, PC.in, WMFC
+MDR.out, ALU.=r, ALU.out, IR.in
+'''
+
+modes = ['R', '(R)+', '-(R)', 'X(R)', '@R',
+              '@(R)+', '@-(R)', '@X(R)']
+
+for (instr, instr_name) in [(mov, 'MOV'), (add, 'ADD'), (adc, 'ADC'),
+                            (sub, 'SUB'), (subc, 'SUBC'), (andd, 'AND'),
+                            (orr, 'OR'), (xnor, 'XNOR'), (cmpp, 'CMP')]:
+    for src in modes:
+        for dst in modes:
+            print()
+            print('-'*15)
+            print(instr_name, src, dst)
+            print('-'*15)
+
+            print(fetch)
+            instr(src, dst)
+            print('\nEND')
+
+for (instr, instr_name) in [(inc, 'INC'), (dec, 'DEC'), (clr, 'CLR'),
+                            (inv, 'INV'), (lsr, 'LSR'), (ror, 'ROR'), (rrc, 'RRC'),
+                            (asr, 'ASR'), (lsl, 'LSL'), (rol, 'ROL'), (rlc, 'RLC')]:
+    for dst in modes:
+        print()
+        print('-'*15)
+        print(instr_name, dst)
+        print('-'*15)
+
+        print(fetch)
+        instr(dst)
+        print('\nEND')
+
+for (name, cond) in [('BR', None),
+                     ('BEQ', 'Z=1'), ('BNE', 'Z=0'),
+                     ('BLO', 'C=0'), ('BLS', 'C=0 or Z=1'),
+                     ('BHI', 'C=1'), ('BHS', 'C=1 or Z=1')]:
+    print()
+    print('-'*15)
+    print(name, '<OFFSET>')
+    print('-'*15)
+
+    print(fetch)
+    # TODO
+    print('\nEND')
+
 for (name, code) in [('HLT', 'HLT'), ('NOP', 'END'),
                      ('JSR X(R)', jsr),
                      ('RTS', rts),
@@ -327,3 +324,4 @@ for (name, code) in [('HLT', 'HLT'), ('NOP', 'END'),
 
     print(fetch)
     print(code)
+    print('\nEND')
