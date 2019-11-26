@@ -154,7 +154,7 @@ def orr(src, dst):
 
 
 def xnor(src, dst):
-    return add(src, dst, 'ALU.rXNORl')
+    return add(src, dst, 'ALU.r(XNOR)l')
 
 
 def cmpp(src, dst):
@@ -250,7 +250,7 @@ def clr(dst):
 
 
 def inv(dst):
-    return inc(dst, 'ALU.not')
+    return inc(dst, 'ALU.~r')
 
 
 def lsr(dst, func='0 || [dst] 15->1'):
@@ -326,7 +326,7 @@ MDR.out, PC.in
 R6.out, ALU.r+1
 ALU.out, R6.in, MAR.in
 R6.out, ALU.=r, ALU.out, MAR.in, RD, WMFC
-MDR.out, FLAGS.in
+MDR.out, ALU.=r, ALU.out, FLAGS.in
 R6.out, ALU.r+1
 ALU.out, R6.in, MAR.in'''
 
@@ -335,8 +335,48 @@ ALU.out, R6.in, MAR.in'''
 fetch = '''PC.out, ALU.=r, ALU.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in, WMFC
-MDR.out, ALU.=r, ALU.out, IR.in
+MDR.out, ALU.=r, ALU.out, IR.in \
 '''
+
+print(f'''\
+------------------------------------------
+PDP11-Simplified 2-Bus Micro-instructions
+------------------------------------------
+
+Notes:
+    - Right bus is shortened as `r`, left is `l`.
+    - Every register can perform the following shift operations in-place:
+        --  0 || [dst] 15->1
+        --  [dst] 0 || [dst] 15->1
+        --  C || [dst] 15->1
+        --  [dst] 15 || [dst] 15->1
+        --  [dst] 14->0 || 0
+        --  [dst] 14->0 || [dst] 15
+        --  [dst] 14->0 || C
+    - FLAGS register is connected (out) to `r` and (in) to `l`.
+    - ALU has output tri-state to buffer its output.
+    - ALU functions:
+        -- pass input from `r`:  =r
+        -- enable output:        out
+        -- add:                  r+l
+        -- sub:                  r-l
+        -- increment:            r+1
+        -- decrement:            r-1
+        -- add with carry:       r+l+c
+        -- sub with carry:       r-l-c
+        -- and:                  r&l
+        -- or:                   r|l
+        -- xnor:                 r(XNOR)l
+        -- not r:                ~r
+    - Every line in micro-instructions needs one and only one clock cicle.
+    - Instruction fetch micro-instructions are performed one time before each instruction, 
+        they are omitted for clearity.
+
+---------------
+Fetch micro-instructions
+---------------
+{fetch}
+''')
 
 modes = ['R', '(R)+', '-(R)', 'X(R)', '@R',
               '@(R)+', '@-(R)', '@X(R)']
@@ -351,7 +391,6 @@ for (instr, instr_name) in [(mov, 'MOV'), (add, 'ADD'), (adc, 'ADC'),
             print(instr_name, src, dst)
             print('-'*15)
 
-            print(fetch)
             instr(src, dst)
             print('\nEND')
 
@@ -364,7 +403,6 @@ for (instr, instr_name) in [(inc, 'INC'), (dec, 'DEC'), (clr, 'CLR'),
         print(instr_name, dst)
         print('-'*15)
 
-        print(fetch)
         instr(dst)
         print('\nEND')
 
@@ -377,7 +415,6 @@ for (name, cond) in [('BR', None),
     print(name, '<OFFSET>')
     print('-'*15)
 
-    print(fetch)
     branch(cond)
     print('\nEND')
 
@@ -391,6 +428,5 @@ for (name, code) in [('HLT', 'HLT'), ('NOP', 'END'),
     print(name)
     print('-'*15)
 
-    print(fetch)
     print(code)
     print('\nEND')
