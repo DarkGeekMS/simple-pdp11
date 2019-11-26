@@ -80,12 +80,8 @@ def _write_adr_R(mode: str):
 
 
 def _write_adr_ALU(mode: str):
-    if mode in ('R', '-(R)'):
+    if mode in ('R', '-(R)', '(R)+'):
         print('ALU.out, R(dst).in')
-
-    elif mode == '(R)+':
-        print('ALU.out, TMP1.in.l')
-        print('TMP1.out.r, ALU.r+1, ALU.out, R(dst).in')
 
     else:
         print('ALU.out, MDR.in, WR, WMFC')
@@ -167,7 +163,7 @@ def cmpp(src, dst):
 
     if tmp1 == 'R' and tmp2 == 'R':
         print(f'R(src).out, TMP1.in.r')
-        print(f'R(dst).out, TMP1.out.l, ALU.r-l, ALU.out')
+        print(f'R(dst).out, TMP1.out.l, ALU.r-l')
 
     elif tmp1 == 'R':
         print(f'R(src).out, TMP1.in.r')
@@ -180,84 +176,81 @@ def cmpp(src, dst):
         print(f'{tmp1}.out.r, {tmp2}.out.l, ALU.r-l')
 
 
-def inc(dst):
-    pass
+def inc(dst, func='ALU.r+1'):
+    tmp = fetch_adr(dst, 'TMP1')
+
+    if tmp == 'R':
+        print(f'R.out, {func}')
+    else:
+        print(f'{tmp}.out.r, {func}')
+
+    write_adr(dst, 'ALU')
 
 
 def dec(dst):
-    pass
+    return inc(dst, 'ALU.r-1')
 
 
 def clr(dst):
-    # if mode in ('R', '-(R)'):
-    #     print('R(src).out, ALU.=r, ALU.out, R(dst).in')
+    if dst in ('R', '-(R)', '(R)+'):
+        print('Zero, R(dst).in')
 
-    # elif mode == '(R)+':
-    #     print('R(src).out, ALU.r+1, ALU.out, R(dst).in')
+    elif dst == 'X(R)':
+        # get x
+        print('PC.out, ALU.=r, ALU.out, MAR.in, RD')
 
-    # elif mode == 'X(R)':
-    #     if ex:
-    #         # get x
-    #         print('PC.out, ALU.=r, ALU.out, MAR.in, RD')
+        # pc++
+        print('PC.out, ALU.r+1')
+        print('ALU.out, PC.in, WMFC')
 
-    #         # pc++
-    #         print('PC.out, ALU.r+1')
-    #         print('ALU.out, PC.in, WMFC')
+        # [x+R] = inp
+        print('MDR.out, TMP2.in.r')
+        print('R.out, TMP2.out.l, ALU.r+l')
+        print('ALU.out, MAR.in')
 
-    #         # [x+R] = inp
-    #         print('MDR.out, TMP2.in.r')
-    #         print('R.out, TMP2.out.l, ALU.r+l')
-    #         print('ALU.out, MAR.in')
+        print('Zero, MDR.in, WR, WMFC')
 
-    #     print('R(src).out, ALU.=r, ALU.out, MDR.in, WR, WMFC')
+    elif dst == '@R':
+        print('R(dst).out, ALU.=r, ALU.out, MAR.in')
 
-    # elif mode == '@R':
-    #     if ex:
-    #         print('R(dst).out, ALU.=r, ALU.out, MAR.in')
+        print('Zero, MDR.in, WR, WMFC')
 
-    #     print('R(src).out, ALU.=r, ALU.out, MDR.in, WR, WMFC')
+    elif dst == '@(R)+':
+        print('R(dst).out, ALU.=r, MAR.in')
 
-    # elif mode == '@(R)+':
-    #     if ex:
-    #         print('R(dst).out, ALU.=r, MAR.in')
+        print('Zero, MDR.in, WR, WMFC')
 
-    #         print('R(src).out, ALU.=r, ALU.out, MDR.in, WR, WMFC')
+        print('R.out, ALU.r+1')
+        print('ALU.out, R.in, WMFC')
 
-    #         print('R.out, ALU.r+1')
-    #         print('ALU.out, R.in, WMFC')
+        print('Zero, MDR.in, WR, WMFC')
 
-    #     else:
-    #         print('R(src).out, ALU.=r, ALU.out, MDR.in, WR, WMFC')
+    elif dst == '@-(R)':
+        print('R(dst).out, ALU.r-1, ALU.out, TMP1.in.l, MAR.in')
+        print('TMP1.out.l, R.in')
 
-    # elif mode == '@-(R)':
-    #     if ex:
-    #         print('R(dst).out, ALU.r-1, ALU.out, TMP1.in.l, MAR.in')
-    #         print('TMP1.out.l, R.in')
+        print('Zero, MDR.in, WR, WMFC')
 
-    #     print('R(src).out, ALU.=r, ALU.out, MDR.in, WR, WMFC')
+    elif dst == '@X(R)':
+        # get x
+        print('PC.out, ALU.=r, ALU.out, MAR.in, RD')
 
-    # elif mode == '@X(R)':
-    #     if ex:
-    #         # get x
-    #         print('PC.out, ALU.=r, ALU.out, MAR.in, RD')
+        # pc++
+        print('PC.out, ALU.r+1')
+        print('ALU.out, PC.in, WMFC')
 
-    #         # pc++
-    #         print('PC.out, ALU.r+1')
-    #         print('ALU.out, PC.in, WMFC')
+        # tmp = x+R
+        print('MDR.out, TMP1.in.r')
+        print('R.out, TMP1.out.l, ALU.r+l')
 
-    #         # tmp = x+R
-    #         print('MDR.out, TMP1.in.r')
-    #         print('R.out, TMP1.out.l, ALU.r+l')
+        # get inp
+        print('ALU.out, MAR.in')
 
-    #         # get inp
-    #         print('ALU.out, MAR.in')
-
-    #     print('R(src).out, ALU.=r, ALU.out, MDR.in, WR, WMFC')
-    pass
+        print('Zero, MDR.in, WR, WMFC')
 
 
 def inv(dst):
-    pass
+    return inc(dst, 'ALU.not')
 
 
 def lsr(dst):
@@ -291,10 +284,11 @@ def rlc(dst):
 def branch(cond: str):
     if cond is not None:
         print(f'IF NOT {cond} THEN END, ', end='')
-    
+
     print('ADDR_PART_IR.out, TMP1.in.r')
     print('TMP1.out.l, PC.out, ALU.r+l')
     print('ALU.out, PC.in')
+
 
 jsr = '''PC.out, ALU.=r, ALU.out, MAR.in, RD
 PC.out, ALU.r+1
