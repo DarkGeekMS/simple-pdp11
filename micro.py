@@ -76,11 +76,15 @@ def fetch_adr(mode: str, tmp: str):
 
 
 def write_adr(mode: str, inp: str, ex: bool = False):
-    if mode in ('R', '(R)+', '-(R)'):
+    if mode in ('R', '-(R)'):
         if inp == 'R':
             print('R(src).out, ALU.=r, ALU.out, R(dst).in')
         else:
             print(f'{inp}.out.l, R.in')
+
+    elif mode == '(R)+':
+        tmp = f'{inp}.out.r' if inp != 'R' else 'R(src).out'
+        print(f'{tmp}, ALU.r+1, ALU.out, R(dst).in')
 
     elif mode == 'X(R)':
         if ex:
@@ -96,42 +100,36 @@ def write_adr(mode: str, inp: str, ex: bool = False):
             print(f'R.out, TMP2.out.l, ALU.r+l')
             print(f'ALU.out, MAR.in')
 
-        tmp = f'{inp}.out.l' if inp != 'R' else 'R.out, ALU.=r, ALU.out'
+        tmp = f'{inp}.out.l' if inp != 'R' else 'R(src).out, ALU.=r, ALU.out'
         print(f'{tmp}, MDR.in, WR, WMFC')
 
     elif mode == '@R':
         if ex:
-            if inp == 'R':
-                print('R(first).out, ALU.=r, ALU.out, MAR.in')
-                print('R(second).out, ALU.=r, ALU.out, MDR.in, WR. WMFC')
-            else:
-                print(f'R.out, ALU.=r, ALU.out, MAR.in')
-                print(f'{inp}.out.l, MDR.in. WR, WMFC')
-        else:
-            tmp = f'{inp}.out.r' if inp != 'R' else 'R.out, ALU.=r, ALU.out'
-            print(f'{tmp}, MDR.in, WR, WMFC')
+            print('R(dst).out, ALU.=r, ALU.out, MAR.in')
+
+        tmp = f'{inp}.out.l' if inp != 'R' else 'R(src).out, ALU.=r, ALU.out'
+        print(f'{tmp}, MDR.in, WR, WMFC')
 
     elif mode == '@(R)+':
         if ex:
-            if inp == 'R':
-                print('R(first).out, ALU.=r, MAR.in')
-                print('R(second).out, ALU.=r, ALU.out, MDR.in, WR')
-            else:
-                print('R.out, ALU.=r, MAR.in')
-                print(f'{inp}.out.l, MDR.in')
+            print('R(dst).out, ALU.=r, MAR.in')
+
+            tmp = f'{inp}.out.l' if inp != 'R' else 'R(src).out, ALU.=r, ALU.out'
+            print(f'{tmp}, MDR.in, WR, WMFC')
 
             print('R.out, ALU.r+1')
             print('ALU.out, R.in, WMFC')
 
         else:
-            print(f'{inp}.out.l, MDR.in, WR, WMFC')
+            tmp = f'{inp}.out.l' if inp != 'R' else 'R(src).out, ALU.=r, ALU.out'
+            print(f'{tmp}, MDR.in, WR, WMFC')
 
     elif mode == '@-(R)':
         if ex:
-            print(f'R.out, ALU.r-1, ALU.out, TMP1.in.l, MAR.in')
+            print(f'R(dst).out, ALU.r-1, ALU.out, TMP1.in.l, MAR.in')
             print(f'TMP1.out.l, R.in')
 
-        tmp = f'{inp}.out.l' if inp != 'R' else 'R.out, ALU.=r, ALU.out'
+        tmp = f'{inp}.out.l' if inp != 'R' else 'R(src).out, ALU.=r, ALU.out'
         print(f'{tmp}, MDR.in, WR, WMFC')
 
     elif mode == '@X(R)':
@@ -150,12 +148,19 @@ def write_adr(mode: str, inp: str, ex: bool = False):
             # get inp
             print(f'ALU.out, MAR.in')
 
-        tmp = f'{inp}.out.l' if inp != 'R' else 'R.out, ALU.=r, ALU.out'
+        tmp = f'{inp}.out.l' if inp != 'R' else 'R(src).out, ALU.=r, ALU.out'
         print(f'{tmp}, MDR.in, WR, WMFC')
 
 
 def mov(src, dst):
-    pass
+    tmp1 = fetch_adr(src, 'TMP1')
+    tmp2 = fetch_adr(dst, 'TMP2')
+
+    if tmp1 == 'R' and tmp2 == 'R':
+        print('R(src).out, TMP1.in.r')
+        print('R(dst).in, TMP1.out.l')
+    elif tmp1 == 'R':
+        print('R.out, ')
 
 
 def add(src, dst, func='ALU.r+l'):
