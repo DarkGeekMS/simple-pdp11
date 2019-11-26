@@ -332,13 +332,8 @@ ALU.out, R6.in, MAR.in'''
 
 #############################
 
-fetch = '''PC.out, ALU.=r, ALU.out, MAR.in, RD
-PC.out, ALU.r+1
-ALU.out, PC.in, WMFC
-MDR.out, ALU.=r, ALU.out, IR.in \
-'''
 
-print(f'''\
+print('''\
 ------------------------------------------
 PDP11-Simplified 2-Bus Micro-instructions
 ------------------------------------------
@@ -375,8 +370,23 @@ Notes:
 ---------------
 Fetch micro-instructions
 ---------------
-{fetch}
+PC.out, ALU.=r, ALU.out, MAR.in, RD
+PC.out, ALU.r+1
+ALU.out, PC.in, WMFC
+MDR.out, ALU.=r, ALU.out, IR.in
 ''')
+
+cicles, memaccess = 4, 1
+
+all_cicles = []
+all_memaccess = []
+
+def wr(x):
+    global cicles, memaccess
+    cicles += 1 + x.count('\n')
+    memaccess += x.count('RD') + x.count('WR')
+
+    print(x)
 
 modes = ['R', '(R)+', '-(R)', 'X(R)', '@R',
               '@(R)+', '@-(R)', '@X(R)']
@@ -392,7 +402,13 @@ for (instr, instr_name) in [(mov, 'MOV'), (add, 'ADD'), (adc, 'ADC'),
             print('-'*15)
 
             instr(src, dst)
-            print('\nEND')
+            wr('END')
+
+            print(f'\nInstruction Total CPU cicles = {cicles}')
+            print(f'Instruction Total MEM access (RD,WR) = {memaccess}')
+            all_cicles.append(cicles)
+            all_memaccess.append(memaccess)
+            cicles, memaccess = 4, 1
 
 for (instr, instr_name) in [(inc, 'INC'), (dec, 'DEC'), (clr, 'CLR'),
                             (inv, 'INV'), (lsr, 'LSR'), (ror, 'ROR'), (rrc, 'RRC'),
@@ -404,7 +420,13 @@ for (instr, instr_name) in [(inc, 'INC'), (dec, 'DEC'), (clr, 'CLR'),
         print('-'*15)
 
         instr(dst)
-        print('\nEND')
+        wr('END')
+
+        print(f'\nInstruction Total CPU cicles = {cicles}')
+        print(f'Instruction Total MEM access (RD,WR) = {memaccess}')
+        all_cicles.append(cicles)
+        all_memaccess.append(memaccess)
+        cicles, memaccess = 4, 1
 
 for (name, cond) in [('BR', None),
                      ('BEQ', '(Z=1)'), ('BNE', '(Z=0)'),
@@ -416,7 +438,13 @@ for (name, cond) in [('BR', None),
     print('-'*15)
 
     branch(cond)
-    print('\nEND')
+    wr('END')
+
+    print(f'\nInstruction Total CPU cicles = {cicles}')
+    print(f'Instruction Total MEM access (RD,WR) = {memaccess}')
+    all_cicles.append(cicles)
+    all_memaccess.append(memaccess)
+    cicles, memaccess = 4, 1
 
 for (name, code) in [('HLT', 'HLT'), ('NOP', 'END'),
                      ('JSR X(R)', jsr),
@@ -428,5 +456,17 @@ for (name, code) in [('HLT', 'HLT'), ('NOP', 'END'),
     print(name)
     print('-'*15)
 
-    print(code)
-    print('\nEND')
+    wr(code)
+    wr('END')
+
+    print(f'\nInstruction Total CPU cicles = {cicles}')
+    print(f'Instruction Total MEM access (RD,WR) = {memaccess}')
+    all_cicles.append(cicles)
+    all_memaccess.append(memaccess)
+    cicles, memaccess = 4, 1
+
+
+print('-'*20)
+print('-'*20)
+print(f'Average MEM access = {sum(all_memaccess)/len(all_memaccess):3.3f}')
+print(f'CPI = {sum(all_cicles)/len(all_cicles):3.3f}')
