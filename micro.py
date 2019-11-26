@@ -253,32 +253,37 @@ def inv(dst):
     return inc(dst, 'ALU.not')
 
 
-def lsr(dst):
-    pass
+def lsr(dst, func='0 || [dst] 15->1'):
+    tmp = fetch_adr(dst, 'TMP1')
+
+    print(f'{tmp}.({func})')
+
+    if tmp != 'R':
+        write_adr(dst, tmp)
 
 
 def ror(dst):
-    pass
+    return lsr(dst, '[dst] 0 || [dst] 15->1')
 
 
 def rrc(dst):
-    pass
+    return lsr(dst, 'C || [dst] 15->1')
 
 
 def asr(dst):
-    pass
+    return lsr(dst, '[dst] 15 || [dst] 15->1')
 
 
 def lsl(dst):
-    pass
+    return lsr(dst, '[dst] 14->0 || 0')
 
 
 def rol(dst):
-    pass
+    return lsr(dst, '[dst] 14->0 || [dst] 15')
 
 
 def rlc(dst):
-    pass
+    return lsr(dst, '[dst] 14->0 || C')
 
 
 def branch(cond: str):
