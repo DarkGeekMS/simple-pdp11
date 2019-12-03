@@ -20,7 +20,7 @@ def fetch(mode: str, tmp: str):
 
         # pc++
         wr('PC.out, ALU.r+1')
-        wr('ALU.out, PC.in, WMFC')
+        wr('ALU.out, PC.in')
 
         # tmp = x+R
         wr(f'MDR.out, {tmp}.in.r')
@@ -30,21 +30,21 @@ def fetch(mode: str, tmp: str):
         return tmp
 
     elif mode == '@R':
-        wr('R.out, ALU.=r, ALU.out, MAR.in, RD, WMFC')
+        wr('R.out, ALU.=r, ALU.out, MAR.in, RD')
         wr(f'MDR.out, {tmp}.in.r')
 
         return tmp
 
     elif mode == '@(R)+':
         wr('R.out, ALU.=r, ALU.out, MAR.in, RD')
-        wr(f'MAR.out, ALU.r+1, ALU.out, R.in, WMFC')
+        wr(f'MAR.out, ALU.r+1, ALU.out, R.in')
         wr(f'MDR.out, {tmp}.in.r')
 
         return tmp
 
     elif mode == '@-(R)':
         wr(f'R.out, ALU.r-1, ALU.out, {tmp}.in.l')
-        wr(f'{tmp}.out.l, R.in, MAR.in, RD, WMFC')
+        wr(f'{tmp}.out.l, R.in, MAR.in, RD')
         wr(f'MDR.out, {tmp}.in.r')
 
         return tmp
@@ -55,14 +55,14 @@ def fetch(mode: str, tmp: str):
 
         # pc++
         wr('PC.out, ALU.r+1')
-        wr('ALU.out, PC.in, WMFC')
+        wr('ALU.out, PC.in')
 
         # tmp = x+R
         wr(f'MDR.out, {tmp}.in.r')
         wr(f'R.out, {tmp}.out.l, ALU.r+l')
 
         # get tmp
-        wr(f'ALU.out, MAR.in, RD, WMFC')
+        wr(f'ALU.out, MAR.in, RD')
         wr(f'MDR.out, {tmp}.in.r')
 
         return tmp
@@ -73,10 +73,10 @@ def _write_R(mode: str):
         wr('R(src).out, ALU.=r, ALU.out, R(dst).in')
 
     elif mode == 'X(R)':
-        wr('R(src).out, ALU.=r, ALU.out, MDR.in, WR, WMFC')
+        wr('R(src).out, ALU.=r, ALU.out, MDR.in, WR')
 
     else:
-        wr('R(src).out, ALU.=r, ALU.out, MDR.in, WR, WMFC')
+        wr('R(src).out, ALU.=r, ALU.out, MDR.in, WR')
 
 
 def _write_ALU(mode: str):
@@ -84,7 +84,7 @@ def _write_ALU(mode: str):
         wr('ALU.out, R(dst).in')
 
     else:
-        wr('ALU.out, MDR.in, WR, WMFC')
+        wr('ALU.out, MDR.in, WR')
 
 
 def _write_TMP(mode: str, inp: str):
@@ -92,7 +92,7 @@ def _write_TMP(mode: str, inp: str):
         wr(f'{inp}.out.l, R.in')
 
     else:
-        wr(f'{inp}.out.l, MDR.in, WR, WMFC')
+        wr(f'{inp}.out.l, MDR.in, WR')
 
 
 def write(mode: str, inp: str):
@@ -202,35 +202,35 @@ def clr(dst):
 
         # pc++
         wr('PC.out, ALU.r+1')
-        wr('ALU.out, PC.in, WMFC')
+        wr('ALU.out, PC.in')
 
         # [x+R] = inp
         wr('MDR.out, TMP2.in.r')
         wr('R.out, TMP2.out.l, ALU.r+l')
         wr('ALU.out, MAR.in')
 
-        wr('Zero, MDR.in, WR, WMFC')
+        wr('Zero, MDR.in, WR')
 
     elif dst == '@R':
         wr('R(dst).out, ALU.=r, ALU.out, MAR.in')
 
-        wr('Zero, MDR.in, WR, WMFC')
+        wr('Zero, MDR.in, WR')
 
     elif dst == '@(R)+':
         wr('R(dst).out, ALU.=r, MAR.in')
 
-        wr('Zero, MDR.in, WR, WMFC')
+        wr('Zero, MDR.in, WR')
 
         wr('R.out, ALU.r+1')
-        wr('ALU.out, R.in, WMFC')
+        wr('ALU.out, R.in')
 
-        wr('Zero, MDR.in, WR, WMFC')
+        wr('Zero, MDR.in, WR')
 
     elif dst == '@-(R)':
         wr('R(dst).out, ALU.r-1, ALU.out, TMP1.in.l, MAR.in')
         wr('TMP1.out.l, R.in')
 
-        wr('Zero, MDR.in, WR, WMFC')
+        wr('Zero, MDR.in, WR')
 
     elif dst == '@X(R)':
         # get x
@@ -238,7 +238,7 @@ def clr(dst):
 
         # pc++
         wr('PC.out, ALU.r+1')
-        wr('ALU.out, PC.in, WMFC')
+        wr('ALU.out, PC.in')
 
         # tmp = x+R
         wr('MDR.out, TMP1.in.r')
@@ -247,7 +247,7 @@ def clr(dst):
         # get inp
         wr('ALU.out, MAR.in')
 
-        wr('Zero, MDR.in, WR, WMFC')
+        wr('Zero, MDR.in, WR')
 
 
 def inv(dst):
@@ -298,16 +298,16 @@ def branch(cond: str):
 
 jsr = '''PC.out, ALU.=r, ALU.out, MAR.in, RD
 PC.out, ALU.r+1
-ALU.out, PC.in, WMFC
+ALU.out, PC.in
 MDR.out, TMP1.in.r
 R.out, TMP1.out.l, ALU.r+l
 ALU.out, TMP1.in.l
 R6.out, ALU.r-1
 ALU.out, R6.in, MAR.in
-PC.out, ALU.=r, ALU.out, MDR.in, WR, WMFC
+PC.out, ALU.=r, ALU.out, MDR.in, WR
 TM1.out.l, PC.in'''
 
-rts = '''R6.out, ALU.=r, ALU.out, MAR.in, RD, WMFC
+rts = '''R6.out, ALU.=r, ALU.out, MAR.in, RD
 MDR.out, PC.in
 R6.out, ALU.r+1
 ALU.out, R6.in, MAR.in'''
@@ -315,18 +315,18 @@ ALU.out, R6.in, MAR.in'''
 intt = '''R6.out, ALU.r-1
 ALU.out, R6.in, MAR.in
 FLAGS.out, ALU.=r, ALU.out, MDR.in
-R6.out, ALU.=r, ALU.out, MAR.in, RD, WMFC
+R6.out, ALU.=r, ALU.out, MAR.in, RD
 R6.out, ALU.r-1
 ALU.out, R6.in, MAR.in
 PC.out, ALU.=r, ALU.out, MDR.in
-R6.out, ALU.=r, ALU.out, MAR.in, RD, WMFC
+R6.out, ALU.=r, ALU.out, MAR.in, RD
 PC.in, HARDWARE_ADDRESS'''
 
-iret = '''R6.out, ALU.=r, ALU.out, MAR.in, RD, WMFC
+iret = '''R6.out, ALU.=r, ALU.out, MAR.in, RD
 MDR.out, PC.in
 R6.out, ALU.r+1
 ALU.out, R6.in, MAR.in
-R6.out, ALU.=r, ALU.out, MAR.in, RD, WMFC
+R6.out, ALU.=r, ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, FLAGS.in
 R6.out, ALU.r+1
 ALU.out, R6.in, MAR.in'''
@@ -373,7 +373,7 @@ Fetch micro-instructions
 ---------------
 PC.out, ALU.=r, ALU.out, MAR.in, RD
 PC.out, ALU.r+1
-ALU.out, PC.in, WMFC
+ALU.out, PC.in
 MDR.out, ALU.=r, ALU.out, IR.in
 ''')
 
