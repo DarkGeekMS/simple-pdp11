@@ -1,0 +1,14 @@
+#!/bin/bash
+set -e
+
+UNIT=$1
+
+if [[ "$#" -lt "1" ]]; then
+    echo "Usage: wave unit-name"
+    exit 1
+fi
+
+mkdir -p waves/gtkwave-saves/
+touch waves/gtkwave-saves/${UNIT}.sav
+
+gtkwave waves/${UNIT}.vcd -A waves/gtkwave-saves/${UNIT}.sav & disown
