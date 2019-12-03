@@ -11,5 +11,5 @@ test_path = join(dirname(__file__), "test")
 vu.add_library("pdp11").add_source_files(
     [join(src_path, "*.vhd*"), join(test_path, "*.vhd*")]
 )
-
+# TODO: add compile options
 vu.main()
