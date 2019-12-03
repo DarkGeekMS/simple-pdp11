@@ -4,11 +4,24 @@ set -e
 UNIT=$1
 
 if [[ "$#" -lt "1" ]]; then
-    echo "Usage: wave unit-name"
+    echo "Usage: wave test-name"
     exit 1
 fi
 
-mkdir -p waves/gtkwave-saves/
-touch waves/gtkwave-saves/${UNIT}.sav
+mkdir -p out/gtkwave-saves/
 
-gtkwave waves/${UNIT}.vcd -A waves/gtkwave-saves/${UNIT}.sav & disown
+num_files=`find out | grep -E '.vcd|.ghw' | grep $UNIT | wc -l`
+
+if [[ "$num_files" -gt "1" ]]; then
+    echo Warning trying to open multiple waves!
+    find out | grep -E '.vcd|.ghw' | grep $UNIT
+elif [[ "$num_files" -eq "0" ]]; then
+    echo No file that matches $UNIT!
+    exit 1
+fi
+
+touch out/gtkwave-saves/${UNIT}.sav
+
+find out | grep -E '.vcd|.ghw' | grep $UNIT | xargs echo gtkwave -a out/gtkwave-saves/${UNIT}.sav
+
+find out | grep -E '.vcd|.ghw' | grep $UNIT | xargs gtkwave -a out/gtkwave-saves/${UNIT}.sav & disown

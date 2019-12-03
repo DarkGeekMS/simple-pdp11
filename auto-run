@@ -1,3 +1,0 @@
-#!/bin/bash
-set -eu
-find . | grep vhd | entr -c ./run $1
