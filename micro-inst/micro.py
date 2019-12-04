@@ -1,4 +1,4 @@
-def fetch_value(mode: str, tmp: str):
+def fetch_value_TMP(mode: str, tmp: str):
     if mode == 'R':
         return 'R'
 
@@ -148,13 +148,13 @@ def write(mode: str, inp: str, need_addr=False):
 
 
 def mov(src, dst):
-    tmp1 = fetch_value(src, 'TMP1')
+    tmp1 = fetch_value_TMP(src, 'TMP1')
     write(dst, tmp1, True)
 
 
 def add(src, dst, func='ALU.r+l'):
-    tmp1 = fetch_value(src, 'TMP1')
-    tmp2 = fetch_value(dst, 'TMP2')
+    tmp1 = fetch_value_TMP(src, 'TMP1')
+    tmp2 = fetch_value_TMP(dst, 'TMP2')
 
     if tmp1 == 'R' and tmp2 == 'R':
         wr(f'R(src).out, TMP1.in.r')
@@ -199,8 +199,8 @@ def xnor(src, dst):
 
 
 def cmpp(src, dst):
-    tmp1 = fetch_value(src, 'TMP1')
-    tmp2 = fetch_value(dst, 'TMP2')
+    tmp1 = fetch_value_TMP(src, 'TMP1')
+    tmp2 = fetch_value_TMP(dst, 'TMP2')
 
     if tmp1 == 'R' and tmp2 == 'R':
         wr(f'R(src).out, TMP1.in.r')
@@ -218,7 +218,7 @@ def cmpp(src, dst):
 
 
 def inc(dst, func='ALU.r+1'):
-    tmp = fetch_value(dst, 'TMP1')
+    tmp = fetch_value_TMP(dst, 'TMP1')
 
     if tmp == 'R':
         wr(f'R.out, {func}')
@@ -294,37 +294,87 @@ def inv(dst):
     return inc(dst, 'ALU.~r')
 
 
-def lsr(dst, func='0 || [dst] 15->1'):
-    tmp = fetch_value(dst, 'TMP1')
+def lsr(dst, func='0 & ALU[15:1]'):
+    if dst in ('R', '(R)+'):
+        wr(f'R.out, ALU.=r, ALU.({func})')
+        wr(f'ALU.out, R.in')
 
-    wr(f'{tmp}.({func})')
+    elif dst == '-(R)':
+        wr('R.out, ALU.r-1')
+        wr(f'ALU.({func}), ALU.out, R.in')
 
-    if tmp != 'R':
-        write(dst, tmp)
+    elif dst == 'X(R)':
+        # get x
+        wr('PC.out, ALU.=r, ALU.out, MAR.in, RD')
+
+        # pc++
+        wr('PC.out, ALU.r+1')
+        wr('ALU.out, PC.in')
+
+        # tmp = x+R
+        wr(f'MDR.out, TMP1.in.r')
+        wr(f'R.out, TMP1.out.l, ALU.r+l')
+
+        # mdr = [tmp]
+        wr(f'ALU.out, MAR.in, RD')
+        wr(f'MDR.out, ALU.=r')
+        wr(f'ALU.({func}), ALU.out, MDR.in, WR')
+
+    elif dst == '@R':
+        wr('R.out, ALU.=r, ALU.out, MAR.in, RD')
+        wr(f'MDR.out, ALU.=r')
+        wr(f'ALU.({func}), ALU.out, MDR.in, WR')
+
+    elif dst == '@(R)+':
+        wr('R.out, ALU.=r, ALU.out, MAR.in, RD')
+        wr(f'MAR.out, ALU.r+1, ALU.out, R.in')
+        wr(f'MDR.out, TMP1.in.r')
+
+    elif dst == '@-(R)':
+        wr(f'R.out, ALU.r-1, ALU.out, TMP1.in.l')
+        wr(f'TMP1.out.l, R.in, MAR.in, RD')
+        wr(f'MDR.out, TMP1.in.r')
+
+    elif dst == '@X(R)':
+        # get x
+        wr('PC.out, ALU.=r, ALU.out, MAR.in, RD')
+
+        # pc++
+        wr('PC.out, ALU.r+1')
+        wr('ALU.out, PC.in')
+
+        # tmp = x+R
+        wr(f'MDR.out, TMP1.in.r')
+        wr(f'R.out, TMP1.out.l, ALU.r+l')
+
+        # get tmp
+        wr(f'ALU.out, MAR.in, RD')
+        wr(f'MDR.out, ALU.=r, ALU.out, MAR.in, RD')
+        wr(f'MDR.out, TMP1.in.r')
 
 
 def ror(dst):
-    return lsr(dst, '[dst] 0 || [dst] 15->1')
+    return lsr(dst, 'ALU[0] & ALU[15:1]')
 
 
 def rrc(dst):
-    return lsr(dst, 'C || [dst] 15->1')
+    return lsr(dst, 'carry & ALU[15:1]')
 
 
 def asr(dst):
-    return lsr(dst, '[dst] 15 || [dst] 15->1')
+    return lsr(dst, 'ALU[15] & ALU[15:1]')
 
 
 def lsl(dst):
-    return lsr(dst, '[dst] 14->0 || 0')
+    return lsr(dst, 'ALU[14:0] & 0')
 
 
 def rol(dst):
-    return lsr(dst, '[dst] 14->0 || [dst] 15')
+    return lsr(dst, 'ALU[14:0] & ALU[15]')
 
 
 def rlc(dst):
-    return lsr(dst, '[dst] 14->0 || C')
+    return lsr(dst, 'ALU[14:0] & carry')
 
 
 def branch(cond: str):
@@ -373,7 +423,6 @@ ALU.out, R6.in, MAR.in'''
 
 #############################
 
-
 print('''\
 ------------------------------------------
 PDP11-Simplified 2-Bus Micro-instructions
@@ -381,29 +430,28 @@ PDP11-Simplified 2-Bus Micro-instructions
 
 Notes:
     - Right bus is shortened as `r`, left is `l`.
-    - Every register can perform the following shift operations in-place:
-        --  0 || [dst] 15->1
-        --  [dst] 0 || [dst] 15->1
-        --  C || [dst] 15->1
-        --  [dst] 15 || [dst] 15->1
-        --  [dst] 14->0 || 0
-        --  [dst] 14->0 || [dst] 15
-        --  [dst] 14->0 || C
     - FLAGS register is connected (out) to `r` and (in) to `l`.
     - ALU has output tri-state to buffer its output.
     - ALU functions:
-        -- pass input from `r`:  =r
-        -- enable output:        out
-        -- add:                  r+l
-        -- sub:                  r-l
-        -- increment:            r+1
-        -- decrement:            r-1
-        -- add with carry:       r+l+c
-        -- sub with carry:       r-l-c
-        -- and:                  r&l
-        -- or:                   r|l
-        -- xnor:                 r(XNOR)l
-        -- not r:                ~r
+        -- pass input from `r`:       =r
+        -- enable output:             out
+        -- add:                       r+l
+        -- sub:                       r-l
+        -- increment:                 r+1
+        -- decrement:                 r-1
+        -- add with carry:            r+l+c
+        -- sub with carry:            r-l-c
+        -- and:                       r&l
+        -- or:                        r|l
+        -- xnor:                      r(XNOR)l
+        -- not r:                     ~r
+        -- arithmetic shift right:    ALU[15]   & ALU[15:1]
+        -- logical shift right:       0         & ALU[15:1]
+        -- logical shift left:        ALU[14:0] & 0
+        -- rotate right:              ALU[0]    & ALU[15:1]
+        -- rotate left:               ALU[14:0] & ALU[15]
+        -- rotate right with carry:   carry     & ALU[15:1]
+        -- rotate left with carry:    ALU[14:0] & carry
     - Every line in micro-instructions needs one and only one clock cicle.
     - Instruction fetch micro-instructions are performed one time before each instruction, 
         they are omitted for clearity.

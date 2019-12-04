@@ -4,29 +4,28 @@ PDP11-Simplified 2-Bus Micro-instructions
 
 Notes:
     - Right bus is shortened as `r`, left is `l`.
-    - Every register can perform the following shift operations in-place:
-        --  0 || [dst] 15->1
-        --  [dst] 0 || [dst] 15->1
-        --  C || [dst] 15->1
-        --  [dst] 15 || [dst] 15->1
-        --  [dst] 14->0 || 0
-        --  [dst] 14->0 || [dst] 15
-        --  [dst] 14->0 || C
     - FLAGS register is connected (out) to `r` and (in) to `l`.
     - ALU has output tri-state to buffer its output.
     - ALU functions:
-        -- pass input from `r`:  =r
-        -- enable output:        out
-        -- add:                  r+l
-        -- sub:                  r-l
-        -- increment:            r+1
-        -- decrement:            r-1
-        -- add with carry:       r+l+c
-        -- sub with carry:       r-l-c
-        -- and:                  r&l
-        -- or:                   r|l
-        -- xnor:                 r(XNOR)l
-        -- not r:                ~r
+        -- pass input from `r`:       =r
+        -- enable output:             out
+        -- add:                       r+l
+        -- sub:                       r-l
+        -- increment:                 r+1
+        -- decrement:                 r-1
+        -- add with carry:            r+l+c
+        -- sub with carry:            r-l-c
+        -- and:                       r&l
+        -- or:                        r|l
+        -- xnor:                      r(XNOR)l
+        -- not r:                     ~r
+        -- arithmetic shift right:    ALU[15]   & ALU[15:1]
+        -- logical shift right:       0         & ALU[15:1]
+        -- logical shift left:        ALU[14:0] & 0
+        -- rotate right:              ALU[0]    & ALU[15:1]
+        -- rotate left:               ALU[14:0] & ALU[15]
+        -- rotate right with carry:   carry     & ALU[15:1]
+        -- rotate left with carry:    ALU[14:0] & carry
     - Every line in micro-instructions needs one and only one clock cicle.
     - Instruction fetch micro-instructions are performed one time before each instruction, 
         they are omitted for clearity.
@@ -9955,33 +9954,31 @@ Instruction Total MEM access (RD,WR) = 5
 ---------------
 LSR R
 ---------------
-R.(0 || [dst] 15->1)
+R.out, ALU.=r, ALU.(0 & ALU[15:1])
+ALU.out, R.in
 END
 
-Instruction Total CPU cicles = 6
+Instruction Total CPU cicles = 7
 Instruction Total MEM access (RD,WR) = 1
 
 ---------------
 LSR (R)+
 ---------------
-R.out, TMP1.in.r, ALU.r+1
+R.out, ALU.=r, ALU.(0 & ALU[15:1])
 ALU.out, R.in
-TMP1.(0 || [dst] 15->1)
-TMP1.out.l, R.in
 END
 
-Instruction Total CPU cicles = 9
+Instruction Total CPU cicles = 7
 Instruction Total MEM access (RD,WR) = 1
 
 ---------------
 LSR -(R)
 ---------------
 R.out, ALU.r-1
-ALU.out, R.in
-R.(0 || [dst] 15->1)
+ALU.(0 & ALU[15:1]), ALU.out, R.in
 END
 
-Instruction Total CPU cicles = 8
+Instruction Total CPU cicles = 7
 Instruction Total MEM access (RD,WR) = 1
 
 ---------------
@@ -9993,24 +9990,22 @@ ALU.out, PC.in
 MDR.out, TMP1.in.r
 R.out, TMP1.out.l, ALU.r+l
 ALU.out, MAR.in, RD
-MDR.out, TMP1.in.r
-TMP1.(0 || [dst] 15->1)
-TMP1.out.l, MDR.in, WR
+MDR.out, ALU.=r
+ALU.(0 & ALU[15:1]), ALU.out, MDR.in, WR
 END
 
-Instruction Total CPU cicles = 14
+Instruction Total CPU cicles = 13
 Instruction Total MEM access (RD,WR) = 4
 
 ---------------
 LSR @R
 ---------------
 R.out, ALU.=r, ALU.out, MAR.in, RD
-MDR.out, TMP1.in.r
-TMP1.(0 || [dst] 15->1)
-TMP1.out.l, MDR.in, WR
+MDR.out, ALU.=r
+ALU.(0 & ALU[15:1]), ALU.out, MDR.in, WR
 END
 
-Instruction Total CPU cicles = 9
+Instruction Total CPU cicles = 8
 Instruction Total MEM access (RD,WR) = 3
 
 ---------------
@@ -10019,12 +10014,10 @@ LSR @(R)+
 R.out, ALU.=r, ALU.out, MAR.in, RD
 MAR.out, ALU.r+1, ALU.out, R.in
 MDR.out, TMP1.in.r
-TMP1.(0 || [dst] 15->1)
-TMP1.out.l, MDR.in, WR
 END
 
-Instruction Total CPU cicles = 10
-Instruction Total MEM access (RD,WR) = 3
+Instruction Total CPU cicles = 8
+Instruction Total MEM access (RD,WR) = 2
 
 ---------------
 LSR @-(R)
@@ -10032,12 +10025,10 @@ LSR @-(R)
 R.out, ALU.r-1, ALU.out, TMP1.in.l
 TMP1.out.l, R.in, MAR.in, RD
 MDR.out, TMP1.in.r
-TMP1.(0 || [dst] 15->1)
-TMP1.out.l, MDR.in, WR
 END
 
-Instruction Total CPU cicles = 10
-Instruction Total MEM access (RD,WR) = 3
+Instruction Total CPU cicles = 8
+Instruction Total MEM access (RD,WR) = 2
 
 ---------------
 LSR @X(R)
@@ -10050,43 +10041,39 @@ R.out, TMP1.out.l, ALU.r+l
 ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, MAR.in, RD
 MDR.out, TMP1.in.r
-TMP1.(0 || [dst] 15->1)
-TMP1.out.l, MDR.in, WR
 END
 
-Instruction Total CPU cicles = 15
-Instruction Total MEM access (RD,WR) = 5
+Instruction Total CPU cicles = 13
+Instruction Total MEM access (RD,WR) = 4
 
 ---------------
 ROR R
 ---------------
-R.([dst] 0 || [dst] 15->1)
+R.out, ALU.=r, ALU.(ALU[0] & ALU[15:1])
+ALU.out, R.in
 END
 
-Instruction Total CPU cicles = 6
+Instruction Total CPU cicles = 7
 Instruction Total MEM access (RD,WR) = 1
 
 ---------------
 ROR (R)+
 ---------------
-R.out, TMP1.in.r, ALU.r+1
+R.out, ALU.=r, ALU.(ALU[0] & ALU[15:1])
 ALU.out, R.in
-TMP1.([dst] 0 || [dst] 15->1)
-TMP1.out.l, R.in
 END
 
-Instruction Total CPU cicles = 9
+Instruction Total CPU cicles = 7
 Instruction Total MEM access (RD,WR) = 1
 
 ---------------
 ROR -(R)
 ---------------
 R.out, ALU.r-1
-ALU.out, R.in
-R.([dst] 0 || [dst] 15->1)
+ALU.(ALU[0] & ALU[15:1]), ALU.out, R.in
 END
 
-Instruction Total CPU cicles = 8
+Instruction Total CPU cicles = 7
 Instruction Total MEM access (RD,WR) = 1
 
 ---------------
@@ -10098,24 +10085,22 @@ ALU.out, PC.in
 MDR.out, TMP1.in.r
 R.out, TMP1.out.l, ALU.r+l
 ALU.out, MAR.in, RD
-MDR.out, TMP1.in.r
-TMP1.([dst] 0 || [dst] 15->1)
-TMP1.out.l, MDR.in, WR
+MDR.out, ALU.=r
+ALU.(ALU[0] & ALU[15:1]), ALU.out, MDR.in, WR
 END
 
-Instruction Total CPU cicles = 14
+Instruction Total CPU cicles = 13
 Instruction Total MEM access (RD,WR) = 4
 
 ---------------
 ROR @R
 ---------------
 R.out, ALU.=r, ALU.out, MAR.in, RD
-MDR.out, TMP1.in.r
-TMP1.([dst] 0 || [dst] 15->1)
-TMP1.out.l, MDR.in, WR
+MDR.out, ALU.=r
+ALU.(ALU[0] & ALU[15:1]), ALU.out, MDR.in, WR
 END
 
-Instruction Total CPU cicles = 9
+Instruction Total CPU cicles = 8
 Instruction Total MEM access (RD,WR) = 3
 
 ---------------
@@ -10124,12 +10109,10 @@ ROR @(R)+
 R.out, ALU.=r, ALU.out, MAR.in, RD
 MAR.out, ALU.r+1, ALU.out, R.in
 MDR.out, TMP1.in.r
-TMP1.([dst] 0 || [dst] 15->1)
-TMP1.out.l, MDR.in, WR
 END
 
-Instruction Total CPU cicles = 10
-Instruction Total MEM access (RD,WR) = 3
+Instruction Total CPU cicles = 8
+Instruction Total MEM access (RD,WR) = 2
 
 ---------------
 ROR @-(R)
@@ -10137,12 +10120,10 @@ ROR @-(R)
 R.out, ALU.r-1, ALU.out, TMP1.in.l
 TMP1.out.l, R.in, MAR.in, RD
 MDR.out, TMP1.in.r
-TMP1.([dst] 0 || [dst] 15->1)
-TMP1.out.l, MDR.in, WR
 END
 
-Instruction Total CPU cicles = 10
-Instruction Total MEM access (RD,WR) = 3
+Instruction Total CPU cicles = 8
+Instruction Total MEM access (RD,WR) = 2
 
 ---------------
 ROR @X(R)
@@ -10155,43 +10136,39 @@ R.out, TMP1.out.l, ALU.r+l
 ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, MAR.in, RD
 MDR.out, TMP1.in.r
-TMP1.([dst] 0 || [dst] 15->1)
-TMP1.out.l, MDR.in, WR
 END
 
-Instruction Total CPU cicles = 15
-Instruction Total MEM access (RD,WR) = 5
+Instruction Total CPU cicles = 13
+Instruction Total MEM access (RD,WR) = 4
 
 ---------------
 RRC R
 ---------------
-R.(C || [dst] 15->1)
+R.out, ALU.=r, ALU.(carry & ALU[15:1])
+ALU.out, R.in
 END
 
-Instruction Total CPU cicles = 6
+Instruction Total CPU cicles = 7
 Instruction Total MEM access (RD,WR) = 1
 
 ---------------
 RRC (R)+
 ---------------
-R.out, TMP1.in.r, ALU.r+1
+R.out, ALU.=r, ALU.(carry & ALU[15:1])
 ALU.out, R.in
-TMP1.(C || [dst] 15->1)
-TMP1.out.l, R.in
 END
 
-Instruction Total CPU cicles = 9
+Instruction Total CPU cicles = 7
 Instruction Total MEM access (RD,WR) = 1
 
 ---------------
 RRC -(R)
 ---------------
 R.out, ALU.r-1
-ALU.out, R.in
-R.(C || [dst] 15->1)
+ALU.(carry & ALU[15:1]), ALU.out, R.in
 END
 
-Instruction Total CPU cicles = 8
+Instruction Total CPU cicles = 7
 Instruction Total MEM access (RD,WR) = 1
 
 ---------------
@@ -10203,24 +10180,22 @@ ALU.out, PC.in
 MDR.out, TMP1.in.r
 R.out, TMP1.out.l, ALU.r+l
 ALU.out, MAR.in, RD
-MDR.out, TMP1.in.r
-TMP1.(C || [dst] 15->1)
-TMP1.out.l, MDR.in, WR
+MDR.out, ALU.=r
+ALU.(carry & ALU[15:1]), ALU.out, MDR.in, WR
 END
 
-Instruction Total CPU cicles = 14
+Instruction Total CPU cicles = 13
 Instruction Total MEM access (RD,WR) = 4
 
 ---------------
 RRC @R
 ---------------
 R.out, ALU.=r, ALU.out, MAR.in, RD
-MDR.out, TMP1.in.r
-TMP1.(C || [dst] 15->1)
-TMP1.out.l, MDR.in, WR
+MDR.out, ALU.=r
+ALU.(carry & ALU[15:1]), ALU.out, MDR.in, WR
 END
 
-Instruction Total CPU cicles = 9
+Instruction Total CPU cicles = 8
 Instruction Total MEM access (RD,WR) = 3
 
 ---------------
@@ -10229,12 +10204,10 @@ RRC @(R)+
 R.out, ALU.=r, ALU.out, MAR.in, RD
 MAR.out, ALU.r+1, ALU.out, R.in
 MDR.out, TMP1.in.r
-TMP1.(C || [dst] 15->1)
-TMP1.out.l, MDR.in, WR
 END
 
-Instruction Total CPU cicles = 10
-Instruction Total MEM access (RD,WR) = 3
+Instruction Total CPU cicles = 8
+Instruction Total MEM access (RD,WR) = 2
 
 ---------------
 RRC @-(R)
@@ -10242,12 +10215,10 @@ RRC @-(R)
 R.out, ALU.r-1, ALU.out, TMP1.in.l
 TMP1.out.l, R.in, MAR.in, RD
 MDR.out, TMP1.in.r
-TMP1.(C || [dst] 15->1)
-TMP1.out.l, MDR.in, WR
 END
 
-Instruction Total CPU cicles = 10
-Instruction Total MEM access (RD,WR) = 3
+Instruction Total CPU cicles = 8
+Instruction Total MEM access (RD,WR) = 2
 
 ---------------
 RRC @X(R)
@@ -10260,43 +10231,39 @@ R.out, TMP1.out.l, ALU.r+l
 ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, MAR.in, RD
 MDR.out, TMP1.in.r
-TMP1.(C || [dst] 15->1)
-TMP1.out.l, MDR.in, WR
 END
 
-Instruction Total CPU cicles = 15
-Instruction Total MEM access (RD,WR) = 5
+Instruction Total CPU cicles = 13
+Instruction Total MEM access (RD,WR) = 4
 
 ---------------
 ASR R
 ---------------
-R.([dst] 15 || [dst] 15->1)
+R.out, ALU.=r, ALU.(ALU[15] & ALU[15:1])
+ALU.out, R.in
 END
 
-Instruction Total CPU cicles = 6
+Instruction Total CPU cicles = 7
 Instruction Total MEM access (RD,WR) = 1
 
 ---------------
 ASR (R)+
 ---------------
-R.out, TMP1.in.r, ALU.r+1
+R.out, ALU.=r, ALU.(ALU[15] & ALU[15:1])
 ALU.out, R.in
-TMP1.([dst] 15 || [dst] 15->1)
-TMP1.out.l, R.in
 END
 
-Instruction Total CPU cicles = 9
+Instruction Total CPU cicles = 7
 Instruction Total MEM access (RD,WR) = 1
 
 ---------------
 ASR -(R)
 ---------------
 R.out, ALU.r-1
-ALU.out, R.in
-R.([dst] 15 || [dst] 15->1)
+ALU.(ALU[15] & ALU[15:1]), ALU.out, R.in
 END
 
-Instruction Total CPU cicles = 8
+Instruction Total CPU cicles = 7
 Instruction Total MEM access (RD,WR) = 1
 
 ---------------
@@ -10308,24 +10275,22 @@ ALU.out, PC.in
 MDR.out, TMP1.in.r
 R.out, TMP1.out.l, ALU.r+l
 ALU.out, MAR.in, RD
-MDR.out, TMP1.in.r
-TMP1.([dst] 15 || [dst] 15->1)
-TMP1.out.l, MDR.in, WR
+MDR.out, ALU.=r
+ALU.(ALU[15] & ALU[15:1]), ALU.out, MDR.in, WR
 END
 
-Instruction Total CPU cicles = 14
+Instruction Total CPU cicles = 13
 Instruction Total MEM access (RD,WR) = 4
 
 ---------------
 ASR @R
 ---------------
 R.out, ALU.=r, ALU.out, MAR.in, RD
-MDR.out, TMP1.in.r
-TMP1.([dst] 15 || [dst] 15->1)
-TMP1.out.l, MDR.in, WR
+MDR.out, ALU.=r
+ALU.(ALU[15] & ALU[15:1]), ALU.out, MDR.in, WR
 END
 
-Instruction Total CPU cicles = 9
+Instruction Total CPU cicles = 8
 Instruction Total MEM access (RD,WR) = 3
 
 ---------------
@@ -10334,12 +10299,10 @@ ASR @(R)+
 R.out, ALU.=r, ALU.out, MAR.in, RD
 MAR.out, ALU.r+1, ALU.out, R.in
 MDR.out, TMP1.in.r
-TMP1.([dst] 15 || [dst] 15->1)
-TMP1.out.l, MDR.in, WR
 END
 
-Instruction Total CPU cicles = 10
-Instruction Total MEM access (RD,WR) = 3
+Instruction Total CPU cicles = 8
+Instruction Total MEM access (RD,WR) = 2
 
 ---------------
 ASR @-(R)
@@ -10347,12 +10310,10 @@ ASR @-(R)
 R.out, ALU.r-1, ALU.out, TMP1.in.l
 TMP1.out.l, R.in, MAR.in, RD
 MDR.out, TMP1.in.r
-TMP1.([dst] 15 || [dst] 15->1)
-TMP1.out.l, MDR.in, WR
 END
 
-Instruction Total CPU cicles = 10
-Instruction Total MEM access (RD,WR) = 3
+Instruction Total CPU cicles = 8
+Instruction Total MEM access (RD,WR) = 2
 
 ---------------
 ASR @X(R)
@@ -10365,43 +10326,39 @@ R.out, TMP1.out.l, ALU.r+l
 ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, MAR.in, RD
 MDR.out, TMP1.in.r
-TMP1.([dst] 15 || [dst] 15->1)
-TMP1.out.l, MDR.in, WR
 END
 
-Instruction Total CPU cicles = 15
-Instruction Total MEM access (RD,WR) = 5
+Instruction Total CPU cicles = 13
+Instruction Total MEM access (RD,WR) = 4
 
 ---------------
 LSL R
 ---------------
-R.([dst] 14->0 || 0)
+R.out, ALU.=r, ALU.(ALU[14:0] & 0)
+ALU.out, R.in
 END
 
-Instruction Total CPU cicles = 6
+Instruction Total CPU cicles = 7
 Instruction Total MEM access (RD,WR) = 1
 
 ---------------
 LSL (R)+
 ---------------
-R.out, TMP1.in.r, ALU.r+1
+R.out, ALU.=r, ALU.(ALU[14:0] & 0)
 ALU.out, R.in
-TMP1.([dst] 14->0 || 0)
-TMP1.out.l, R.in
 END
 
-Instruction Total CPU cicles = 9
+Instruction Total CPU cicles = 7
 Instruction Total MEM access (RD,WR) = 1
 
 ---------------
 LSL -(R)
 ---------------
 R.out, ALU.r-1
-ALU.out, R.in
-R.([dst] 14->0 || 0)
+ALU.(ALU[14:0] & 0), ALU.out, R.in
 END
 
-Instruction Total CPU cicles = 8
+Instruction Total CPU cicles = 7
 Instruction Total MEM access (RD,WR) = 1
 
 ---------------
@@ -10413,24 +10370,22 @@ ALU.out, PC.in
 MDR.out, TMP1.in.r
 R.out, TMP1.out.l, ALU.r+l
 ALU.out, MAR.in, RD
-MDR.out, TMP1.in.r
-TMP1.([dst] 14->0 || 0)
-TMP1.out.l, MDR.in, WR
+MDR.out, ALU.=r
+ALU.(ALU[14:0] & 0), ALU.out, MDR.in, WR
 END
 
-Instruction Total CPU cicles = 14
+Instruction Total CPU cicles = 13
 Instruction Total MEM access (RD,WR) = 4
 
 ---------------
 LSL @R
 ---------------
 R.out, ALU.=r, ALU.out, MAR.in, RD
-MDR.out, TMP1.in.r
-TMP1.([dst] 14->0 || 0)
-TMP1.out.l, MDR.in, WR
+MDR.out, ALU.=r
+ALU.(ALU[14:0] & 0), ALU.out, MDR.in, WR
 END
 
-Instruction Total CPU cicles = 9
+Instruction Total CPU cicles = 8
 Instruction Total MEM access (RD,WR) = 3
 
 ---------------
@@ -10439,12 +10394,10 @@ LSL @(R)+
 R.out, ALU.=r, ALU.out, MAR.in, RD
 MAR.out, ALU.r+1, ALU.out, R.in
 MDR.out, TMP1.in.r
-TMP1.([dst] 14->0 || 0)
-TMP1.out.l, MDR.in, WR
 END
 
-Instruction Total CPU cicles = 10
-Instruction Total MEM access (RD,WR) = 3
+Instruction Total CPU cicles = 8
+Instruction Total MEM access (RD,WR) = 2
 
 ---------------
 LSL @-(R)
@@ -10452,12 +10405,10 @@ LSL @-(R)
 R.out, ALU.r-1, ALU.out, TMP1.in.l
 TMP1.out.l, R.in, MAR.in, RD
 MDR.out, TMP1.in.r
-TMP1.([dst] 14->0 || 0)
-TMP1.out.l, MDR.in, WR
 END
 
-Instruction Total CPU cicles = 10
-Instruction Total MEM access (RD,WR) = 3
+Instruction Total CPU cicles = 8
+Instruction Total MEM access (RD,WR) = 2
 
 ---------------
 LSL @X(R)
@@ -10470,43 +10421,39 @@ R.out, TMP1.out.l, ALU.r+l
 ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, MAR.in, RD
 MDR.out, TMP1.in.r
-TMP1.([dst] 14->0 || 0)
-TMP1.out.l, MDR.in, WR
 END
 
-Instruction Total CPU cicles = 15
-Instruction Total MEM access (RD,WR) = 5
+Instruction Total CPU cicles = 13
+Instruction Total MEM access (RD,WR) = 4
 
 ---------------
 ROL R
 ---------------
-R.([dst] 14->0 || [dst] 15)
+R.out, ALU.=r, ALU.(ALU[14:0] & ALU[15])
+ALU.out, R.in
 END
 
-Instruction Total CPU cicles = 6
+Instruction Total CPU cicles = 7
 Instruction Total MEM access (RD,WR) = 1
 
 ---------------
 ROL (R)+
 ---------------
-R.out, TMP1.in.r, ALU.r+1
+R.out, ALU.=r, ALU.(ALU[14:0] & ALU[15])
 ALU.out, R.in
-TMP1.([dst] 14->0 || [dst] 15)
-TMP1.out.l, R.in
 END
 
-Instruction Total CPU cicles = 9
+Instruction Total CPU cicles = 7
 Instruction Total MEM access (RD,WR) = 1
 
 ---------------
 ROL -(R)
 ---------------
 R.out, ALU.r-1
-ALU.out, R.in
-R.([dst] 14->0 || [dst] 15)
+ALU.(ALU[14:0] & ALU[15]), ALU.out, R.in
 END
 
-Instruction Total CPU cicles = 8
+Instruction Total CPU cicles = 7
 Instruction Total MEM access (RD,WR) = 1
 
 ---------------
@@ -10518,24 +10465,22 @@ ALU.out, PC.in
 MDR.out, TMP1.in.r
 R.out, TMP1.out.l, ALU.r+l
 ALU.out, MAR.in, RD
-MDR.out, TMP1.in.r
-TMP1.([dst] 14->0 || [dst] 15)
-TMP1.out.l, MDR.in, WR
+MDR.out, ALU.=r
+ALU.(ALU[14:0] & ALU[15]), ALU.out, MDR.in, WR
 END
 
-Instruction Total CPU cicles = 14
+Instruction Total CPU cicles = 13
 Instruction Total MEM access (RD,WR) = 4
 
 ---------------
 ROL @R
 ---------------
 R.out, ALU.=r, ALU.out, MAR.in, RD
-MDR.out, TMP1.in.r
-TMP1.([dst] 14->0 || [dst] 15)
-TMP1.out.l, MDR.in, WR
+MDR.out, ALU.=r
+ALU.(ALU[14:0] & ALU[15]), ALU.out, MDR.in, WR
 END
 
-Instruction Total CPU cicles = 9
+Instruction Total CPU cicles = 8
 Instruction Total MEM access (RD,WR) = 3
 
 ---------------
@@ -10544,12 +10489,10 @@ ROL @(R)+
 R.out, ALU.=r, ALU.out, MAR.in, RD
 MAR.out, ALU.r+1, ALU.out, R.in
 MDR.out, TMP1.in.r
-TMP1.([dst] 14->0 || [dst] 15)
-TMP1.out.l, MDR.in, WR
 END
 
-Instruction Total CPU cicles = 10
-Instruction Total MEM access (RD,WR) = 3
+Instruction Total CPU cicles = 8
+Instruction Total MEM access (RD,WR) = 2
 
 ---------------
 ROL @-(R)
@@ -10557,12 +10500,10 @@ ROL @-(R)
 R.out, ALU.r-1, ALU.out, TMP1.in.l
 TMP1.out.l, R.in, MAR.in, RD
 MDR.out, TMP1.in.r
-TMP1.([dst] 14->0 || [dst] 15)
-TMP1.out.l, MDR.in, WR
 END
 
-Instruction Total CPU cicles = 10
-Instruction Total MEM access (RD,WR) = 3
+Instruction Total CPU cicles = 8
+Instruction Total MEM access (RD,WR) = 2
 
 ---------------
 ROL @X(R)
@@ -10575,43 +10516,39 @@ R.out, TMP1.out.l, ALU.r+l
 ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, MAR.in, RD
 MDR.out, TMP1.in.r
-TMP1.([dst] 14->0 || [dst] 15)
-TMP1.out.l, MDR.in, WR
 END
 
-Instruction Total CPU cicles = 15
-Instruction Total MEM access (RD,WR) = 5
+Instruction Total CPU cicles = 13
+Instruction Total MEM access (RD,WR) = 4
 
 ---------------
 RLC R
 ---------------
-R.([dst] 14->0 || C)
+R.out, ALU.=r, ALU.(ALU[14:0] & carry)
+ALU.out, R.in
 END
 
-Instruction Total CPU cicles = 6
+Instruction Total CPU cicles = 7
 Instruction Total MEM access (RD,WR) = 1
 
 ---------------
 RLC (R)+
 ---------------
-R.out, TMP1.in.r, ALU.r+1
+R.out, ALU.=r, ALU.(ALU[14:0] & carry)
 ALU.out, R.in
-TMP1.([dst] 14->0 || C)
-TMP1.out.l, R.in
 END
 
-Instruction Total CPU cicles = 9
+Instruction Total CPU cicles = 7
 Instruction Total MEM access (RD,WR) = 1
 
 ---------------
 RLC -(R)
 ---------------
 R.out, ALU.r-1
-ALU.out, R.in
-R.([dst] 14->0 || C)
+ALU.(ALU[14:0] & carry), ALU.out, R.in
 END
 
-Instruction Total CPU cicles = 8
+Instruction Total CPU cicles = 7
 Instruction Total MEM access (RD,WR) = 1
 
 ---------------
@@ -10623,24 +10560,22 @@ ALU.out, PC.in
 MDR.out, TMP1.in.r
 R.out, TMP1.out.l, ALU.r+l
 ALU.out, MAR.in, RD
-MDR.out, TMP1.in.r
-TMP1.([dst] 14->0 || C)
-TMP1.out.l, MDR.in, WR
+MDR.out, ALU.=r
+ALU.(ALU[14:0] & carry), ALU.out, MDR.in, WR
 END
 
-Instruction Total CPU cicles = 14
+Instruction Total CPU cicles = 13
 Instruction Total MEM access (RD,WR) = 4
 
 ---------------
 RLC @R
 ---------------
 R.out, ALU.=r, ALU.out, MAR.in, RD
-MDR.out, TMP1.in.r
-TMP1.([dst] 14->0 || C)
-TMP1.out.l, MDR.in, WR
+MDR.out, ALU.=r
+ALU.(ALU[14:0] & carry), ALU.out, MDR.in, WR
 END
 
-Instruction Total CPU cicles = 9
+Instruction Total CPU cicles = 8
 Instruction Total MEM access (RD,WR) = 3
 
 ---------------
@@ -10649,12 +10584,10 @@ RLC @(R)+
 R.out, ALU.=r, ALU.out, MAR.in, RD
 MAR.out, ALU.r+1, ALU.out, R.in
 MDR.out, TMP1.in.r
-TMP1.([dst] 14->0 || C)
-TMP1.out.l, MDR.in, WR
 END
 
-Instruction Total CPU cicles = 10
-Instruction Total MEM access (RD,WR) = 3
+Instruction Total CPU cicles = 8
+Instruction Total MEM access (RD,WR) = 2
 
 ---------------
 RLC @-(R)
@@ -10662,12 +10595,10 @@ RLC @-(R)
 R.out, ALU.r-1, ALU.out, TMP1.in.l
 TMP1.out.l, R.in, MAR.in, RD
 MDR.out, TMP1.in.r
-TMP1.([dst] 14->0 || C)
-TMP1.out.l, MDR.in, WR
 END
 
-Instruction Total CPU cicles = 10
-Instruction Total MEM access (RD,WR) = 3
+Instruction Total CPU cicles = 8
+Instruction Total MEM access (RD,WR) = 2
 
 ---------------
 RLC @X(R)
@@ -10680,12 +10611,10 @@ R.out, TMP1.out.l, ALU.r+l
 ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, MAR.in, RD
 MDR.out, TMP1.in.r
-TMP1.([dst] 14->0 || C)
-TMP1.out.l, MDR.in, WR
 END
 
-Instruction Total CPU cicles = 15
-Instruction Total MEM access (RD,WR) = 5
+Instruction Total CPU cicles = 13
+Instruction Total MEM access (RD,WR) = 4
 
 ---------------
 BR <OFFSET>
@@ -10845,8 +10774,8 @@ Instruction Total CPU cicles = 13
 Instruction Total MEM access (RD,WR) = 3
 --------------------
 --------------------
-Total CPU cicles = 8779
-Total MEM access = 2247
+Total CPU cicles = 8709
+Total MEM access = 2226
 
-Average MEM access = 3.319
-CPI = 12.968
+Average MEM access = 3.288
+CPI = 12.864
