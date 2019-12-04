@@ -590,11 +590,23 @@ print(f'Average MEM access = {sum(all_memaccess)/len(all_memaccess):3.3f}')
 print(f'CPI = {sum(all_cicles)/len(all_cicles):3.3f}')
 
 
-print('-'*20)
-print('-'*20)
-if '' in unique_signals: unique_signals.remove('')
+unique_signals.discard('')
+unique_signals.discard('R(dst).in')
+unique_signals.discard('R(dst).out')
+unique_signals.discard('R(src).in')
+unique_signals.discard('R(src).out')
+unique_signals.discard('R.out')
+unique_signals.discard('R.in')
+
+for i in range(8):
+    unique_signals.add(f'R{i}.in')
+    unique_signals.add(f'R{i}.out')
+
 unique_signals = list(unique_signals)
 unique_signals.sort()
+
+print('-'*20)
+print('-'*20)
 print(f'Total Control Signals ({len(unique_signals)}):', '{')
 for sig in unique_signals: print('\t', sig, sep='')
 print('}')

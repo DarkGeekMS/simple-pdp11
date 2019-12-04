@@ -10867,7 +10867,7 @@ Average MEM access = 3.319
 CPI = 12.990
 --------------------
 --------------------
-Total Control Signals (46): {
+Total Control Signals (54): {
 	ADDR_PART_IR.out
 	ALU.(0 & ALU[15:1])
 	ALU.(ALU[0] & ALU[15:1])
@@ -10900,14 +10900,22 @@ Total Control Signals (46): {
 	MDR.out
 	PC.in
 	PC.out
-	R(dst).in
-	R(dst).out
-	R(src).in
-	R(src).out
-	R.in
-	R.out
+	R0.in
+	R0.out
+	R1.in
+	R1.out
+	R2.in
+	R2.out
+	R3.in
+	R3.out
+	R4.in
+	R4.out
+	R5.in
+	R5.out
 	R6.in
 	R6.out
+	R7.in
+	R7.out
 	RD
 	TMP0.in
 	TMP0.out
