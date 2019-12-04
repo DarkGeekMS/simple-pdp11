@@ -1,4 +1,4 @@
-def fetch(mode: str, tmp: str):
+def fetch_value(mode: str, tmp: str):
     if mode == 'R':
         return 'R'
 
@@ -25,7 +25,12 @@ def fetch(mode: str, tmp: str):
         # tmp = x+R
         wr(f'MDR.out, {tmp}.in.r')
         wr(f'R.out, {tmp}.out.l, ALU.r+l')
-        wr(f'ALU.out, {tmp}.in.l')
+
+        # mdr = [tmp]
+        wr(f'ALU.out, MAR.in, RD')
+
+        # temp = mdr TODO: maybe not optimal?
+        wr(f'MDR.out, {tmp}.in.r')
 
         return tmp
 
@@ -36,8 +41,8 @@ def fetch(mode: str, tmp: str):
         return tmp
 
     elif mode == '@(R)+':
-        wr('R.out, ALU.=r, ALU.out, MAR.in, RD')
-        wr(f'MAR.out, ALU.r+1, ALU.out, R.in')
+        wr(f'R.out, ALU.r+1, ALU.out, MAR.in, RD, {tmp}.in.l')
+        wr(f'{tmp}.out.l, R.in')
         wr(f'MDR.out, {tmp}.in.r')
 
         return tmp
@@ -107,14 +112,14 @@ def write(mode: str, inp: str):
 
 
 def mov(src, dst):
-    tmp1 = fetch(src, 'TMP1')
-    # tmp2 = fetch(dst, 'TMP2') TODO: fix so that it reads the address in MAR
+    tmp1 = fetch_value(src, 'TMP1')
+    # tmp2 = fetch_value(dst, 'TMP2') TODO: fix so that it reads the address in MAR
     write(dst, tmp1)
 
 
 def add(src, dst, func='ALU.r+l'):
-    tmp1 = fetch(src, 'TMP1')
-    tmp2 = fetch(dst, 'TMP2')
+    tmp1 = fetch_value(src, 'TMP1')
+    tmp2 = fetch_value(dst, 'TMP2')
 
     if tmp1 == 'R' and tmp2 == 'R':
         wr(f'R(src).out, TMP1.in.r')
@@ -159,8 +164,8 @@ def xnor(src, dst):
 
 
 def cmpp(src, dst):
-    tmp1 = fetch(src, 'TMP1')
-    tmp2 = fetch(dst, 'TMP2')
+    tmp1 = fetch_value(src, 'TMP1')
+    tmp2 = fetch_value(dst, 'TMP2')
 
     if tmp1 == 'R' and tmp2 == 'R':
         wr(f'R(src).out, TMP1.in.r')
@@ -178,7 +183,7 @@ def cmpp(src, dst):
 
 
 def inc(dst, func='ALU.r+1'):
-    tmp = fetch(dst, 'TMP1')
+    tmp = fetch_value(dst, 'TMP1')
 
     if tmp == 'R':
         wr(f'R.out, {func}')
@@ -255,7 +260,7 @@ def inv(dst):
 
 
 def lsr(dst, func='0 || [dst] 15->1'):
-    tmp = fetch(dst, 'TMP1')
+    tmp = fetch_value(dst, 'TMP1')
 
     wr(f'{tmp}.({func})')
 

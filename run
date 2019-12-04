@@ -17,7 +17,6 @@ main() {
 
     docker exec -w $PWD ghdld bash -c "
         find ../src/ | grep .vhd | xargs -l ghdl -i --ieee=synopsys -fexplicit || echo
-        find ../test/ | grep .vhd | xargs -l ghdl -i --ieee=synopsys -fexplicit || echo
 
         set -e
 
