@@ -475,6 +475,8 @@ cicles, memaccess = 4, 1
 all_cicles = []
 all_memaccess = []
 unique_signals = set()
+json_out = {'instructions': {}, 'signals': {}}
+lines = []
 
 def get_unique(inp: str):
     global unique_signals
@@ -485,10 +487,11 @@ def get_unique(inp: str):
                 unique_signals.add(x.strip())
 
 
-def wr(x, end='\n'):
-    global cicles, memaccess
+def wr(x: str, end='\n'):
+    global cicles, memaccess, lines
     cicles += 1 + x.count('\n')
     memaccess += x.count('RD') + x.count('WR')
+    lines.extend(x.splitlines())
     get_unique(x)
 
     print(x, end=end)
@@ -510,12 +513,14 @@ for (instr, instr_name) in [(mov, 'MOV'), (add, 'ADD'), (adc, 'ADC'),
             instr(src, dst)
             wr('END')
 
+            json_out['instructions'][f'{instr_name} {src} {dst}'] = lines
             print()
             print(f'CPU cicles = {cicles}')
             print(f'MEM access = {memaccess}')
             all_cicles.append(cicles)
             all_memaccess.append(memaccess)
             cicles, memaccess = 4, 1
+            lines = []
 
 for (instr, instr_name) in [(inc, 'INC'), (dec, 'DEC'), (clr, 'CLR'),
                             (inv, 'INV'), (lsr, 'LSR'), (ror, 'ROR'), (rrc, 'RRC'),
@@ -529,12 +534,14 @@ for (instr, instr_name) in [(inc, 'INC'), (dec, 'DEC'), (clr, 'CLR'),
         instr(dst)
         wr('END')
 
+        json_out['instructions'][f'{instr_name} {src} {dst}'] = lines
         print()
         print(f'CPU cicles = {cicles}')
         print(f'MEM access = {memaccess}')
         all_cicles.append(cicles)
         all_memaccess.append(memaccess)
         cicles, memaccess = 4, 1
+        lines = []
 
 for (name, cond) in [('BR', None),
                      ('BEQ', '(Z=1)'), ('BNE', '(Z=0)'),
@@ -548,12 +555,14 @@ for (name, cond) in [('BR', None),
     branch(cond)
     wr('END')
 
+    json_out['instructions'][f'{instr_name} {src} {dst}'] = lines
     print()
     print(f'CPU cicles = {cicles}')
     print(f'MEM access = {memaccess}')
     all_cicles.append(cicles)
     all_memaccess.append(memaccess)
     cicles, memaccess = 4, 1
+    lines = []
 
 for (name, code) in [('HLT', 'HLT'), ('NOP', ''),
                      ('JSR X(R)', jsr),
@@ -570,12 +579,14 @@ for (name, code) in [('HLT', 'HLT'), ('NOP', ''),
     if name != 'HLT':
         wr('END')
 
+    json_out['instructions'][f'{instr_name} {src} {dst}'] = lines
     print()
     print(f'CPU cicles = {cicles}')
     print(f'MEM access = {memaccess}')
     all_cicles.append(cicles)
     all_memaccess.append(memaccess)
     cicles, memaccess = 4, 1
+    lines = []
 
 
 print('-'*20)
@@ -609,3 +620,7 @@ print('-'*20)
 print(f'Total Control Signals ({len(unique_signals)}):', '{')
 for sig in unique_signals: print('\t', sig, sep='')
 print('}')
+
+import json, sys
+json_out['signals'] = unique_signals
+print(json.dumps(json_out), file=sys.stderr)
