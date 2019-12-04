@@ -298,14 +298,14 @@ def inv(dst):
     return inc(dst, 'ALU.~r')
 
 
-def lsr(dst, func='0 & ALU[15:1]'):
+def lsr(dst, func='lsr'):
     if dst in ('R', '(R)+'):
-        wr(f'R.out, ALU.=r, ALU.({func})')
+        wr(f'R.out, ALU.=r, ALU.{func}')
         wr(f'ALU.out, R.in')
 
     elif dst == '-(R)':
         wr('R.out, ALU.r-1')
-        wr(f'ALU.({func}), ALU.out, R.in')
+        wr(f'ALU.{func}, ALU.out, R.in')
 
     elif dst == 'X(R)':
         # get x
@@ -321,24 +321,24 @@ def lsr(dst, func='0 & ALU[15:1]'):
         wr(f'R.out, ALU.r+l, ALU.out, MAR.in, RD')
 
         wr(f'MDR.out, ALU.=r')
-        wr(f'ALU.({func}), ALU.out, MDR.in, WR')
+        wr(f'ALU.{func}, ALU.out, MDR.in, WR')
 
     elif dst == '@R':
         wr('R.out, ALU.=r, ALU.out, MAR.in, RD')
         wr(f'MDR.out, ALU.=r')
-        wr(f'ALU.({func}), ALU.out, MDR.in, WR')
+        wr(f'ALU.{func}, ALU.out, MDR.in, WR')
 
     elif dst == '@(R)+':
         wr('R.out, ALU.=r, ALU.out, MAR.in, RD')
         wr(f'MAR.out, ALU.r+1, ALU.out, R.in')
         wr(f'MDR.out, ALU.=r')
-        wr(f'ALU.({func}), ALU.out, MDR.in, WR')
+        wr(f'ALU.{func}, ALU.out, MDR.in, WR')
 
     elif dst == '@-(R)':
         wr(f'R.out, ALU.r-1, ALU.out, TMP0.in')
         wr(f'TMP0.out, ALU.=r, ALU.out, R.in, MAR.in, RD')
         wr(f'MDR.out, ALU.=r')
-        wr(f'ALU.({func}), ALU.out, MDR.in, WR')
+        wr(f'ALU.{func}, ALU.out, MDR.in, WR')
 
     elif dst == '@X(R)':
         # get x
@@ -356,38 +356,38 @@ def lsr(dst, func='0 & ALU[15:1]'):
         wr(f'MDR.out, ALU.=r, ALU.out, MAR.in, RD')
 
         wr(f'MDR.out, ALU.=r')
-        wr(f'ALU.({func}), ALU.out, MDR.in, WR')
+        wr(f'ALU.{func}, ALU.out, MDR.in, WR')
 
 
 def ror(dst):
-    return lsr(dst, 'ALU[0] & ALU[15:1]')
+    return lsr(dst, 'ror')
 
 
 def rrc(dst):
-    return lsr(dst, 'carry & ALU[15:1]')
+    return lsr(dst, 'rrc')
 
 
 def asr(dst):
-    return lsr(dst, 'ALU[15] & ALU[15:1]')
+    return lsr(dst, 'asr')
 
 
 def lsl(dst):
-    return lsr(dst, 'ALU[14:0] & 0')
+    return lsr(dst, 'lsl')
 
 
 def rol(dst):
-    return lsr(dst, 'ALU[14:0] & ALU[15]')
+    return lsr(dst, 'rol')
 
 
 def rlc(dst):
-    return lsr(dst, 'ALU[14:0] & carry')
+    return lsr(dst, 'rlc')
 
 
 def branch(cond: str):
     if cond is not None:
         wr(f'IF NOT {cond} THEN END, ', end='')
 
-    wr('ADDR_PART_IR.out, ALU.=r, ALU.out, TMP0.in')
+    wr('IR.addr.out, ALU.=r, ALU.out, TMP0.in')
     wr('PC.out, ALU.r+l')
     wr('ALU.out, PC.in')
 
@@ -451,14 +451,13 @@ Notes:
         -- or:                        ALU.r|l
         -- xnor:                      ALU.r(XNOR)l
         -- not r:                     ALU.~r
-        -- arithmetic shift right:    ALU.(ALU[15]   & ALU[15:1])
-        -- logical shift right:       ALU.(0         & ALU[15:1])
-        -- logical shift left:        ALU.(ALU[14:0] & 0)
-        -- rotate right:              ALU.(ALU[0]    & ALU[15:1])
-        -- rotate left:               ALU.(ALU[14:0] & ALU[15])
-        -- rotate right with carry:   ALU.(carry     & ALU[15:1])
-        -- rotate left with carry:    ALU.(ALU[14:0] & carry)
-    - Every line in micro-instructions needs one and only one clock cicle.
+        -- arithmetic shift right:    ALU.asr           (ALU[15]   & ALU[15:1])
+        -- logical shift right:       ALU.lsr           (0         & ALU[15:1])
+        -- logical shift left:        ALU.lsl           (ALU[14:0] & 0)
+        -- rotate right:              ALU.ror           (ALU[0]    & ALU[15:1])
+        -- rotate left:               ALU.rol           (ALU[14:0] & ALU[15])
+        -- rotate right with carry:   ALU.rrc           (carry     & ALU[15:1])
+        -- rotate left with carry:    ALU.rlc           (ALU[14:0] & carry)
     - Instruction fetch micro-instructions are performed one time before each instruction, 
         they are omitted for clearity.
 
