@@ -41,9 +41,14 @@ def fetch_value(mode: str, tmp: str):
         return tmp
 
     elif mode == '@(R)+':
-        wr(f'R.out, ALU.r+1, ALU.out, MAR.in, RD, {tmp}.in.l')
-        wr(f'{tmp}.out.l, R.in')
+        # TODO: increment then access ?
+        wr('R.out, ALU.=r, ALU.out, MAR.in, RD')  # access first
+        wr(f'MAR.out, ALU.r+1, ALU.out, R.in')
         wr(f'MDR.out, {tmp}.in.r')
+
+        # wr(f'R.out, ALU.r+1, ALU.out, MAR.in, RD, {tmp}.in.l') # increment first
+        # wr(f'{tmp}.out.l, R.in')
+        # wr(f'MDR.out, {tmp}.in.r')
 
         return tmp
 
@@ -68,53 +73,92 @@ def fetch_value(mode: str, tmp: str):
 
         # get tmp
         wr(f'ALU.out, MAR.in, RD')
+        wr(f'MDR.out, ALU.=r, ALU.out, MAR.in, RD')
         wr(f'MDR.out, {tmp}.in.r')
 
         return tmp
 
 
-def _write_R(mode: str):
+def fetch_addr(mode: str, tmp: str):
+    if mode == '@R':
+        wr('R.out, ALU.=r, ALU.out, MAR.in')
+
+    elif mode == '@(R)+':
+        # TODO: increment then access ?
+        wr('R.out, ALU.=r, ALU.out, MAR.in')  # access first
+        wr(f'MAR.out, ALU.r+1, ALU.out, R.in')
+
+        # wr(f'R.out, ALU.r+1, ALU.out, MAR.in, {tmp}.in.l')  # increment first
+        # wr(f'{tmp}.out.l, R.in')
+
+    elif mode == '@-(R)':
+        wr(f'R.out, ALU.r-1, ALU.out, {tmp}.in.l')
+        wr(f'{tmp}.out.l, R.in, MAR.in')
+
+    elif mode == '@X(R)':
+        # get x
+        wr('PC.out, ALU.=r, ALU.out, MAR.in, RD')
+
+        # pc++
+        wr('PC.out, ALU.r+1')
+        wr('ALU.out, PC.in')
+
+        # tmp = x+R
+        wr(f'MDR.out, {tmp}.in.r')
+        wr(f'R.out, {tmp}.out.l, ALU.r+l')
+
+        # get tmp
+        wr(f'ALU.out, MAR.in, RD')
+        wr(f'MDR.out, ALU.=r, ALU.out, MAR.in')
+
+
+def _write_R(mode: str, need_addr=False):
+    if need_addr:
+        fetch_addr(mode, 'TMP1')
+
     if mode in ('R', '-(R)', '(R)+'):
         wr('R(src).out, ALU.=r, ALU.out, R(dst).in')
-
-    elif mode == 'X(R)':
-        wr('R(src).out, ALU.=r, ALU.out, MDR.in, WR')
-
     else:
         wr('R(src).out, ALU.=r, ALU.out, MDR.in, WR')
 
 
-def _write_ALU(mode: str):
+def _write_ALU(mode: str, need_addr=False):
     if mode in ('R', '-(R)', '(R)+'):
         wr('ALU.out, R(dst).in')
-
     else:
-        wr('ALU.out, MDR.in, WR')
+        if need_addr:
+            wr('ALU.out, TMP1.in.l')
+            fetch_addr(mode, 'TMP2')
+            wr('TMP1.out.l, MDR.in, WR')
+        else:
+            wr('ALU.out, MDR.in, WR')
 
 
-def _write_TMP(mode: str, inp: str):
+def _write_TMP(mode: str, inp: str, need_addr=False):
     if mode in ('R', '-(R)', '(R)+'):
         wr(f'{inp}.out.l, R.in')
-
     else:
+        if need_addr:
+            tmp = 'TMP1' if inp != 'TMP1' else 'TMP2'
+            fetch_addr(mode, tmp)
+
         wr(f'{inp}.out.l, MDR.in, WR')
 
 
-def write(mode: str, inp: str):
+def write(mode: str, inp: str, need_addr=False):
     if inp == 'R':
-        _write_R(mode)
+        _write_R(mode, need_addr)
     elif inp == 'ALU':
-        _write_ALU(mode)
+        _write_ALU(mode, need_addr)
     else:  # TMP#
-        _write_TMP(mode, inp)
+        _write_TMP(mode, inp, need_addr)
 
 #############################
 
 
 def mov(src, dst):
     tmp1 = fetch_value(src, 'TMP1')
-    # tmp2 = fetch_value(dst, 'TMP2') TODO: fix so that it reads the address in MAR
-    write(dst, tmp1)
+    write(dst, tmp1, True)
 
 
 def add(src, dst, func='ALU.r+l'):
@@ -387,12 +431,14 @@ cicles, memaccess = 4, 1
 all_cicles = []
 all_memaccess = []
 
+
 def wr(x, end='\n'):
     global cicles, memaccess
     cicles += 1 + x.count('\n')
     memaccess += x.count('RD') + x.count('WR')
 
     print(x, end=end)
+
 
 modes = ['R', '(R)+', '-(R)', 'X(R)', '@R',
               '@(R)+', '@-(R)', '@X(R)']
