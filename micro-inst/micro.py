@@ -41,14 +41,9 @@ def fetch_value(mode: str, tmp: str):
         return tmp
 
     elif mode == '@(R)+':
-        # TODO: increment then access ?
-        wr('R.out, ALU.=r, ALU.out, MAR.in, RD')  # access first
+        wr('R.out, ALU.=r, ALU.out, MAR.in, RD')
         wr(f'MAR.out, ALU.r+1, ALU.out, R.in')
         wr(f'MDR.out, {tmp}.in.r')
-
-        # wr(f'R.out, ALU.r+1, ALU.out, MAR.in, RD, {tmp}.in.l') # increment first
-        # wr(f'{tmp}.out.l, R.in')
-        # wr(f'MDR.out, {tmp}.in.r')
 
         return tmp
 
@@ -84,12 +79,8 @@ def fetch_addr(mode: str, tmp: str):
         wr('R.out, ALU.=r, ALU.out, MAR.in')
 
     elif mode == '@(R)+':
-        # TODO: increment then access ?
-        wr('R.out, ALU.=r, ALU.out, MAR.in')  # access first
+        wr('R.out, ALU.=r, ALU.out, MAR.in')
         wr(f'MAR.out, ALU.r+1, ALU.out, R.in')
-
-        # wr(f'R.out, ALU.r+1, ALU.out, MAR.in, {tmp}.in.l')  # increment first
-        # wr(f'{tmp}.out.l, R.in')
 
     elif mode == '@-(R)':
         wr(f'R.out, ALU.r-1, ALU.out, {tmp}.in.l')
