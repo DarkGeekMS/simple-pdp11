@@ -5360,7 +5360,7 @@ MEM access = 8
 AND R R
 ---------------
 R(src).out, ALU.=r, ALU.out, TMP0.in
-R(dst).out, ALU.r^l, ALU.out, R(src).in
+R(dst).out, ALU.r&l, ALU.out, R(src).in
 END
 
 CPU cicles = 7
@@ -5371,7 +5371,7 @@ AND R (R)+
 ---------------
 R.out, ALU.=r, ALU.out, TMP0.in
 TMP0.out, ALU.r+1, ALU.out, R.in
-R(src).out, ALU.r^l
+R(src).out, ALU.r&l
 ALU.out, R(dst).in
 END
 
@@ -5384,7 +5384,7 @@ AND R -(R)
 R.out, ALU.r-1
 ALU.out, R.in
 R(src).out, ALU.=r, ALU.out, TMP0.in
-R(dst).out, ALU.r^l, ALU.out, R(src).in
+R(dst).out, ALU.r&l, ALU.out, R(src).in
 END
 
 CPU cicles = 9
@@ -5399,7 +5399,7 @@ ALU.out, PC.in
 MDR.out, ALU.=r, ALU.out, TMP0.in
 R.out, ALU.c=0, ALU.r+l+c, ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, TMP0.in
-R(src).out, ALU.r^l
+R(src).out, ALU.r&l
 ALU.out, MDR.in, WR
 END
 
@@ -5411,7 +5411,7 @@ AND R @R
 ---------------
 R.out, ALU.=r, ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, TMP0.in
-R(src).out, ALU.r^l
+R(src).out, ALU.r&l
 ALU.out, MDR.in, WR
 END
 
@@ -5424,7 +5424,7 @@ AND R @(R)+
 R.out, ALU.=r, ALU.out, MAR.in, RD
 MAR.out, ALU.r+1, ALU.out, R.in
 MDR.out, ALU.=r, ALU.out, TMP0.in
-R(src).out, ALU.r^l
+R(src).out, ALU.r&l
 ALU.out, MDR.in, WR
 END
 
@@ -5437,7 +5437,7 @@ AND R @-(R)
 R.out, ALU.r-1, ALU.out, TMP0.in
 TMP0.out, ALU.=r, ALU.out, R.in, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, TMP0.in
-R(src).out, ALU.r^l
+R(src).out, ALU.r&l
 ALU.out, MDR.in, WR
 END
 
@@ -5454,7 +5454,7 @@ MDR.out, ALU.=r, ALU.out, TMP0.in
 R.out,  ALU.c=0, ALU.r+l+c, ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, TMP0.in
-R(src).out, ALU.r^l
+R(src).out, ALU.r&l
 ALU.out, MDR.in, WR
 END
 
@@ -5467,7 +5467,7 @@ AND (R)+ R
 R.out, ALU.=r, ALU.out, TMP1.in
 TMP1.out, ALU.r+1, ALU.out, R.in
 TMP1.out, ALU.=r, ALU.out, TMP0.in
-R(dst).out, ALU.r^l
+R(dst).out, ALU.r&l
 ALU.out, R(dst).in
 END
 
@@ -5481,7 +5481,7 @@ R.out, ALU.=r, ALU.out, TMP1.in
 TMP1.out, ALU.r+1, ALU.out, R.in
 R.out, ALU.=r, ALU.out, TMP0.in
 TMP0.out, ALU.r+1, ALU.out, R.in
-TMP1.out, ALU.r^l
+TMP1.out, ALU.r&l
 ALU.out, R(dst).in
 END
 
@@ -5496,7 +5496,7 @@ TMP1.out, ALU.r+1, ALU.out, R.in
 R.out, ALU.r-1
 ALU.out, R.in
 TMP1.out, ALU.=r, ALU.out, TMP0.in
-R(dst).out, ALU.r^l
+R(dst).out, ALU.r&l
 ALU.out, R(dst).in
 END
 
@@ -5514,7 +5514,7 @@ ALU.out, PC.in
 MDR.out, ALU.=r, ALU.out, TMP0.in
 R.out, ALU.c=0, ALU.r+l+c, ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, TMP0.in
-TMP1.out, ALU.r^l
+TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
 END
 
@@ -5528,7 +5528,7 @@ R.out, ALU.=r, ALU.out, TMP1.in
 TMP1.out, ALU.r+1, ALU.out, R.in
 R.out, ALU.=r, ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, TMP0.in
-TMP1.out, ALU.r^l
+TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
 END
 
@@ -5543,7 +5543,7 @@ TMP1.out, ALU.r+1, ALU.out, R.in
 R.out, ALU.=r, ALU.out, MAR.in, RD
 MAR.out, ALU.r+1, ALU.out, R.in
 MDR.out, ALU.=r, ALU.out, TMP0.in
-TMP1.out, ALU.r^l
+TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
 END
 
@@ -5558,7 +5558,7 @@ TMP1.out, ALU.r+1, ALU.out, R.in
 R.out, ALU.r-1, ALU.out, TMP0.in
 TMP0.out, ALU.=r, ALU.out, R.in, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, TMP0.in
-TMP1.out, ALU.r^l
+TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
 END
 
@@ -5577,7 +5577,7 @@ MDR.out, ALU.=r, ALU.out, TMP0.in
 R.out,  ALU.c=0, ALU.r+l+c, ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, TMP0.in
-TMP1.out, ALU.r^l
+TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
 END
 
@@ -5590,7 +5590,7 @@ AND -(R) R
 R.out, ALU.r-1
 ALU.out, R.in
 R(src).out, ALU.=r, ALU.out, TMP0.in
-R(dst).out, ALU.r^l, ALU.out, R(src).in
+R(dst).out, ALU.r&l, ALU.out, R(src).in
 END
 
 CPU cicles = 9
@@ -5603,7 +5603,7 @@ R.out, ALU.r-1
 ALU.out, R.in
 R.out, ALU.=r, ALU.out, TMP0.in
 TMP0.out, ALU.r+1, ALU.out, R.in
-R(src).out, ALU.r^l
+R(src).out, ALU.r&l
 ALU.out, R(dst).in
 END
 
@@ -5618,7 +5618,7 @@ ALU.out, R.in
 R.out, ALU.r-1
 ALU.out, R.in
 R(src).out, ALU.=r, ALU.out, TMP0.in
-R(dst).out, ALU.r^l, ALU.out, R(src).in
+R(dst).out, ALU.r&l, ALU.out, R(src).in
 END
 
 CPU cicles = 11
@@ -5635,7 +5635,7 @@ ALU.out, PC.in
 MDR.out, ALU.=r, ALU.out, TMP0.in
 R.out, ALU.c=0, ALU.r+l+c, ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, TMP0.in
-R(src).out, ALU.r^l
+R(src).out, ALU.r&l
 ALU.out, MDR.in, WR
 END
 
@@ -5649,7 +5649,7 @@ R.out, ALU.r-1
 ALU.out, R.in
 R.out, ALU.=r, ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, TMP0.in
-R(src).out, ALU.r^l
+R(src).out, ALU.r&l
 ALU.out, MDR.in, WR
 END
 
@@ -5664,7 +5664,7 @@ ALU.out, R.in
 R.out, ALU.=r, ALU.out, MAR.in, RD
 MAR.out, ALU.r+1, ALU.out, R.in
 MDR.out, ALU.=r, ALU.out, TMP0.in
-R(src).out, ALU.r^l
+R(src).out, ALU.r&l
 ALU.out, MDR.in, WR
 END
 
@@ -5679,7 +5679,7 @@ ALU.out, R.in
 R.out, ALU.r-1, ALU.out, TMP0.in
 TMP0.out, ALU.=r, ALU.out, R.in, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, TMP0.in
-R(src).out, ALU.r^l
+R(src).out, ALU.r&l
 ALU.out, MDR.in, WR
 END
 
@@ -5698,7 +5698,7 @@ MDR.out, ALU.=r, ALU.out, TMP0.in
 R.out,  ALU.c=0, ALU.r+l+c, ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, TMP0.in
-R(src).out, ALU.r^l
+R(src).out, ALU.r&l
 ALU.out, MDR.in, WR
 END
 
@@ -5715,7 +5715,7 @@ MDR.out, ALU.=r, ALU.out, TMP0.in
 R.out, ALU.c=0, ALU.r+l+c, ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, TMP1.in
 TMP1.out, ALU.=r, ALU.out, TMP0.in
-R(dst).out, ALU.r^l
+R(dst).out, ALU.r&l
 ALU.out, R(dst).in
 END
 
@@ -5733,7 +5733,7 @@ R.out, ALU.c=0, ALU.r+l+c, ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, TMP1.in
 R.out, ALU.=r, ALU.out, TMP0.in
 TMP0.out, ALU.r+1, ALU.out, R.in
-TMP1.out, ALU.r^l
+TMP1.out, ALU.r&l
 ALU.out, R(dst).in
 END
 
@@ -5752,7 +5752,7 @@ MDR.out, ALU.=r, ALU.out, TMP1.in
 R.out, ALU.r-1
 ALU.out, R.in
 TMP1.out, ALU.=r, ALU.out, TMP0.in
-R(dst).out, ALU.r^l
+R(dst).out, ALU.r&l
 ALU.out, R(dst).in
 END
 
@@ -5774,7 +5774,7 @@ ALU.out, PC.in
 MDR.out, ALU.=r, ALU.out, TMP0.in
 R.out, ALU.c=0, ALU.r+l+c, ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, TMP0.in
-TMP1.out, ALU.r^l
+TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
 END
 
@@ -5792,7 +5792,7 @@ R.out, ALU.c=0, ALU.r+l+c, ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, TMP1.in
 R.out, ALU.=r, ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, TMP0.in
-TMP1.out, ALU.r^l
+TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
 END
 
@@ -5811,7 +5811,7 @@ MDR.out, ALU.=r, ALU.out, TMP1.in
 R.out, ALU.=r, ALU.out, MAR.in, RD
 MAR.out, ALU.r+1, ALU.out, R.in
 MDR.out, ALU.=r, ALU.out, TMP0.in
-TMP1.out, ALU.r^l
+TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
 END
 
@@ -5830,7 +5830,7 @@ MDR.out, ALU.=r, ALU.out, TMP1.in
 R.out, ALU.r-1, ALU.out, TMP0.in
 TMP0.out, ALU.=r, ALU.out, R.in, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, TMP0.in
-TMP1.out, ALU.r^l
+TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
 END
 
@@ -5853,7 +5853,7 @@ MDR.out, ALU.=r, ALU.out, TMP0.in
 R.out,  ALU.c=0, ALU.r+l+c, ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, TMP0.in
-TMP1.out, ALU.r^l
+TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
 END
 
@@ -5866,7 +5866,7 @@ AND @R R
 R.out, ALU.=r, ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, TMP1.in
 TMP1.out, ALU.=r, ALU.out, TMP0.in
-R(dst).out, ALU.r^l
+R(dst).out, ALU.r&l
 ALU.out, R(dst).in
 END
 
@@ -5880,7 +5880,7 @@ R.out, ALU.=r, ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, TMP1.in
 R.out, ALU.=r, ALU.out, TMP0.in
 TMP0.out, ALU.r+1, ALU.out, R.in
-TMP1.out, ALU.r^l
+TMP1.out, ALU.r&l
 ALU.out, R(dst).in
 END
 
@@ -5895,7 +5895,7 @@ MDR.out, ALU.=r, ALU.out, TMP1.in
 R.out, ALU.r-1
 ALU.out, R.in
 TMP1.out, ALU.=r, ALU.out, TMP0.in
-R(dst).out, ALU.r^l
+R(dst).out, ALU.r&l
 ALU.out, R(dst).in
 END
 
@@ -5913,7 +5913,7 @@ ALU.out, PC.in
 MDR.out, ALU.=r, ALU.out, TMP0.in
 R.out, ALU.c=0, ALU.r+l+c, ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, TMP0.in
-TMP1.out, ALU.r^l
+TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
 END
 
@@ -5927,7 +5927,7 @@ R.out, ALU.=r, ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, TMP1.in
 R.out, ALU.=r, ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, TMP0.in
-TMP1.out, ALU.r^l
+TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
 END
 
@@ -5942,7 +5942,7 @@ MDR.out, ALU.=r, ALU.out, TMP1.in
 R.out, ALU.=r, ALU.out, MAR.in, RD
 MAR.out, ALU.r+1, ALU.out, R.in
 MDR.out, ALU.=r, ALU.out, TMP0.in
-TMP1.out, ALU.r^l
+TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
 END
 
@@ -5957,7 +5957,7 @@ MDR.out, ALU.=r, ALU.out, TMP1.in
 R.out, ALU.r-1, ALU.out, TMP0.in
 TMP0.out, ALU.=r, ALU.out, R.in, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, TMP0.in
-TMP1.out, ALU.r^l
+TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
 END
 
@@ -5976,7 +5976,7 @@ MDR.out, ALU.=r, ALU.out, TMP0.in
 R.out,  ALU.c=0, ALU.r+l+c, ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, TMP0.in
-TMP1.out, ALU.r^l
+TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
 END
 
@@ -5990,7 +5990,7 @@ R.out, ALU.=r, ALU.out, MAR.in, RD
 MAR.out, ALU.r+1, ALU.out, R.in
 MDR.out, ALU.=r, ALU.out, TMP1.in
 TMP1.out, ALU.=r, ALU.out, TMP0.in
-R(dst).out, ALU.r^l
+R(dst).out, ALU.r&l
 ALU.out, R(dst).in
 END
 
@@ -6005,7 +6005,7 @@ MAR.out, ALU.r+1, ALU.out, R.in
 MDR.out, ALU.=r, ALU.out, TMP1.in
 R.out, ALU.=r, ALU.out, TMP0.in
 TMP0.out, ALU.r+1, ALU.out, R.in
-TMP1.out, ALU.r^l
+TMP1.out, ALU.r&l
 ALU.out, R(dst).in
 END
 
@@ -6021,7 +6021,7 @@ MDR.out, ALU.=r, ALU.out, TMP1.in
 R.out, ALU.r-1
 ALU.out, R.in
 TMP1.out, ALU.=r, ALU.out, TMP0.in
-R(dst).out, ALU.r^l
+R(dst).out, ALU.r&l
 ALU.out, R(dst).in
 END
 
@@ -6040,7 +6040,7 @@ ALU.out, PC.in
 MDR.out, ALU.=r, ALU.out, TMP0.in
 R.out, ALU.c=0, ALU.r+l+c, ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, TMP0.in
-TMP1.out, ALU.r^l
+TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
 END
 
@@ -6055,7 +6055,7 @@ MAR.out, ALU.r+1, ALU.out, R.in
 MDR.out, ALU.=r, ALU.out, TMP1.in
 R.out, ALU.=r, ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, TMP0.in
-TMP1.out, ALU.r^l
+TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
 END
 
@@ -6071,7 +6071,7 @@ MDR.out, ALU.=r, ALU.out, TMP1.in
 R.out, ALU.=r, ALU.out, MAR.in, RD
 MAR.out, ALU.r+1, ALU.out, R.in
 MDR.out, ALU.=r, ALU.out, TMP0.in
-TMP1.out, ALU.r^l
+TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
 END
 
@@ -6087,7 +6087,7 @@ MDR.out, ALU.=r, ALU.out, TMP1.in
 R.out, ALU.r-1, ALU.out, TMP0.in
 TMP0.out, ALU.=r, ALU.out, R.in, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, TMP0.in
-TMP1.out, ALU.r^l
+TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
 END
 
@@ -6107,7 +6107,7 @@ MDR.out, ALU.=r, ALU.out, TMP0.in
 R.out,  ALU.c=0, ALU.r+l+c, ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, TMP0.in
-TMP1.out, ALU.r^l
+TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
 END
 
@@ -6121,7 +6121,7 @@ R.out, ALU.r-1, ALU.out, TMP1.in
 TMP1.out, ALU.=r, ALU.out, R.in, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, TMP1.in
 TMP1.out, ALU.=r, ALU.out, TMP0.in
-R(dst).out, ALU.r^l
+R(dst).out, ALU.r&l
 ALU.out, R(dst).in
 END
 
@@ -6136,7 +6136,7 @@ TMP1.out, ALU.=r, ALU.out, R.in, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, TMP1.in
 R.out, ALU.=r, ALU.out, TMP0.in
 TMP0.out, ALU.r+1, ALU.out, R.in
-TMP1.out, ALU.r^l
+TMP1.out, ALU.r&l
 ALU.out, R(dst).in
 END
 
@@ -6152,7 +6152,7 @@ MDR.out, ALU.=r, ALU.out, TMP1.in
 R.out, ALU.r-1
 ALU.out, R.in
 TMP1.out, ALU.=r, ALU.out, TMP0.in
-R(dst).out, ALU.r^l
+R(dst).out, ALU.r&l
 ALU.out, R(dst).in
 END
 
@@ -6171,7 +6171,7 @@ ALU.out, PC.in
 MDR.out, ALU.=r, ALU.out, TMP0.in
 R.out, ALU.c=0, ALU.r+l+c, ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, TMP0.in
-TMP1.out, ALU.r^l
+TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
 END
 
@@ -6186,7 +6186,7 @@ TMP1.out, ALU.=r, ALU.out, R.in, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, TMP1.in
 R.out, ALU.=r, ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, TMP0.in
-TMP1.out, ALU.r^l
+TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
 END
 
@@ -6202,7 +6202,7 @@ MDR.out, ALU.=r, ALU.out, TMP1.in
 R.out, ALU.=r, ALU.out, MAR.in, RD
 MAR.out, ALU.r+1, ALU.out, R.in
 MDR.out, ALU.=r, ALU.out, TMP0.in
-TMP1.out, ALU.r^l
+TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
 END
 
@@ -6218,7 +6218,7 @@ MDR.out, ALU.=r, ALU.out, TMP1.in
 R.out, ALU.r-1, ALU.out, TMP0.in
 TMP0.out, ALU.=r, ALU.out, R.in, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, TMP0.in
-TMP1.out, ALU.r^l
+TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
 END
 
@@ -6238,7 +6238,7 @@ MDR.out, ALU.=r, ALU.out, TMP0.in
 R.out,  ALU.c=0, ALU.r+l+c, ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, TMP0.in
-TMP1.out, ALU.r^l
+TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
 END
 
@@ -6256,7 +6256,7 @@ R.out,  ALU.c=0, ALU.r+l+c, ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, TMP1.in
 TMP1.out, ALU.=r, ALU.out, TMP0.in
-R(dst).out, ALU.r^l
+R(dst).out, ALU.r&l
 ALU.out, R(dst).in
 END
 
@@ -6275,7 +6275,7 @@ MDR.out, ALU.=r, ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, TMP1.in
 R.out, ALU.=r, ALU.out, TMP0.in
 TMP0.out, ALU.r+1, ALU.out, R.in
-TMP1.out, ALU.r^l
+TMP1.out, ALU.r&l
 ALU.out, R(dst).in
 END
 
@@ -6295,7 +6295,7 @@ MDR.out, ALU.=r, ALU.out, TMP1.in
 R.out, ALU.r-1
 ALU.out, R.in
 TMP1.out, ALU.=r, ALU.out, TMP0.in
-R(dst).out, ALU.r^l
+R(dst).out, ALU.r&l
 ALU.out, R(dst).in
 END
 
@@ -6318,7 +6318,7 @@ ALU.out, PC.in
 MDR.out, ALU.=r, ALU.out, TMP0.in
 R.out, ALU.c=0, ALU.r+l+c, ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, TMP0.in
-TMP1.out, ALU.r^l
+TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
 END
 
@@ -6337,7 +6337,7 @@ MDR.out, ALU.=r, ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, TMP1.in
 R.out, ALU.=r, ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, TMP0.in
-TMP1.out, ALU.r^l
+TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
 END
 
@@ -6357,7 +6357,7 @@ MDR.out, ALU.=r, ALU.out, TMP1.in
 R.out, ALU.=r, ALU.out, MAR.in, RD
 MAR.out, ALU.r+1, ALU.out, R.in
 MDR.out, ALU.=r, ALU.out, TMP0.in
-TMP1.out, ALU.r^l
+TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
 END
 
@@ -6377,7 +6377,7 @@ MDR.out, ALU.=r, ALU.out, TMP1.in
 R.out, ALU.r-1, ALU.out, TMP0.in
 TMP0.out, ALU.=r, ALU.out, R.in, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, TMP0.in
-TMP1.out, ALU.r^l
+TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
 END
 
@@ -6401,7 +6401,7 @@ MDR.out, ALU.=r, ALU.out, TMP0.in
 R.out,  ALU.c=0, ALU.r+l+c, ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, MAR.in, RD
 MDR.out, ALU.=r, ALU.out, TMP0.in
-TMP1.out, ALU.r^l
+TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
 END
 
@@ -10868,12 +10868,12 @@ Total Control Signals (37): {
 	ALU.asr
 	ALU.c=0
 	ALU.out
+	ALU.r&l
 	ALU.r(XNOR)l
 	ALU.r+1
 	ALU.r+l+c
 	ALU.r-1
 	ALU.r-l-c
-	ALU.r^l
 	ALU.rlc
 	ALU.rol
 	ALU.ror

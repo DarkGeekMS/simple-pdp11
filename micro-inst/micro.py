@@ -210,7 +210,7 @@ def subc(src, dst):
 
 
 def andd(src, dst):
-    return add(src, dst, 'ALU.r^l')
+    return add(src, dst, 'ALU.r&l')
 
 
 def orr(src, dst):
@@ -552,7 +552,7 @@ for (name, cond) in [('BR', None),
     branch(cond)
     wr('END')
 
-    json_out['instructions'][f'{instr_name} {src} {dst}'] = lines
+    json_out['instructions'][f'{name}'] = lines
     print()
     print(f'CPU cicles = {cicles}')
     print(f'MEM access = {memaccess}')
@@ -576,7 +576,7 @@ for (name, code) in [('HLT', 'HLT'), ('NOP', ''),
     if name != 'HLT':
         wr('END')
 
-    json_out['instructions'][f'{instr_name} {src} {dst}'] = lines
+    json_out['instructions'][f'{name}'] = lines
     print()
     print(f'CPU cicles = {cicles}')
     print(f'MEM access = {memaccess}')
