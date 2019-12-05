@@ -25,7 +25,7 @@ def fetch_value_TMP(mode: str, tmp: str):
         # tmp = x+R
         wr(f'MDR.out, ALU.=r, ALU.out, TMP0.in')
         # mdr = [tmp]
-        wr(f'R.out, ALU.r+l, ALU.out, MAR.in, RD')
+        wr(f'R.out, ALU.c=0, ALU.r+l+c, ALU.out, MAR.in, RD')
 
         # temp = mdr TODO: maybe not optimal?
         wr(f'MDR.out, ALU.=r, ALU.out, {tmp}.in')
@@ -63,7 +63,7 @@ def fetch_value_TMP(mode: str, tmp: str):
         # tmp = x+R
         wr(f'MDR.out, ALU.=r, ALU.out, TMP0.in')
         # get tmp
-        wr(f'R.out,  ALU.r+l, ALU.out, MAR.in, RD')
+        wr(f'R.out,  ALU.c=0, ALU.r+l+c, ALU.out, MAR.in, RD')
         # get tmp
         wr(f'MDR.out, ALU.=r, ALU.out, MAR.in, RD')
 
@@ -95,7 +95,7 @@ def fetch_addr(mode: str, tmp: str):
         # tmp = x+R
         wr(f'MDR.out, ALU.=r, ALU.out, TMP0.in')
         # get tmp
-        wr(f'R.out, ALU.r+l, ALU.out, MAR.in, RD')
+        wr(f'R.out, ALU.c=0, ALU.r+l+c, ALU.out, MAR.in, RD')
         wr(f'MDR.out, ALU.=r, ALU.out, MAR.in')
 
 
@@ -148,7 +148,7 @@ def mov(src, dst):
     write(dst, tmp1, True)
 
 
-def add(src, dst, func='ALU.r+l'):
+def add(src, dst, func='ALU.c=0, ALU.r+l+c'):
     tmp1 = fetch_value_TMP(src, 'TMP1')
     tmp0 = fetch_value_TMP(dst, 'TMP0')
 
@@ -174,7 +174,7 @@ def adc(src, dst):
     return add(src, dst, 'ALU.r+l+c')
 
 
-def sub(src, dst, func='ALU.r-l', do_write=True):
+def sub(src, dst, func='ALU.c=0, ALU.r-l-c', do_write=True):
     tmp1 = fetch_value_TMP(src, 'TMP1')
     tmp0 = fetch_value_TMP(dst, 'TMP0' if tmp1 != 'R' else 'TMP1')
 
@@ -222,7 +222,7 @@ def xnor(src, dst):
 
 
 def cmpp(src, dst):
-    return sub(src, dst, 'ALU.r-l', False)
+    return sub(src, dst, 'ALU.c=0, ALU.r-l-c', False)
 
 
 def inc(dst, func='ALU.r+1'):
@@ -254,7 +254,7 @@ def clr(dst):
 
         # [x+R] = inp
         wr('MDR.out, ALU.=r, ALU.out, TMP0.in')
-        wr('R.out, ALU.r+l, ALU.out, MAR.in')
+        wr('R.out, ALU.c=0, ALU.r+l+c, ALU.out, MAR.in')
 
         wr('ALU.zero, MDR.in, WR')
 
@@ -289,7 +289,7 @@ def clr(dst):
 
         # tmp = x+R
         wr('MDR.out, ALU.=r, ALU.out, TMP0.in')
-        wr('R.out, ALU.r+l, ALU.out, MAR.in')
+        wr('R.out, ALU.c=0, ALU.r+l+c, ALU.out, MAR.in')
 
         wr('ALU.zero, MDR.in, WR')
 
@@ -298,14 +298,14 @@ def inv(dst):
     return inc(dst, 'ALU.~r')
 
 
-def lsr(dst, func='lsr'):
+def lsr(dst, func='ALU.c=0, ALU.rrc'):
     if dst in ('R', '(R)+'):
-        wr(f'R.out, ALU.=r, ALU.{func}')
+        wr(f'R.out, ALU.=r, {func}')
         wr(f'ALU.out, R.in')
 
     elif dst == '-(R)':
         wr('R.out, ALU.r-1')
-        wr(f'ALU.{func}, ALU.out, R.in')
+        wr(f'{func}, ALU.out, R.in')
 
     elif dst == 'X(R)':
         # get x
@@ -318,27 +318,27 @@ def lsr(dst, func='lsr'):
         # tmp = x+R
         wr(f'MDR.out, ALU.=r, ALU.out, TMP0.in')
         # mdr = [tmp]
-        wr(f'R.out, ALU.r+l, ALU.out, MAR.in, RD')
+        wr(f'R.out, ALU.c=0, ALU.r+l+c, ALU.out, MAR.in, RD')
 
         wr(f'MDR.out, ALU.=r')
-        wr(f'ALU.{func}, ALU.out, MDR.in, WR')
+        wr(f'{func}, ALU.out, MDR.in, WR')
 
     elif dst == '@R':
         wr('R.out, ALU.=r, ALU.out, MAR.in, RD')
         wr(f'MDR.out, ALU.=r')
-        wr(f'ALU.{func}, ALU.out, MDR.in, WR')
+        wr(f'{func}, ALU.out, MDR.in, WR')
 
     elif dst == '@(R)+':
         wr('R.out, ALU.=r, ALU.out, MAR.in, RD')
         wr(f'MAR.out, ALU.r+1, ALU.out, R.in')
         wr(f'MDR.out, ALU.=r')
-        wr(f'ALU.{func}, ALU.out, MDR.in, WR')
+        wr(f'{func}, ALU.out, MDR.in, WR')
 
     elif dst == '@-(R)':
         wr(f'R.out, ALU.r-1, ALU.out, TMP0.in')
         wr(f'TMP0.out, ALU.=r, ALU.out, R.in, MAR.in, RD')
         wr(f'MDR.out, ALU.=r')
-        wr(f'ALU.{func}, ALU.out, MDR.in, WR')
+        wr(f'{func}, ALU.out, MDR.in, WR')
 
     elif dst == '@X(R)':
         # get x
@@ -351,36 +351,36 @@ def lsr(dst, func='lsr'):
         # tmp = x+R
         wr(f'MDR.out, ALU.=r, ALU.out, TMP0.in')
         # get tmp
-        wr(f'R.out, ALU.r+l, ALU.out, MAR.in, RD')
+        wr(f'R.out, ALU.c=0, ALU.r+l+c, ALU.out, MAR.in, RD')
         # get tmp
         wr(f'MDR.out, ALU.=r, ALU.out, MAR.in, RD')
 
         wr(f'MDR.out, ALU.=r')
-        wr(f'ALU.{func}, ALU.out, MDR.in, WR')
+        wr(f'{func}, ALU.out, MDR.in, WR')
 
 
 def ror(dst):
-    return lsr(dst, 'ror')
+    return lsr(dst, 'ALU.ror')
 
 
 def rrc(dst):
-    return lsr(dst, 'rrc')
+    return lsr(dst, 'ALU.rrc')
 
 
 def asr(dst):
-    return lsr(dst, 'asr')
+    return lsr(dst, 'ALU.asr')
 
 
 def lsl(dst):
-    return lsr(dst, 'lsl')
+    return lsr(dst, 'ALU.c=0, ALU.rlc')
 
 
 def rol(dst):
-    return lsr(dst, 'rol')
+    return lsr(dst, 'ALU.rol')
 
 
 def rlc(dst):
-    return lsr(dst, 'rlc')
+    return lsr(dst, 'ALU.rlc')
 
 
 def branch(cond: str):
@@ -388,7 +388,7 @@ def branch(cond: str):
         wr(f'IF NOT {cond} THEN END, ', end='')
 
     wr('IR.addr.out, ALU.=r, ALU.out, TMP0.in')
-    wr('PC.out, ALU.r+l')
+    wr('PC.out, ALU.c=0, ALU.r+l+c')
     wr('ALU.out, PC.in')
 
 
@@ -396,7 +396,7 @@ jsr = '''PC.out, ALU.=r, ALU.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, ALU.=r, ALU.out, TMP0.in
-R.out, ALU.r+l, ALU.out, TMP0.in
+R.out, ALU.c=0, ALU.r+l+c, ALU.out, TMP0.in
 R6.out, ALU.r-1
 ALU.out, R6.in, MAR.in
 PC.out, ALU.=r, ALU.out, MDR.in, WR
@@ -406,7 +406,7 @@ rts = '''R6.out, ALU.=r, ALU.out, MAR.in, RD
 MDR.out, PC.in
 R6.out, ALU.r+1
 ALU.out, R6.in, MAR.in'''
-
+# TODO: where is the flags reg?
 intt = '''R6.out, ALU.r-1
 ALU.out, R6.in, MAR.in
 FLAGS.out, ALU.=r, ALU.out, MDR.in
@@ -441,8 +441,7 @@ Notes:
         -- pass input from `r`:       ALU.=r
         -- enable output:             ALU.out
         -- out zero:                  ALU.zero
-        -- add:                       ALU.r+l
-        -- sub:                       ALU.r-l
+        -- clear carry:               ALU.c=0
         -- increment:                 ALU.r+1
         -- decrement:                 ALU.r-1
         -- add with carry:            ALU.r+l+c
@@ -452,8 +451,6 @@ Notes:
         -- xnor:                      ALU.r(XNOR)l
         -- not r:                     ALU.~r
         -- arithmetic shift right:    ALU.asr           (ALU[15]   & ALU[15:1])
-        -- logical shift right:       ALU.lsr           (0         & ALU[15:1])
-        -- logical shift left:        ALU.lsl           (ALU[14:0] & 0)
         -- rotate right:              ALU.ror           (ALU[0]    & ALU[15:1])
         -- rotate left:               ALU.rol           (ALU[14:0] & ALU[15])
         -- rotate right with carry:   ALU.rrc           (carry     & ALU[15:1])
@@ -605,6 +602,8 @@ unique_signals.discard('R.out')
 unique_signals.discard('R.in')
 unique_signals.discard('R6.out')
 unique_signals.discard('R6.in')
+unique_signals.discard('END')
+unique_signals.discard('HLT')
 
 unique_signals = list(unique_signals)
 unique_signals.sort()
