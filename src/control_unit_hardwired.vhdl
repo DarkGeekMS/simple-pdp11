@@ -102,9 +102,8 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp0_in <= '1';
-                when 2 => tmp0_out <= '1'; mar_in <= '1';
-                when 3 => r_src_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1';
+                when 2 => r_src_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -202,9 +201,8 @@ begin
                 when 0 => tmp1_in <= '1'; alu_r_plus_1 <= '1';
                 when 1 => alu_out <= '1';
                 when 2 => alu_r_minus_1 <= '1';
-                when 3 => alu_out <= '1'; tmp0_in <= '1';
-                when 4 => tmp0_out <= '1'; mar_in <= '1';
-                when 5 => tmp1_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 3 => alu_out <= '1'; mar_in <= '1';
+                when 4 => tmp1_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -304,9 +302,8 @@ begin
                 when 0 => alu_r_minus_1 <= '1';
                 when 1 => alu_out <= '1';
                 when 2 => alu_r_minus_1 <= '1';
-                when 3 => alu_out <= '1'; tmp0_in <= '1';
-                when 4 => tmp0_out <= '1'; mar_in <= '1';
-                when 5 => r_src_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 3 => alu_out <= '1'; mar_in <= '1';
+                when 4 => r_src_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -441,9 +438,8 @@ begin
                 when 5 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
                 when 6 => mdr_out <= '1'; tmp1_in <= '1';
                 when 7 => alu_r_minus_1 <= '1';
-                when 8 => alu_out <= '1'; tmp0_in <= '1';
-                when 9 => tmp0_out <= '1'; mar_in <= '1';
-                when 10 => tmp1_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 8 => alu_out <= '1'; mar_in <= '1';
+                when 9 => tmp1_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -548,9 +544,8 @@ begin
                 when 0 => mar_in <= '1'; rd <= '1';
                 when 1 => mdr_out <= '1'; tmp1_in <= '1';
                 when 2 => alu_r_minus_1 <= '1';
-                when 3 => alu_out <= '1'; tmp0_in <= '1';
-                when 4 => tmp0_out <= '1'; mar_in <= '1';
-                when 5 => tmp1_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 3 => alu_out <= '1'; mar_in <= '1';
+                when 4 => tmp1_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -664,9 +659,8 @@ begin
                 when 2 => alu_out <= '1';
                 when 3 => mdr_out <= '1'; tmp1_in <= '1';
                 when 4 => alu_r_minus_1 <= '1';
-                when 5 => alu_out <= '1'; tmp0_in <= '1';
-                when 6 => tmp0_out <= '1'; mar_in <= '1';
-                when 7 => tmp1_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 5 => alu_out <= '1'; mar_in <= '1';
+                when 6 => tmp1_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -696,10 +690,9 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => tmp1_out <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => tmp1_out <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -709,10 +702,9 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => tmp1_out <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => tmp1_out <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -722,10 +714,9 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => tmp1_out <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => tmp1_out <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -735,10 +726,9 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => tmp1_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => tmp1_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -748,11 +738,10 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => mar_in <= '1';
-                when 5 => tmp1_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => mar_in <= '1';
+                when 4 => tmp1_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -762,13 +751,12 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => mar_in <= '1';
-                when 5 => mar_out <= '1'; alu_r_plus_1 <= '1';
-                when 6 => alu_out <= '1';
-                when 7 => tmp1_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => mar_in <= '1';
+                when 4 => mar_out <= '1'; alu_r_plus_1 <= '1';
+                when 5 => alu_out <= '1';
+                when 6 => tmp1_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -778,13 +766,11 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => alu_r_minus_1 <= '1';
-                when 5 => alu_out <= '1'; tmp0_in <= '1';
-                when 6 => tmp0_out <= '1'; mar_in <= '1';
-                when 7 => tmp1_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => alu_r_minus_1 <= '1';
+                when 4 => alu_out <= '1'; mar_in <= '1';
+                when 5 => tmp1_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -794,17 +780,16 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => pc_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 5 => pc_out <= '1'; alu_r_plus_1 <= '1';
-                when 6 => alu_out <= '1'; pc_in <= '1';
-                when 7 => mdr_out <= '1'; tmp0_in <= '1';
-                when 8 => alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 9 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 10 => mdr_out <= '1'; mar_in <= '1';
-                when 11 => tmp1_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => pc_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 4 => pc_out <= '1'; alu_r_plus_1 <= '1';
+                when 5 => alu_out <= '1'; pc_in <= '1';
+                when 6 => mdr_out <= '1'; tmp0_in <= '1';
+                when 7 => alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 8 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 9 => mdr_out <= '1'; mar_in <= '1';
+                when 10 => tmp1_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -928,9 +913,8 @@ begin
                 when 6 => mdr_out <= '1'; mar_in <= '1'; rd <= '1';
                 when 7 => mdr_out <= '1'; tmp1_in <= '1';
                 when 8 => alu_r_minus_1 <= '1';
-                when 9 => alu_out <= '1'; tmp0_in <= '1';
-                when 10 => tmp0_out <= '1'; mar_in <= '1';
-                when 11 => tmp1_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 9 => alu_out <= '1'; mar_in <= '1';
+                when 10 => tmp1_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -1043,11 +1027,10 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp0_in <= '1';
-                when 2 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp0_in <= '1';
-                when 4 => r_src_out <= '1'; alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 5 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp0_in <= '1';
+                when 3 => r_src_out <= '1'; alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 4 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -1168,11 +1151,10 @@ begin
                 when 0 => tmp1_in <= '1'; alu_r_plus_1 <= '1';
                 when 1 => alu_out <= '1';
                 when 2 => alu_r_minus_1 <= '1';
-                when 3 => alu_out <= '1'; tmp0_in <= '1';
-                when 4 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 5 => mdr_out <= '1'; tmp0_in <= '1';
-                when 6 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 7 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 3 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 4 => mdr_out <= '1'; tmp0_in <= '1';
+                when 5 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 6 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -1295,11 +1277,10 @@ begin
                 when 0 => alu_r_minus_1 <= '1';
                 when 1 => alu_out <= '1';
                 when 2 => alu_r_minus_1 <= '1';
-                when 3 => alu_out <= '1'; tmp0_in <= '1';
-                when 4 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 5 => mdr_out <= '1'; tmp0_in <= '1';
-                when 6 => r_src_out <= '1'; alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 7 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 3 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 4 => mdr_out <= '1'; tmp0_in <= '1';
+                when 5 => r_src_out <= '1'; alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 6 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -1457,11 +1438,10 @@ begin
                 when 5 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
                 when 6 => mdr_out <= '1'; tmp1_in <= '1';
                 when 7 => alu_r_minus_1 <= '1';
-                when 8 => alu_out <= '1'; tmp0_in <= '1';
-                when 9 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 10 => mdr_out <= '1'; tmp0_in <= '1';
-                when 11 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 12 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 8 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 9 => mdr_out <= '1'; tmp0_in <= '1';
+                when 10 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 11 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -1589,11 +1569,10 @@ begin
                 when 0 => mar_in <= '1'; rd <= '1';
                 when 1 => mdr_out <= '1'; tmp1_in <= '1';
                 when 2 => alu_r_minus_1 <= '1';
-                when 3 => alu_out <= '1'; tmp0_in <= '1';
-                when 4 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 5 => mdr_out <= '1'; tmp0_in <= '1';
-                when 6 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 7 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 3 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 4 => mdr_out <= '1'; tmp0_in <= '1';
+                when 5 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 6 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -1730,11 +1709,10 @@ begin
                 when 2 => alu_out <= '1';
                 when 3 => mdr_out <= '1'; tmp1_in <= '1';
                 when 4 => alu_r_minus_1 <= '1';
-                when 5 => alu_out <= '1'; tmp0_in <= '1';
-                when 6 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 7 => mdr_out <= '1'; tmp0_in <= '1';
-                when 8 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 9 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 5 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 6 => mdr_out <= '1'; tmp0_in <= '1';
+                when 7 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 8 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -1766,12 +1744,11 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 5 => r_dst_out <= '1'; alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 6 => alu_out <= '1'; r_dst_in <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 4 => r_dst_out <= '1'; alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 5 => alu_out <= '1'; r_dst_in <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -1781,13 +1758,12 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => tmp0_in <= '1'; alu_r_plus_1 <= '1';
-                when 5 => alu_out <= '1';
-                when 6 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 7 => alu_out <= '1'; r_dst_in <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => tmp0_in <= '1'; alu_r_plus_1 <= '1';
+                when 4 => alu_out <= '1';
+                when 5 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 6 => alu_out <= '1'; r_dst_in <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -1797,14 +1773,13 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => alu_r_minus_1 <= '1';
-                when 5 => alu_out <= '1';
-                when 6 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 7 => r_dst_out <= '1'; alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 8 => alu_out <= '1'; r_dst_in <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => alu_r_minus_1 <= '1';
+                when 4 => alu_out <= '1';
+                when 5 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 6 => r_dst_out <= '1'; alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 7 => alu_out <= '1'; r_dst_in <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -1814,18 +1789,17 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => pc_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 5 => pc_out <= '1'; alu_r_plus_1 <= '1';
-                when 6 => alu_out <= '1'; pc_in <= '1';
-                when 7 => mdr_out <= '1'; tmp0_in <= '1';
-                when 8 => alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 9 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 10 => mdr_out <= '1'; tmp0_in <= '1';
-                when 11 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 12 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => pc_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 4 => pc_out <= '1'; alu_r_plus_1 <= '1';
+                when 5 => alu_out <= '1'; pc_in <= '1';
+                when 6 => mdr_out <= '1'; tmp0_in <= '1';
+                when 7 => alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 8 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 9 => mdr_out <= '1'; tmp0_in <= '1';
+                when 10 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 11 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -1835,13 +1809,12 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => mar_in <= '1'; rd <= '1';
-                when 5 => mdr_out <= '1'; tmp0_in <= '1';
-                when 6 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 7 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => mar_in <= '1'; rd <= '1';
+                when 4 => mdr_out <= '1'; tmp0_in <= '1';
+                when 5 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 6 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -1851,15 +1824,14 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => mar_in <= '1'; rd <= '1';
-                when 5 => mar_out <= '1'; alu_r_plus_1 <= '1';
-                when 6 => alu_out <= '1';
-                when 7 => mdr_out <= '1'; tmp0_in <= '1';
-                when 8 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 9 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => mar_in <= '1'; rd <= '1';
+                when 4 => mar_out <= '1'; alu_r_plus_1 <= '1';
+                when 5 => alu_out <= '1';
+                when 6 => mdr_out <= '1'; tmp0_in <= '1';
+                when 7 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 8 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -1869,15 +1841,13 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => alu_r_minus_1 <= '1';
-                when 5 => alu_out <= '1'; tmp0_in <= '1';
-                when 6 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 7 => mdr_out <= '1'; tmp0_in <= '1';
-                when 8 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 9 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => alu_r_minus_1 <= '1';
+                when 4 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 5 => mdr_out <= '1'; tmp0_in <= '1';
+                when 6 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 7 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -1887,19 +1857,18 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => pc_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 5 => pc_out <= '1'; alu_r_plus_1 <= '1';
-                when 6 => alu_out <= '1'; pc_in <= '1';
-                when 7 => mdr_out <= '1'; tmp0_in <= '1';
-                when 8 => alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 9 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 10 => mdr_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 11 => mdr_out <= '1'; tmp0_in <= '1';
-                when 12 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 13 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => pc_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 4 => pc_out <= '1'; alu_r_plus_1 <= '1';
+                when 5 => alu_out <= '1'; pc_in <= '1';
+                when 6 => mdr_out <= '1'; tmp0_in <= '1';
+                when 7 => alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 8 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 9 => mdr_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 10 => mdr_out <= '1'; tmp0_in <= '1';
+                when 11 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 12 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -2044,11 +2013,10 @@ begin
                 when 6 => mdr_out <= '1'; mar_in <= '1'; rd <= '1';
                 when 7 => mdr_out <= '1'; tmp1_in <= '1';
                 when 8 => alu_r_minus_1 <= '1';
-                when 9 => alu_out <= '1'; tmp0_in <= '1';
-                when 10 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 11 => mdr_out <= '1'; tmp0_in <= '1';
-                when 12 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 13 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 9 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 10 => mdr_out <= '1'; tmp0_in <= '1';
+                when 11 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 12 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -2163,11 +2131,10 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp0_in <= '1';
-                when 2 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp0_in <= '1';
-                when 4 => r_src_out <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 5 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp0_in <= '1';
+                when 3 => r_src_out <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 4 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -2288,11 +2255,10 @@ begin
                 when 0 => tmp1_in <= '1'; alu_r_plus_1 <= '1';
                 when 1 => alu_out <= '1';
                 when 2 => alu_r_minus_1 <= '1';
-                when 3 => alu_out <= '1'; tmp0_in <= '1';
-                when 4 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 5 => mdr_out <= '1'; tmp0_in <= '1';
-                when 6 => tmp1_out <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 7 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 3 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 4 => mdr_out <= '1'; tmp0_in <= '1';
+                when 5 => tmp1_out <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 6 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -2415,11 +2381,10 @@ begin
                 when 0 => alu_r_minus_1 <= '1';
                 when 1 => alu_out <= '1';
                 when 2 => alu_r_minus_1 <= '1';
-                when 3 => alu_out <= '1'; tmp0_in <= '1';
-                when 4 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 5 => mdr_out <= '1'; tmp0_in <= '1';
-                when 6 => r_src_out <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 7 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 3 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 4 => mdr_out <= '1'; tmp0_in <= '1';
+                when 5 => r_src_out <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 6 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -2577,11 +2542,10 @@ begin
                 when 5 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
                 when 6 => mdr_out <= '1'; tmp1_in <= '1';
                 when 7 => alu_r_minus_1 <= '1';
-                when 8 => alu_out <= '1'; tmp0_in <= '1';
-                when 9 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 10 => mdr_out <= '1'; tmp0_in <= '1';
-                when 11 => tmp1_out <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 12 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 8 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 9 => mdr_out <= '1'; tmp0_in <= '1';
+                when 10 => tmp1_out <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 11 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -2709,11 +2673,10 @@ begin
                 when 0 => mar_in <= '1'; rd <= '1';
                 when 1 => mdr_out <= '1'; tmp1_in <= '1';
                 when 2 => alu_r_minus_1 <= '1';
-                when 3 => alu_out <= '1'; tmp0_in <= '1';
-                when 4 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 5 => mdr_out <= '1'; tmp0_in <= '1';
-                when 6 => tmp1_out <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 7 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 3 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 4 => mdr_out <= '1'; tmp0_in <= '1';
+                when 5 => tmp1_out <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 6 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -2850,11 +2813,10 @@ begin
                 when 2 => alu_out <= '1';
                 when 3 => mdr_out <= '1'; tmp1_in <= '1';
                 when 4 => alu_r_minus_1 <= '1';
-                when 5 => alu_out <= '1'; tmp0_in <= '1';
-                when 6 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 7 => mdr_out <= '1'; tmp0_in <= '1';
-                when 8 => tmp1_out <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 9 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 5 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 6 => mdr_out <= '1'; tmp0_in <= '1';
+                when 7 => tmp1_out <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 8 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -2886,12 +2848,11 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 5 => r_dst_out <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 6 => alu_out <= '1'; r_dst_in <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 4 => r_dst_out <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 5 => alu_out <= '1'; r_dst_in <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -2901,13 +2862,12 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => tmp0_in <= '1'; alu_r_plus_1 <= '1';
-                when 5 => alu_out <= '1';
-                when 6 => tmp1_out <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 7 => alu_out <= '1'; r_dst_in <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => tmp0_in <= '1'; alu_r_plus_1 <= '1';
+                when 4 => alu_out <= '1';
+                when 5 => tmp1_out <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 6 => alu_out <= '1'; r_dst_in <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -2917,14 +2877,13 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => alu_r_minus_1 <= '1';
-                when 5 => alu_out <= '1';
-                when 6 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 7 => r_dst_out <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 8 => alu_out <= '1'; r_dst_in <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => alu_r_minus_1 <= '1';
+                when 4 => alu_out <= '1';
+                when 5 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 6 => r_dst_out <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 7 => alu_out <= '1'; r_dst_in <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -2934,18 +2893,17 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => pc_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 5 => pc_out <= '1'; alu_r_plus_1 <= '1';
-                when 6 => alu_out <= '1'; pc_in <= '1';
-                when 7 => mdr_out <= '1'; tmp0_in <= '1';
-                when 8 => alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 9 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 10 => mdr_out <= '1'; tmp0_in <= '1';
-                when 11 => tmp1_out <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 12 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => pc_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 4 => pc_out <= '1'; alu_r_plus_1 <= '1';
+                when 5 => alu_out <= '1'; pc_in <= '1';
+                when 6 => mdr_out <= '1'; tmp0_in <= '1';
+                when 7 => alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 8 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 9 => mdr_out <= '1'; tmp0_in <= '1';
+                when 10 => tmp1_out <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 11 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -2955,13 +2913,12 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => mar_in <= '1'; rd <= '1';
-                when 5 => mdr_out <= '1'; tmp0_in <= '1';
-                when 6 => tmp1_out <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 7 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => mar_in <= '1'; rd <= '1';
+                when 4 => mdr_out <= '1'; tmp0_in <= '1';
+                when 5 => tmp1_out <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 6 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -2971,15 +2928,14 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => mar_in <= '1'; rd <= '1';
-                when 5 => mar_out <= '1'; alu_r_plus_1 <= '1';
-                when 6 => alu_out <= '1';
-                when 7 => mdr_out <= '1'; tmp0_in <= '1';
-                when 8 => tmp1_out <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 9 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => mar_in <= '1'; rd <= '1';
+                when 4 => mar_out <= '1'; alu_r_plus_1 <= '1';
+                when 5 => alu_out <= '1';
+                when 6 => mdr_out <= '1'; tmp0_in <= '1';
+                when 7 => tmp1_out <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 8 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -2989,15 +2945,13 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => alu_r_minus_1 <= '1';
-                when 5 => alu_out <= '1'; tmp0_in <= '1';
-                when 6 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 7 => mdr_out <= '1'; tmp0_in <= '1';
-                when 8 => tmp1_out <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 9 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => alu_r_minus_1 <= '1';
+                when 4 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 5 => mdr_out <= '1'; tmp0_in <= '1';
+                when 6 => tmp1_out <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 7 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -3007,19 +2961,18 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => pc_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 5 => pc_out <= '1'; alu_r_plus_1 <= '1';
-                when 6 => alu_out <= '1'; pc_in <= '1';
-                when 7 => mdr_out <= '1'; tmp0_in <= '1';
-                when 8 => alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 9 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 10 => mdr_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 11 => mdr_out <= '1'; tmp0_in <= '1';
-                when 12 => tmp1_out <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 13 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => pc_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 4 => pc_out <= '1'; alu_r_plus_1 <= '1';
+                when 5 => alu_out <= '1'; pc_in <= '1';
+                when 6 => mdr_out <= '1'; tmp0_in <= '1';
+                when 7 => alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 8 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 9 => mdr_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 10 => mdr_out <= '1'; tmp0_in <= '1';
+                when 11 => tmp1_out <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 12 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -3164,11 +3117,10 @@ begin
                 when 6 => mdr_out <= '1'; mar_in <= '1'; rd <= '1';
                 when 7 => mdr_out <= '1'; tmp1_in <= '1';
                 when 8 => alu_r_minus_1 <= '1';
-                when 9 => alu_out <= '1'; tmp0_in <= '1';
-                when 10 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 11 => mdr_out <= '1'; tmp0_in <= '1';
-                when 12 => tmp1_out <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 13 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 9 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 10 => mdr_out <= '1'; tmp0_in <= '1';
+                when 11 => tmp1_out <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 12 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -3287,12 +3239,11 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => r_src_out <= '1'; tmp0_in <= '1';
-                when 5 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
-                when 6 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => r_src_out <= '1'; tmp0_in <= '1';
+                when 4 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
+                when 5 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -3426,14 +3377,13 @@ begin
                 when 0 => tmp1_in <= '1'; alu_r_plus_1 <= '1';
                 when 1 => alu_out <= '1';
                 when 2 => alu_r_minus_1 <= '1';
-                when 3 => alu_out <= '1'; tmp0_in <= '1';
-                when 4 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 5 => mdr_out <= '1'; tmp0_in <= '1';
-                when 6 => tmp0_out <= '1'; mdr_in <= '1';
-                when 7 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 8 => mdr_out <= '1'; tmp1_in <= '1';
-                when 9 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
-                when 10 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 3 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 4 => mdr_out <= '1'; tmp0_in <= '1';
+                when 5 => tmp0_out <= '1'; mdr_in <= '1';
+                when 6 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 7 => mdr_out <= '1'; tmp1_in <= '1';
+                when 8 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
+                when 9 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -3563,12 +3513,11 @@ begin
                 when 0 => alu_r_minus_1 <= '1';
                 when 1 => alu_out <= '1';
                 when 2 => alu_r_minus_1 <= '1';
-                when 3 => alu_out <= '1'; tmp1_in <= '1';
-                when 4 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 5 => mdr_out <= '1'; tmp1_in <= '1';
-                when 6 => r_src_out <= '1'; tmp0_in <= '1';
-                when 7 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
-                when 8 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 3 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 4 => mdr_out <= '1'; tmp1_in <= '1';
+                when 5 => r_src_out <= '1'; tmp0_in <= '1';
+                when 6 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
+                when 7 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -3739,14 +3688,13 @@ begin
                 when 5 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
                 when 6 => mdr_out <= '1'; tmp1_in <= '1';
                 when 7 => alu_r_minus_1 <= '1';
-                when 8 => alu_out <= '1'; tmp0_in <= '1';
-                when 9 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 10 => mdr_out <= '1'; tmp0_in <= '1';
-                when 11 => tmp0_out <= '1'; mdr_in <= '1';
-                when 12 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 13 => mdr_out <= '1'; tmp1_in <= '1';
-                when 14 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
-                when 15 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 8 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 9 => mdr_out <= '1'; tmp0_in <= '1';
+                when 10 => tmp0_out <= '1'; mdr_in <= '1';
+                when 11 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 12 => mdr_out <= '1'; tmp1_in <= '1';
+                when 13 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
+                when 14 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -3889,14 +3837,13 @@ begin
                 when 0 => mar_in <= '1'; rd <= '1';
                 when 1 => mdr_out <= '1'; tmp1_in <= '1';
                 when 2 => alu_r_minus_1 <= '1';
-                when 3 => alu_out <= '1'; tmp0_in <= '1';
-                when 4 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 5 => mdr_out <= '1'; tmp0_in <= '1';
-                when 6 => tmp0_out <= '1'; mdr_in <= '1';
-                when 7 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 8 => mdr_out <= '1'; tmp1_in <= '1';
-                when 9 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
-                when 10 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 3 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 4 => mdr_out <= '1'; tmp0_in <= '1';
+                when 5 => tmp0_out <= '1'; mdr_in <= '1';
+                when 6 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 7 => mdr_out <= '1'; tmp1_in <= '1';
+                when 8 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
+                when 9 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -4048,14 +3995,13 @@ begin
                 when 2 => alu_out <= '1';
                 when 3 => mdr_out <= '1'; tmp1_in <= '1';
                 when 4 => alu_r_minus_1 <= '1';
-                when 5 => alu_out <= '1'; tmp0_in <= '1';
-                when 6 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 7 => mdr_out <= '1'; tmp0_in <= '1';
-                when 8 => tmp0_out <= '1'; mdr_in <= '1';
-                when 9 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 10 => mdr_out <= '1'; tmp1_in <= '1';
-                when 11 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
-                when 12 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 5 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 6 => mdr_out <= '1'; tmp0_in <= '1';
+                when 7 => tmp0_out <= '1'; mdr_in <= '1';
+                when 8 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 9 => mdr_out <= '1'; tmp1_in <= '1';
+                when 10 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
+                when 11 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -4090,12 +4036,11 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 5 => r_dst_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
-                when 6 => alu_out <= '1'; r_dst_in <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 4 => r_dst_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
+                when 5 => alu_out <= '1'; r_dst_in <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -4105,16 +4050,15 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => tmp0_in <= '1'; alu_r_plus_1 <= '1';
-                when 5 => alu_out <= '1';
-                when 6 => tmp0_out <= '1'; mdr_in <= '1';
-                when 7 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 8 => mdr_out <= '1'; tmp1_in <= '1';
-                when 9 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
-                when 10 => alu_out <= '1'; r_dst_in <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => tmp0_in <= '1'; alu_r_plus_1 <= '1';
+                when 4 => alu_out <= '1';
+                when 5 => tmp0_out <= '1'; mdr_in <= '1';
+                when 6 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 7 => mdr_out <= '1'; tmp1_in <= '1';
+                when 8 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
+                when 9 => alu_out <= '1'; r_dst_in <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -4124,14 +4068,13 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => alu_r_minus_1 <= '1';
-                when 5 => alu_out <= '1';
-                when 6 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 7 => r_dst_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
-                when 8 => alu_out <= '1'; r_dst_in <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => alu_r_minus_1 <= '1';
+                when 4 => alu_out <= '1';
+                when 5 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 6 => r_dst_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
+                when 7 => alu_out <= '1'; r_dst_in <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -4141,21 +4084,20 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => pc_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 5 => pc_out <= '1'; alu_r_plus_1 <= '1';
-                when 6 => alu_out <= '1'; pc_in <= '1';
-                when 7 => mdr_out <= '1'; tmp0_in <= '1';
-                when 8 => alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 9 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 10 => mdr_out <= '1'; tmp0_in <= '1';
-                when 11 => tmp0_out <= '1'; mdr_in <= '1';
-                when 12 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 13 => mdr_out <= '1'; tmp1_in <= '1';
-                when 14 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
-                when 15 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => pc_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 4 => pc_out <= '1'; alu_r_plus_1 <= '1';
+                when 5 => alu_out <= '1'; pc_in <= '1';
+                when 6 => mdr_out <= '1'; tmp0_in <= '1';
+                when 7 => alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 8 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 9 => mdr_out <= '1'; tmp0_in <= '1';
+                when 10 => tmp0_out <= '1'; mdr_in <= '1';
+                when 11 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 12 => mdr_out <= '1'; tmp1_in <= '1';
+                when 13 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
+                when 14 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -4165,10 +4107,48 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => mar_in <= '1'; rd <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => mar_in <= '1'; rd <= '1';
+                when 4 => mdr_out <= '1'; tmp0_in <= '1';
+                when 5 => tmp0_out <= '1'; mdr_in <= '1';
+                when 6 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 7 => mdr_out <= '1'; tmp1_in <= '1';
+                when 8 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
+                when 9 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when others => end_flag <= 1;
+            end case;
+        end procedure;
+
+        -- SUB @-(R) @(R)+
+        procedure sub_at_minus_r_at_r_plus is
+        begin
+            case timer is
+                when 0 => alu_r_minus_1 <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => mar_in <= '1'; rd <= '1';
+                when 4 => mar_out <= '1'; alu_r_plus_1 <= '1';
+                when 5 => alu_out <= '1';
+                when 6 => mdr_out <= '1'; tmp0_in <= '1';
+                when 7 => tmp0_out <= '1'; mdr_in <= '1';
+                when 8 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 9 => mdr_out <= '1'; tmp1_in <= '1';
+                when 10 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
+                when 11 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when others => end_flag <= 1;
+            end case;
+        end procedure;
+
+        -- SUB @-(R) @-(R)
+        procedure sub_at_minus_r_at_minus_r is
+        begin
+            case timer is
+                when 0 => alu_r_minus_1 <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => alu_r_minus_1 <= '1';
+                when 4 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
                 when 5 => mdr_out <= '1'; tmp0_in <= '1';
                 when 6 => tmp0_out <= '1'; mdr_in <= '1';
                 when 7 => tmp1_out <= '1'; tmp0_in <= '1';
@@ -4179,69 +4159,26 @@ begin
             end case;
         end procedure;
 
-        -- SUB @-(R) @(R)+
-        procedure sub_at_minus_r_at_r_plus is
-        begin
-            case timer is
-                when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => mar_in <= '1'; rd <= '1';
-                when 5 => mar_out <= '1'; alu_r_plus_1 <= '1';
-                when 6 => alu_out <= '1';
-                when 7 => mdr_out <= '1'; tmp0_in <= '1';
-                when 8 => tmp0_out <= '1'; mdr_in <= '1';
-                when 9 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 10 => mdr_out <= '1'; tmp1_in <= '1';
-                when 11 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
-                when 12 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
-                when others => end_flag <= 1;
-            end case;
-        end procedure;
-
-        -- SUB @-(R) @-(R)
-        procedure sub_at_minus_r_at_minus_r is
-        begin
-            case timer is
-                when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => alu_r_minus_1 <= '1';
-                when 5 => alu_out <= '1'; tmp0_in <= '1';
-                when 6 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 7 => mdr_out <= '1'; tmp0_in <= '1';
-                when 8 => tmp0_out <= '1'; mdr_in <= '1';
-                when 9 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 10 => mdr_out <= '1'; tmp1_in <= '1';
-                when 11 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
-                when 12 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
-                when others => end_flag <= 1;
-            end case;
-        end procedure;
-
         -- SUB @-(R) @X(R)
         procedure sub_at_minus_r_at_x_r is
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => pc_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 5 => pc_out <= '1'; alu_r_plus_1 <= '1';
-                when 6 => alu_out <= '1'; pc_in <= '1';
-                when 7 => mdr_out <= '1'; tmp0_in <= '1';
-                when 8 => alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 9 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 10 => mdr_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 11 => mdr_out <= '1'; tmp0_in <= '1';
-                when 12 => tmp0_out <= '1'; mdr_in <= '1';
-                when 13 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 14 => mdr_out <= '1'; tmp1_in <= '1';
-                when 15 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
-                when 16 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => pc_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 4 => pc_out <= '1'; alu_r_plus_1 <= '1';
+                when 5 => alu_out <= '1'; pc_in <= '1';
+                when 6 => mdr_out <= '1'; tmp0_in <= '1';
+                when 7 => alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 8 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 9 => mdr_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 10 => mdr_out <= '1'; tmp0_in <= '1';
+                when 11 => tmp0_out <= '1'; mdr_in <= '1';
+                when 12 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 13 => mdr_out <= '1'; tmp1_in <= '1';
+                when 14 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
+                when 15 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -4398,14 +4335,13 @@ begin
                 when 6 => mdr_out <= '1'; mar_in <= '1'; rd <= '1';
                 when 7 => mdr_out <= '1'; tmp1_in <= '1';
                 when 8 => alu_r_minus_1 <= '1';
-                when 9 => alu_out <= '1'; tmp0_in <= '1';
-                when 10 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 11 => mdr_out <= '1'; tmp0_in <= '1';
-                when 12 => tmp0_out <= '1'; mdr_in <= '1';
-                when 13 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 14 => mdr_out <= '1'; tmp1_in <= '1';
-                when 15 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
-                when 16 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 9 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 10 => mdr_out <= '1'; tmp0_in <= '1';
+                when 11 => tmp0_out <= '1'; mdr_in <= '1';
+                when 12 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 13 => mdr_out <= '1'; tmp1_in <= '1';
+                when 14 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
+                when 15 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -4527,12 +4463,11 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => r_src_out <= '1'; tmp0_in <= '1';
-                when 5 => tmp1_out <= '1'; alu_r_minus_l_minus_c <= '1';
-                when 6 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => r_src_out <= '1'; tmp0_in <= '1';
+                when 4 => tmp1_out <= '1'; alu_r_minus_l_minus_c <= '1';
+                when 5 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -4666,14 +4601,13 @@ begin
                 when 0 => tmp1_in <= '1'; alu_r_plus_1 <= '1';
                 when 1 => alu_out <= '1';
                 when 2 => alu_r_minus_1 <= '1';
-                when 3 => alu_out <= '1'; tmp0_in <= '1';
-                when 4 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 5 => mdr_out <= '1'; tmp0_in <= '1';
-                when 6 => tmp0_out <= '1'; mdr_in <= '1';
-                when 7 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 8 => mdr_out <= '1'; tmp1_in <= '1';
-                when 9 => tmp1_out <= '1'; alu_r_minus_l_minus_c <= '1';
-                when 10 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 3 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 4 => mdr_out <= '1'; tmp0_in <= '1';
+                when 5 => tmp0_out <= '1'; mdr_in <= '1';
+                when 6 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 7 => mdr_out <= '1'; tmp1_in <= '1';
+                when 8 => tmp1_out <= '1'; alu_r_minus_l_minus_c <= '1';
+                when 9 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -4803,12 +4737,11 @@ begin
                 when 0 => alu_r_minus_1 <= '1';
                 when 1 => alu_out <= '1';
                 when 2 => alu_r_minus_1 <= '1';
-                when 3 => alu_out <= '1'; tmp1_in <= '1';
-                when 4 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 5 => mdr_out <= '1'; tmp1_in <= '1';
-                when 6 => r_src_out <= '1'; tmp0_in <= '1';
-                when 7 => tmp1_out <= '1'; alu_r_minus_l_minus_c <= '1';
-                when 8 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 3 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 4 => mdr_out <= '1'; tmp1_in <= '1';
+                when 5 => r_src_out <= '1'; tmp0_in <= '1';
+                when 6 => tmp1_out <= '1'; alu_r_minus_l_minus_c <= '1';
+                when 7 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -4979,14 +4912,13 @@ begin
                 when 5 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
                 when 6 => mdr_out <= '1'; tmp1_in <= '1';
                 when 7 => alu_r_minus_1 <= '1';
-                when 8 => alu_out <= '1'; tmp0_in <= '1';
-                when 9 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 10 => mdr_out <= '1'; tmp0_in <= '1';
-                when 11 => tmp0_out <= '1'; mdr_in <= '1';
-                when 12 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 13 => mdr_out <= '1'; tmp1_in <= '1';
-                when 14 => tmp1_out <= '1'; alu_r_minus_l_minus_c <= '1';
-                when 15 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 8 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 9 => mdr_out <= '1'; tmp0_in <= '1';
+                when 10 => tmp0_out <= '1'; mdr_in <= '1';
+                when 11 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 12 => mdr_out <= '1'; tmp1_in <= '1';
+                when 13 => tmp1_out <= '1'; alu_r_minus_l_minus_c <= '1';
+                when 14 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -5129,14 +5061,13 @@ begin
                 when 0 => mar_in <= '1'; rd <= '1';
                 when 1 => mdr_out <= '1'; tmp1_in <= '1';
                 when 2 => alu_r_minus_1 <= '1';
-                when 3 => alu_out <= '1'; tmp0_in <= '1';
-                when 4 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 5 => mdr_out <= '1'; tmp0_in <= '1';
-                when 6 => tmp0_out <= '1'; mdr_in <= '1';
-                when 7 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 8 => mdr_out <= '1'; tmp1_in <= '1';
-                when 9 => tmp1_out <= '1'; alu_r_minus_l_minus_c <= '1';
-                when 10 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 3 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 4 => mdr_out <= '1'; tmp0_in <= '1';
+                when 5 => tmp0_out <= '1'; mdr_in <= '1';
+                when 6 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 7 => mdr_out <= '1'; tmp1_in <= '1';
+                when 8 => tmp1_out <= '1'; alu_r_minus_l_minus_c <= '1';
+                when 9 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -5288,14 +5219,13 @@ begin
                 when 2 => alu_out <= '1';
                 when 3 => mdr_out <= '1'; tmp1_in <= '1';
                 when 4 => alu_r_minus_1 <= '1';
-                when 5 => alu_out <= '1'; tmp0_in <= '1';
-                when 6 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 7 => mdr_out <= '1'; tmp0_in <= '1';
-                when 8 => tmp0_out <= '1'; mdr_in <= '1';
-                when 9 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 10 => mdr_out <= '1'; tmp1_in <= '1';
-                when 11 => tmp1_out <= '1'; alu_r_minus_l_minus_c <= '1';
-                when 12 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 5 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 6 => mdr_out <= '1'; tmp0_in <= '1';
+                when 7 => tmp0_out <= '1'; mdr_in <= '1';
+                when 8 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 9 => mdr_out <= '1'; tmp1_in <= '1';
+                when 10 => tmp1_out <= '1'; alu_r_minus_l_minus_c <= '1';
+                when 11 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -5330,12 +5260,11 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 5 => r_dst_out <= '1'; alu_r_minus_l_minus_c <= '1';
-                when 6 => alu_out <= '1'; r_dst_in <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 4 => r_dst_out <= '1'; alu_r_minus_l_minus_c <= '1';
+                when 5 => alu_out <= '1'; r_dst_in <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -5345,16 +5274,15 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => tmp0_in <= '1'; alu_r_plus_1 <= '1';
-                when 5 => alu_out <= '1';
-                when 6 => tmp0_out <= '1'; mdr_in <= '1';
-                when 7 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 8 => mdr_out <= '1'; tmp1_in <= '1';
-                when 9 => tmp1_out <= '1'; alu_r_minus_l_minus_c <= '1';
-                when 10 => alu_out <= '1'; r_dst_in <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => tmp0_in <= '1'; alu_r_plus_1 <= '1';
+                when 4 => alu_out <= '1';
+                when 5 => tmp0_out <= '1'; mdr_in <= '1';
+                when 6 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 7 => mdr_out <= '1'; tmp1_in <= '1';
+                when 8 => tmp1_out <= '1'; alu_r_minus_l_minus_c <= '1';
+                when 9 => alu_out <= '1'; r_dst_in <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -5364,14 +5292,13 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => alu_r_minus_1 <= '1';
-                when 5 => alu_out <= '1';
-                when 6 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 7 => r_dst_out <= '1'; alu_r_minus_l_minus_c <= '1';
-                when 8 => alu_out <= '1'; r_dst_in <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => alu_r_minus_1 <= '1';
+                when 4 => alu_out <= '1';
+                when 5 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 6 => r_dst_out <= '1'; alu_r_minus_l_minus_c <= '1';
+                when 7 => alu_out <= '1'; r_dst_in <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -5381,21 +5308,20 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => pc_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 5 => pc_out <= '1'; alu_r_plus_1 <= '1';
-                when 6 => alu_out <= '1'; pc_in <= '1';
-                when 7 => mdr_out <= '1'; tmp0_in <= '1';
-                when 8 => alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 9 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 10 => mdr_out <= '1'; tmp0_in <= '1';
-                when 11 => tmp0_out <= '1'; mdr_in <= '1';
-                when 12 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 13 => mdr_out <= '1'; tmp1_in <= '1';
-                when 14 => tmp1_out <= '1'; alu_r_minus_l_minus_c <= '1';
-                when 15 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => pc_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 4 => pc_out <= '1'; alu_r_plus_1 <= '1';
+                when 5 => alu_out <= '1'; pc_in <= '1';
+                when 6 => mdr_out <= '1'; tmp0_in <= '1';
+                when 7 => alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 8 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 9 => mdr_out <= '1'; tmp0_in <= '1';
+                when 10 => tmp0_out <= '1'; mdr_in <= '1';
+                when 11 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 12 => mdr_out <= '1'; tmp1_in <= '1';
+                when 13 => tmp1_out <= '1'; alu_r_minus_l_minus_c <= '1';
+                when 14 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -5405,10 +5331,48 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => mar_in <= '1'; rd <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => mar_in <= '1'; rd <= '1';
+                when 4 => mdr_out <= '1'; tmp0_in <= '1';
+                when 5 => tmp0_out <= '1'; mdr_in <= '1';
+                when 6 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 7 => mdr_out <= '1'; tmp1_in <= '1';
+                when 8 => tmp1_out <= '1'; alu_r_minus_l_minus_c <= '1';
+                when 9 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when others => end_flag <= 1;
+            end case;
+        end procedure;
+
+        -- SUBC @-(R) @(R)+
+        procedure subc_at_minus_r_at_r_plus is
+        begin
+            case timer is
+                when 0 => alu_r_minus_1 <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => mar_in <= '1'; rd <= '1';
+                when 4 => mar_out <= '1'; alu_r_plus_1 <= '1';
+                when 5 => alu_out <= '1';
+                when 6 => mdr_out <= '1'; tmp0_in <= '1';
+                when 7 => tmp0_out <= '1'; mdr_in <= '1';
+                when 8 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 9 => mdr_out <= '1'; tmp1_in <= '1';
+                when 10 => tmp1_out <= '1'; alu_r_minus_l_minus_c <= '1';
+                when 11 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when others => end_flag <= 1;
+            end case;
+        end procedure;
+
+        -- SUBC @-(R) @-(R)
+        procedure subc_at_minus_r_at_minus_r is
+        begin
+            case timer is
+                when 0 => alu_r_minus_1 <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => alu_r_minus_1 <= '1';
+                when 4 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
                 when 5 => mdr_out <= '1'; tmp0_in <= '1';
                 when 6 => tmp0_out <= '1'; mdr_in <= '1';
                 when 7 => tmp1_out <= '1'; tmp0_in <= '1';
@@ -5419,69 +5383,26 @@ begin
             end case;
         end procedure;
 
-        -- SUBC @-(R) @(R)+
-        procedure subc_at_minus_r_at_r_plus is
-        begin
-            case timer is
-                when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => mar_in <= '1'; rd <= '1';
-                when 5 => mar_out <= '1'; alu_r_plus_1 <= '1';
-                when 6 => alu_out <= '1';
-                when 7 => mdr_out <= '1'; tmp0_in <= '1';
-                when 8 => tmp0_out <= '1'; mdr_in <= '1';
-                when 9 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 10 => mdr_out <= '1'; tmp1_in <= '1';
-                when 11 => tmp1_out <= '1'; alu_r_minus_l_minus_c <= '1';
-                when 12 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
-                when others => end_flag <= 1;
-            end case;
-        end procedure;
-
-        -- SUBC @-(R) @-(R)
-        procedure subc_at_minus_r_at_minus_r is
-        begin
-            case timer is
-                when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => alu_r_minus_1 <= '1';
-                when 5 => alu_out <= '1'; tmp0_in <= '1';
-                when 6 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 7 => mdr_out <= '1'; tmp0_in <= '1';
-                when 8 => tmp0_out <= '1'; mdr_in <= '1';
-                when 9 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 10 => mdr_out <= '1'; tmp1_in <= '1';
-                when 11 => tmp1_out <= '1'; alu_r_minus_l_minus_c <= '1';
-                when 12 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
-                when others => end_flag <= 1;
-            end case;
-        end procedure;
-
         -- SUBC @-(R) @X(R)
         procedure subc_at_minus_r_at_x_r is
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => pc_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 5 => pc_out <= '1'; alu_r_plus_1 <= '1';
-                when 6 => alu_out <= '1'; pc_in <= '1';
-                when 7 => mdr_out <= '1'; tmp0_in <= '1';
-                when 8 => alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 9 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 10 => mdr_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 11 => mdr_out <= '1'; tmp0_in <= '1';
-                when 12 => tmp0_out <= '1'; mdr_in <= '1';
-                when 13 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 14 => mdr_out <= '1'; tmp1_in <= '1';
-                when 15 => tmp1_out <= '1'; alu_r_minus_l_minus_c <= '1';
-                when 16 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => pc_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 4 => pc_out <= '1'; alu_r_plus_1 <= '1';
+                when 5 => alu_out <= '1'; pc_in <= '1';
+                when 6 => mdr_out <= '1'; tmp0_in <= '1';
+                when 7 => alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 8 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 9 => mdr_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 10 => mdr_out <= '1'; tmp0_in <= '1';
+                when 11 => tmp0_out <= '1'; mdr_in <= '1';
+                when 12 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 13 => mdr_out <= '1'; tmp1_in <= '1';
+                when 14 => tmp1_out <= '1'; alu_r_minus_l_minus_c <= '1';
+                when 15 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -5638,14 +5559,13 @@ begin
                 when 6 => mdr_out <= '1'; mar_in <= '1'; rd <= '1';
                 when 7 => mdr_out <= '1'; tmp1_in <= '1';
                 when 8 => alu_r_minus_1 <= '1';
-                when 9 => alu_out <= '1'; tmp0_in <= '1';
-                when 10 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 11 => mdr_out <= '1'; tmp0_in <= '1';
-                when 12 => tmp0_out <= '1'; mdr_in <= '1';
-                when 13 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 14 => mdr_out <= '1'; tmp1_in <= '1';
-                when 15 => tmp1_out <= '1'; alu_r_minus_l_minus_c <= '1';
-                when 16 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 9 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 10 => mdr_out <= '1'; tmp0_in <= '1';
+                when 11 => tmp0_out <= '1'; mdr_in <= '1';
+                when 12 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 13 => mdr_out <= '1'; tmp1_in <= '1';
+                when 14 => tmp1_out <= '1'; alu_r_minus_l_minus_c <= '1';
+                when 15 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -5763,11 +5683,10 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp0_in <= '1';
-                when 2 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp0_in <= '1';
-                when 4 => r_src_out <= '1'; alu_r_not_l <= '1';
-                when 5 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp0_in <= '1';
+                when 3 => r_src_out <= '1'; alu_r_not_l <= '1';
+                when 4 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -5888,11 +5807,10 @@ begin
                 when 0 => tmp1_in <= '1'; alu_r_plus_1 <= '1';
                 when 1 => alu_out <= '1';
                 when 2 => alu_r_minus_1 <= '1';
-                when 3 => alu_out <= '1'; tmp0_in <= '1';
-                when 4 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 5 => mdr_out <= '1'; tmp0_in <= '1';
-                when 6 => tmp1_out <= '1'; alu_r_not_l <= '1';
-                when 7 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 3 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 4 => mdr_out <= '1'; tmp0_in <= '1';
+                when 5 => tmp1_out <= '1'; alu_r_not_l <= '1';
+                when 6 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -6015,11 +5933,10 @@ begin
                 when 0 => alu_r_minus_1 <= '1';
                 when 1 => alu_out <= '1';
                 when 2 => alu_r_minus_1 <= '1';
-                when 3 => alu_out <= '1'; tmp0_in <= '1';
-                when 4 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 5 => mdr_out <= '1'; tmp0_in <= '1';
-                when 6 => r_src_out <= '1'; alu_r_not_l <= '1';
-                when 7 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 3 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 4 => mdr_out <= '1'; tmp0_in <= '1';
+                when 5 => r_src_out <= '1'; alu_r_not_l <= '1';
+                when 6 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -6177,11 +6094,10 @@ begin
                 when 5 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
                 when 6 => mdr_out <= '1'; tmp1_in <= '1';
                 when 7 => alu_r_minus_1 <= '1';
-                when 8 => alu_out <= '1'; tmp0_in <= '1';
-                when 9 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 10 => mdr_out <= '1'; tmp0_in <= '1';
-                when 11 => tmp1_out <= '1'; alu_r_not_l <= '1';
-                when 12 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 8 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 9 => mdr_out <= '1'; tmp0_in <= '1';
+                when 10 => tmp1_out <= '1'; alu_r_not_l <= '1';
+                when 11 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -6309,11 +6225,10 @@ begin
                 when 0 => mar_in <= '1'; rd <= '1';
                 when 1 => mdr_out <= '1'; tmp1_in <= '1';
                 when 2 => alu_r_minus_1 <= '1';
-                when 3 => alu_out <= '1'; tmp0_in <= '1';
-                when 4 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 5 => mdr_out <= '1'; tmp0_in <= '1';
-                when 6 => tmp1_out <= '1'; alu_r_not_l <= '1';
-                when 7 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 3 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 4 => mdr_out <= '1'; tmp0_in <= '1';
+                when 5 => tmp1_out <= '1'; alu_r_not_l <= '1';
+                when 6 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -6450,11 +6365,10 @@ begin
                 when 2 => alu_out <= '1';
                 when 3 => mdr_out <= '1'; tmp1_in <= '1';
                 when 4 => alu_r_minus_1 <= '1';
-                when 5 => alu_out <= '1'; tmp0_in <= '1';
-                when 6 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 7 => mdr_out <= '1'; tmp0_in <= '1';
-                when 8 => tmp1_out <= '1'; alu_r_not_l <= '1';
-                when 9 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 5 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 6 => mdr_out <= '1'; tmp0_in <= '1';
+                when 7 => tmp1_out <= '1'; alu_r_not_l <= '1';
+                when 8 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -6486,12 +6400,11 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 5 => r_dst_out <= '1'; alu_r_not_l <= '1';
-                when 6 => alu_out <= '1'; r_dst_in <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 4 => r_dst_out <= '1'; alu_r_not_l <= '1';
+                when 5 => alu_out <= '1'; r_dst_in <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -6501,13 +6414,12 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => tmp0_in <= '1'; alu_r_plus_1 <= '1';
-                when 5 => alu_out <= '1';
-                when 6 => tmp1_out <= '1'; alu_r_not_l <= '1';
-                when 7 => alu_out <= '1'; r_dst_in <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => tmp0_in <= '1'; alu_r_plus_1 <= '1';
+                when 4 => alu_out <= '1';
+                when 5 => tmp1_out <= '1'; alu_r_not_l <= '1';
+                when 6 => alu_out <= '1'; r_dst_in <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -6517,14 +6429,13 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => alu_r_minus_1 <= '1';
-                when 5 => alu_out <= '1';
-                when 6 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 7 => r_dst_out <= '1'; alu_r_not_l <= '1';
-                when 8 => alu_out <= '1'; r_dst_in <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => alu_r_minus_1 <= '1';
+                when 4 => alu_out <= '1';
+                when 5 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 6 => r_dst_out <= '1'; alu_r_not_l <= '1';
+                when 7 => alu_out <= '1'; r_dst_in <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -6534,18 +6445,17 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => pc_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 5 => pc_out <= '1'; alu_r_plus_1 <= '1';
-                when 6 => alu_out <= '1'; pc_in <= '1';
-                when 7 => mdr_out <= '1'; tmp0_in <= '1';
-                when 8 => alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 9 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 10 => mdr_out <= '1'; tmp0_in <= '1';
-                when 11 => tmp1_out <= '1'; alu_r_not_l <= '1';
-                when 12 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => pc_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 4 => pc_out <= '1'; alu_r_plus_1 <= '1';
+                when 5 => alu_out <= '1'; pc_in <= '1';
+                when 6 => mdr_out <= '1'; tmp0_in <= '1';
+                when 7 => alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 8 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 9 => mdr_out <= '1'; tmp0_in <= '1';
+                when 10 => tmp1_out <= '1'; alu_r_not_l <= '1';
+                when 11 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -6555,13 +6465,12 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => mar_in <= '1'; rd <= '1';
-                when 5 => mdr_out <= '1'; tmp0_in <= '1';
-                when 6 => tmp1_out <= '1'; alu_r_not_l <= '1';
-                when 7 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => mar_in <= '1'; rd <= '1';
+                when 4 => mdr_out <= '1'; tmp0_in <= '1';
+                when 5 => tmp1_out <= '1'; alu_r_not_l <= '1';
+                when 6 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -6571,15 +6480,14 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => mar_in <= '1'; rd <= '1';
-                when 5 => mar_out <= '1'; alu_r_plus_1 <= '1';
-                when 6 => alu_out <= '1';
-                when 7 => mdr_out <= '1'; tmp0_in <= '1';
-                when 8 => tmp1_out <= '1'; alu_r_not_l <= '1';
-                when 9 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => mar_in <= '1'; rd <= '1';
+                when 4 => mar_out <= '1'; alu_r_plus_1 <= '1';
+                when 5 => alu_out <= '1';
+                when 6 => mdr_out <= '1'; tmp0_in <= '1';
+                when 7 => tmp1_out <= '1'; alu_r_not_l <= '1';
+                when 8 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -6589,15 +6497,13 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => alu_r_minus_1 <= '1';
-                when 5 => alu_out <= '1'; tmp0_in <= '1';
-                when 6 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 7 => mdr_out <= '1'; tmp0_in <= '1';
-                when 8 => tmp1_out <= '1'; alu_r_not_l <= '1';
-                when 9 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => alu_r_minus_1 <= '1';
+                when 4 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 5 => mdr_out <= '1'; tmp0_in <= '1';
+                when 6 => tmp1_out <= '1'; alu_r_not_l <= '1';
+                when 7 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -6607,19 +6513,18 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => pc_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 5 => pc_out <= '1'; alu_r_plus_1 <= '1';
-                when 6 => alu_out <= '1'; pc_in <= '1';
-                when 7 => mdr_out <= '1'; tmp0_in <= '1';
-                when 8 => alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 9 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 10 => mdr_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 11 => mdr_out <= '1'; tmp0_in <= '1';
-                when 12 => tmp1_out <= '1'; alu_r_not_l <= '1';
-                when 13 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => pc_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 4 => pc_out <= '1'; alu_r_plus_1 <= '1';
+                when 5 => alu_out <= '1'; pc_in <= '1';
+                when 6 => mdr_out <= '1'; tmp0_in <= '1';
+                when 7 => alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 8 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 9 => mdr_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 10 => mdr_out <= '1'; tmp0_in <= '1';
+                when 11 => tmp1_out <= '1'; alu_r_not_l <= '1';
+                when 12 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -6764,11 +6669,10 @@ begin
                 when 6 => mdr_out <= '1'; mar_in <= '1'; rd <= '1';
                 when 7 => mdr_out <= '1'; tmp1_in <= '1';
                 when 8 => alu_r_minus_1 <= '1';
-                when 9 => alu_out <= '1'; tmp0_in <= '1';
-                when 10 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 11 => mdr_out <= '1'; tmp0_in <= '1';
-                when 12 => tmp1_out <= '1'; alu_r_not_l <= '1';
-                when 13 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 9 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 10 => mdr_out <= '1'; tmp0_in <= '1';
+                when 11 => tmp1_out <= '1'; alu_r_not_l <= '1';
+                when 12 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -6883,11 +6787,10 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp0_in <= '1';
-                when 2 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp0_in <= '1';
-                when 4 => r_src_out <= '1'; alu_r_or_l <= '1';
-                when 5 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp0_in <= '1';
+                when 3 => r_src_out <= '1'; alu_r_or_l <= '1';
+                when 4 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -7008,11 +6911,10 @@ begin
                 when 0 => tmp1_in <= '1'; alu_r_plus_1 <= '1';
                 when 1 => alu_out <= '1';
                 when 2 => alu_r_minus_1 <= '1';
-                when 3 => alu_out <= '1'; tmp0_in <= '1';
-                when 4 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 5 => mdr_out <= '1'; tmp0_in <= '1';
-                when 6 => tmp1_out <= '1'; alu_r_or_l <= '1';
-                when 7 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 3 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 4 => mdr_out <= '1'; tmp0_in <= '1';
+                when 5 => tmp1_out <= '1'; alu_r_or_l <= '1';
+                when 6 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -7135,11 +7037,10 @@ begin
                 when 0 => alu_r_minus_1 <= '1';
                 when 1 => alu_out <= '1';
                 when 2 => alu_r_minus_1 <= '1';
-                when 3 => alu_out <= '1'; tmp0_in <= '1';
-                when 4 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 5 => mdr_out <= '1'; tmp0_in <= '1';
-                when 6 => r_src_out <= '1'; alu_r_or_l <= '1';
-                when 7 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 3 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 4 => mdr_out <= '1'; tmp0_in <= '1';
+                when 5 => r_src_out <= '1'; alu_r_or_l <= '1';
+                when 6 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -7297,11 +7198,10 @@ begin
                 when 5 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
                 when 6 => mdr_out <= '1'; tmp1_in <= '1';
                 when 7 => alu_r_minus_1 <= '1';
-                when 8 => alu_out <= '1'; tmp0_in <= '1';
-                when 9 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 10 => mdr_out <= '1'; tmp0_in <= '1';
-                when 11 => tmp1_out <= '1'; alu_r_or_l <= '1';
-                when 12 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 8 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 9 => mdr_out <= '1'; tmp0_in <= '1';
+                when 10 => tmp1_out <= '1'; alu_r_or_l <= '1';
+                when 11 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -7429,11 +7329,10 @@ begin
                 when 0 => mar_in <= '1'; rd <= '1';
                 when 1 => mdr_out <= '1'; tmp1_in <= '1';
                 when 2 => alu_r_minus_1 <= '1';
-                when 3 => alu_out <= '1'; tmp0_in <= '1';
-                when 4 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 5 => mdr_out <= '1'; tmp0_in <= '1';
-                when 6 => tmp1_out <= '1'; alu_r_or_l <= '1';
-                when 7 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 3 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 4 => mdr_out <= '1'; tmp0_in <= '1';
+                when 5 => tmp1_out <= '1'; alu_r_or_l <= '1';
+                when 6 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -7570,11 +7469,10 @@ begin
                 when 2 => alu_out <= '1';
                 when 3 => mdr_out <= '1'; tmp1_in <= '1';
                 when 4 => alu_r_minus_1 <= '1';
-                when 5 => alu_out <= '1'; tmp0_in <= '1';
-                when 6 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 7 => mdr_out <= '1'; tmp0_in <= '1';
-                when 8 => tmp1_out <= '1'; alu_r_or_l <= '1';
-                when 9 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 5 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 6 => mdr_out <= '1'; tmp0_in <= '1';
+                when 7 => tmp1_out <= '1'; alu_r_or_l <= '1';
+                when 8 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -7606,12 +7504,11 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 5 => r_dst_out <= '1'; alu_r_or_l <= '1';
-                when 6 => alu_out <= '1'; r_dst_in <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 4 => r_dst_out <= '1'; alu_r_or_l <= '1';
+                when 5 => alu_out <= '1'; r_dst_in <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -7621,13 +7518,12 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => tmp0_in <= '1'; alu_r_plus_1 <= '1';
-                when 5 => alu_out <= '1';
-                when 6 => tmp1_out <= '1'; alu_r_or_l <= '1';
-                when 7 => alu_out <= '1'; r_dst_in <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => tmp0_in <= '1'; alu_r_plus_1 <= '1';
+                when 4 => alu_out <= '1';
+                when 5 => tmp1_out <= '1'; alu_r_or_l <= '1';
+                when 6 => alu_out <= '1'; r_dst_in <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -7637,14 +7533,13 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => alu_r_minus_1 <= '1';
-                when 5 => alu_out <= '1';
-                when 6 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 7 => r_dst_out <= '1'; alu_r_or_l <= '1';
-                when 8 => alu_out <= '1'; r_dst_in <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => alu_r_minus_1 <= '1';
+                when 4 => alu_out <= '1';
+                when 5 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 6 => r_dst_out <= '1'; alu_r_or_l <= '1';
+                when 7 => alu_out <= '1'; r_dst_in <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -7654,18 +7549,17 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => pc_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 5 => pc_out <= '1'; alu_r_plus_1 <= '1';
-                when 6 => alu_out <= '1'; pc_in <= '1';
-                when 7 => mdr_out <= '1'; tmp0_in <= '1';
-                when 8 => alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 9 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 10 => mdr_out <= '1'; tmp0_in <= '1';
-                when 11 => tmp1_out <= '1'; alu_r_or_l <= '1';
-                when 12 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => pc_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 4 => pc_out <= '1'; alu_r_plus_1 <= '1';
+                when 5 => alu_out <= '1'; pc_in <= '1';
+                when 6 => mdr_out <= '1'; tmp0_in <= '1';
+                when 7 => alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 8 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 9 => mdr_out <= '1'; tmp0_in <= '1';
+                when 10 => tmp1_out <= '1'; alu_r_or_l <= '1';
+                when 11 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -7675,13 +7569,12 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => mar_in <= '1'; rd <= '1';
-                when 5 => mdr_out <= '1'; tmp0_in <= '1';
-                when 6 => tmp1_out <= '1'; alu_r_or_l <= '1';
-                when 7 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => mar_in <= '1'; rd <= '1';
+                when 4 => mdr_out <= '1'; tmp0_in <= '1';
+                when 5 => tmp1_out <= '1'; alu_r_or_l <= '1';
+                when 6 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -7691,15 +7584,14 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => mar_in <= '1'; rd <= '1';
-                when 5 => mar_out <= '1'; alu_r_plus_1 <= '1';
-                when 6 => alu_out <= '1';
-                when 7 => mdr_out <= '1'; tmp0_in <= '1';
-                when 8 => tmp1_out <= '1'; alu_r_or_l <= '1';
-                when 9 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => mar_in <= '1'; rd <= '1';
+                when 4 => mar_out <= '1'; alu_r_plus_1 <= '1';
+                when 5 => alu_out <= '1';
+                when 6 => mdr_out <= '1'; tmp0_in <= '1';
+                when 7 => tmp1_out <= '1'; alu_r_or_l <= '1';
+                when 8 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -7709,15 +7601,13 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => alu_r_minus_1 <= '1';
-                when 5 => alu_out <= '1'; tmp0_in <= '1';
-                when 6 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 7 => mdr_out <= '1'; tmp0_in <= '1';
-                when 8 => tmp1_out <= '1'; alu_r_or_l <= '1';
-                when 9 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => alu_r_minus_1 <= '1';
+                when 4 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 5 => mdr_out <= '1'; tmp0_in <= '1';
+                when 6 => tmp1_out <= '1'; alu_r_or_l <= '1';
+                when 7 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -7727,19 +7617,18 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => pc_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 5 => pc_out <= '1'; alu_r_plus_1 <= '1';
-                when 6 => alu_out <= '1'; pc_in <= '1';
-                when 7 => mdr_out <= '1'; tmp0_in <= '1';
-                when 8 => alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 9 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 10 => mdr_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 11 => mdr_out <= '1'; tmp0_in <= '1';
-                when 12 => tmp1_out <= '1'; alu_r_or_l <= '1';
-                when 13 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => pc_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 4 => pc_out <= '1'; alu_r_plus_1 <= '1';
+                when 5 => alu_out <= '1'; pc_in <= '1';
+                when 6 => mdr_out <= '1'; tmp0_in <= '1';
+                when 7 => alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 8 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 9 => mdr_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 10 => mdr_out <= '1'; tmp0_in <= '1';
+                when 11 => tmp1_out <= '1'; alu_r_or_l <= '1';
+                when 12 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -7884,11 +7773,10 @@ begin
                 when 6 => mdr_out <= '1'; mar_in <= '1'; rd <= '1';
                 when 7 => mdr_out <= '1'; tmp1_in <= '1';
                 when 8 => alu_r_minus_1 <= '1';
-                when 9 => alu_out <= '1'; tmp0_in <= '1';
-                when 10 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 11 => mdr_out <= '1'; tmp0_in <= '1';
-                when 12 => tmp1_out <= '1'; alu_r_or_l <= '1';
-                when 13 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 9 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 10 => mdr_out <= '1'; tmp0_in <= '1';
+                when 11 => tmp1_out <= '1'; alu_r_or_l <= '1';
+                when 12 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -8003,11 +7891,10 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp0_in <= '1';
-                when 2 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp0_in <= '1';
-                when 4 => r_src_out <= '1'; alu_r_xnor_l <= '1';
-                when 5 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp0_in <= '1';
+                when 3 => r_src_out <= '1'; alu_r_xnor_l <= '1';
+                when 4 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -8128,11 +8015,10 @@ begin
                 when 0 => tmp1_in <= '1'; alu_r_plus_1 <= '1';
                 when 1 => alu_out <= '1';
                 when 2 => alu_r_minus_1 <= '1';
-                when 3 => alu_out <= '1'; tmp0_in <= '1';
-                when 4 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 5 => mdr_out <= '1'; tmp0_in <= '1';
-                when 6 => tmp1_out <= '1'; alu_r_xnor_l <= '1';
-                when 7 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 3 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 4 => mdr_out <= '1'; tmp0_in <= '1';
+                when 5 => tmp1_out <= '1'; alu_r_xnor_l <= '1';
+                when 6 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -8255,11 +8141,10 @@ begin
                 when 0 => alu_r_minus_1 <= '1';
                 when 1 => alu_out <= '1';
                 when 2 => alu_r_minus_1 <= '1';
-                when 3 => alu_out <= '1'; tmp0_in <= '1';
-                when 4 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 5 => mdr_out <= '1'; tmp0_in <= '1';
-                when 6 => r_src_out <= '1'; alu_r_xnor_l <= '1';
-                when 7 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 3 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 4 => mdr_out <= '1'; tmp0_in <= '1';
+                when 5 => r_src_out <= '1'; alu_r_xnor_l <= '1';
+                when 6 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -8417,11 +8302,10 @@ begin
                 when 5 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
                 when 6 => mdr_out <= '1'; tmp1_in <= '1';
                 when 7 => alu_r_minus_1 <= '1';
-                when 8 => alu_out <= '1'; tmp0_in <= '1';
-                when 9 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 10 => mdr_out <= '1'; tmp0_in <= '1';
-                when 11 => tmp1_out <= '1'; alu_r_xnor_l <= '1';
-                when 12 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 8 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 9 => mdr_out <= '1'; tmp0_in <= '1';
+                when 10 => tmp1_out <= '1'; alu_r_xnor_l <= '1';
+                when 11 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -8549,11 +8433,10 @@ begin
                 when 0 => mar_in <= '1'; rd <= '1';
                 when 1 => mdr_out <= '1'; tmp1_in <= '1';
                 when 2 => alu_r_minus_1 <= '1';
-                when 3 => alu_out <= '1'; tmp0_in <= '1';
-                when 4 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 5 => mdr_out <= '1'; tmp0_in <= '1';
-                when 6 => tmp1_out <= '1'; alu_r_xnor_l <= '1';
-                when 7 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 3 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 4 => mdr_out <= '1'; tmp0_in <= '1';
+                when 5 => tmp1_out <= '1'; alu_r_xnor_l <= '1';
+                when 6 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -8690,11 +8573,10 @@ begin
                 when 2 => alu_out <= '1';
                 when 3 => mdr_out <= '1'; tmp1_in <= '1';
                 when 4 => alu_r_minus_1 <= '1';
-                when 5 => alu_out <= '1'; tmp0_in <= '1';
-                when 6 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 7 => mdr_out <= '1'; tmp0_in <= '1';
-                when 8 => tmp1_out <= '1'; alu_r_xnor_l <= '1';
-                when 9 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 5 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 6 => mdr_out <= '1'; tmp0_in <= '1';
+                when 7 => tmp1_out <= '1'; alu_r_xnor_l <= '1';
+                when 8 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -8726,12 +8608,11 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 5 => r_dst_out <= '1'; alu_r_xnor_l <= '1';
-                when 6 => alu_out <= '1'; r_dst_in <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 4 => r_dst_out <= '1'; alu_r_xnor_l <= '1';
+                when 5 => alu_out <= '1'; r_dst_in <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -8741,13 +8622,12 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => tmp0_in <= '1'; alu_r_plus_1 <= '1';
-                when 5 => alu_out <= '1';
-                when 6 => tmp1_out <= '1'; alu_r_xnor_l <= '1';
-                when 7 => alu_out <= '1'; r_dst_in <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => tmp0_in <= '1'; alu_r_plus_1 <= '1';
+                when 4 => alu_out <= '1';
+                when 5 => tmp1_out <= '1'; alu_r_xnor_l <= '1';
+                when 6 => alu_out <= '1'; r_dst_in <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -8757,14 +8637,13 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => alu_r_minus_1 <= '1';
-                when 5 => alu_out <= '1';
-                when 6 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 7 => r_dst_out <= '1'; alu_r_xnor_l <= '1';
-                when 8 => alu_out <= '1'; r_dst_in <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => alu_r_minus_1 <= '1';
+                when 4 => alu_out <= '1';
+                when 5 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 6 => r_dst_out <= '1'; alu_r_xnor_l <= '1';
+                when 7 => alu_out <= '1'; r_dst_in <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -8774,18 +8653,17 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => pc_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 5 => pc_out <= '1'; alu_r_plus_1 <= '1';
-                when 6 => alu_out <= '1'; pc_in <= '1';
-                when 7 => mdr_out <= '1'; tmp0_in <= '1';
-                when 8 => alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 9 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 10 => mdr_out <= '1'; tmp0_in <= '1';
-                when 11 => tmp1_out <= '1'; alu_r_xnor_l <= '1';
-                when 12 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => pc_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 4 => pc_out <= '1'; alu_r_plus_1 <= '1';
+                when 5 => alu_out <= '1'; pc_in <= '1';
+                when 6 => mdr_out <= '1'; tmp0_in <= '1';
+                when 7 => alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 8 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 9 => mdr_out <= '1'; tmp0_in <= '1';
+                when 10 => tmp1_out <= '1'; alu_r_xnor_l <= '1';
+                when 11 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -8795,13 +8673,12 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => mar_in <= '1'; rd <= '1';
-                when 5 => mdr_out <= '1'; tmp0_in <= '1';
-                when 6 => tmp1_out <= '1'; alu_r_xnor_l <= '1';
-                when 7 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => mar_in <= '1'; rd <= '1';
+                when 4 => mdr_out <= '1'; tmp0_in <= '1';
+                when 5 => tmp1_out <= '1'; alu_r_xnor_l <= '1';
+                when 6 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -8811,15 +8688,14 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => mar_in <= '1'; rd <= '1';
-                when 5 => mar_out <= '1'; alu_r_plus_1 <= '1';
-                when 6 => alu_out <= '1';
-                when 7 => mdr_out <= '1'; tmp0_in <= '1';
-                when 8 => tmp1_out <= '1'; alu_r_xnor_l <= '1';
-                when 9 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => mar_in <= '1'; rd <= '1';
+                when 4 => mar_out <= '1'; alu_r_plus_1 <= '1';
+                when 5 => alu_out <= '1';
+                when 6 => mdr_out <= '1'; tmp0_in <= '1';
+                when 7 => tmp1_out <= '1'; alu_r_xnor_l <= '1';
+                when 8 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -8829,15 +8705,13 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => alu_r_minus_1 <= '1';
-                when 5 => alu_out <= '1'; tmp0_in <= '1';
-                when 6 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 7 => mdr_out <= '1'; tmp0_in <= '1';
-                when 8 => tmp1_out <= '1'; alu_r_xnor_l <= '1';
-                when 9 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => alu_r_minus_1 <= '1';
+                when 4 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 5 => mdr_out <= '1'; tmp0_in <= '1';
+                when 6 => tmp1_out <= '1'; alu_r_xnor_l <= '1';
+                when 7 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -8847,19 +8721,18 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => pc_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 5 => pc_out <= '1'; alu_r_plus_1 <= '1';
-                when 6 => alu_out <= '1'; pc_in <= '1';
-                when 7 => mdr_out <= '1'; tmp0_in <= '1';
-                when 8 => alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 9 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 10 => mdr_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 11 => mdr_out <= '1'; tmp0_in <= '1';
-                when 12 => tmp1_out <= '1'; alu_r_xnor_l <= '1';
-                when 13 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => pc_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 4 => pc_out <= '1'; alu_r_plus_1 <= '1';
+                when 5 => alu_out <= '1'; pc_in <= '1';
+                when 6 => mdr_out <= '1'; tmp0_in <= '1';
+                when 7 => alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 8 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 9 => mdr_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 10 => mdr_out <= '1'; tmp0_in <= '1';
+                when 11 => tmp1_out <= '1'; alu_r_xnor_l <= '1';
+                when 12 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -9004,11 +8877,10 @@ begin
                 when 6 => mdr_out <= '1'; mar_in <= '1'; rd <= '1';
                 when 7 => mdr_out <= '1'; tmp1_in <= '1';
                 when 8 => alu_r_minus_1 <= '1';
-                when 9 => alu_out <= '1'; tmp0_in <= '1';
-                when 10 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 11 => mdr_out <= '1'; tmp0_in <= '1';
-                when 12 => tmp1_out <= '1'; alu_r_xnor_l <= '1';
-                when 13 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 9 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 10 => mdr_out <= '1'; tmp0_in <= '1';
+                when 11 => tmp1_out <= '1'; alu_r_xnor_l <= '1';
+                when 12 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -9121,11 +8993,10 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => r_src_out <= '1'; tmp0_in <= '1';
-                when 5 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => r_src_out <= '1'; tmp0_in <= '1';
+                when 4 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -9252,13 +9123,12 @@ begin
                 when 0 => tmp1_in <= '1'; alu_r_plus_1 <= '1';
                 when 1 => alu_out <= '1';
                 when 2 => alu_r_minus_1 <= '1';
-                when 3 => alu_out <= '1'; tmp0_in <= '1';
-                when 4 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 5 => mdr_out <= '1'; tmp0_in <= '1';
-                when 6 => tmp0_out <= '1'; mdr_in <= '1';
-                when 7 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 8 => mdr_out <= '1'; tmp1_in <= '1';
-                when 9 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
+                when 3 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 4 => mdr_out <= '1'; tmp0_in <= '1';
+                when 5 => tmp0_out <= '1'; mdr_in <= '1';
+                when 6 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 7 => mdr_out <= '1'; tmp1_in <= '1';
+                when 8 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -9381,11 +9251,10 @@ begin
                 when 0 => alu_r_minus_1 <= '1';
                 when 1 => alu_out <= '1';
                 when 2 => alu_r_minus_1 <= '1';
-                when 3 => alu_out <= '1'; tmp1_in <= '1';
-                when 4 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 5 => mdr_out <= '1'; tmp1_in <= '1';
-                when 6 => r_src_out <= '1'; tmp0_in <= '1';
-                when 7 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
+                when 3 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 4 => mdr_out <= '1'; tmp1_in <= '1';
+                when 5 => r_src_out <= '1'; tmp0_in <= '1';
+                when 6 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -9549,13 +9418,12 @@ begin
                 when 5 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
                 when 6 => mdr_out <= '1'; tmp1_in <= '1';
                 when 7 => alu_r_minus_1 <= '1';
-                when 8 => alu_out <= '1'; tmp0_in <= '1';
-                when 9 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 10 => mdr_out <= '1'; tmp0_in <= '1';
-                when 11 => tmp0_out <= '1'; mdr_in <= '1';
-                when 12 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 13 => mdr_out <= '1'; tmp1_in <= '1';
-                when 14 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
+                when 8 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 9 => mdr_out <= '1'; tmp0_in <= '1';
+                when 10 => tmp0_out <= '1'; mdr_in <= '1';
+                when 11 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 12 => mdr_out <= '1'; tmp1_in <= '1';
+                when 13 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -9691,13 +9559,12 @@ begin
                 when 0 => mar_in <= '1'; rd <= '1';
                 when 1 => mdr_out <= '1'; tmp1_in <= '1';
                 when 2 => alu_r_minus_1 <= '1';
-                when 3 => alu_out <= '1'; tmp0_in <= '1';
-                when 4 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 5 => mdr_out <= '1'; tmp0_in <= '1';
-                when 6 => tmp0_out <= '1'; mdr_in <= '1';
-                when 7 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 8 => mdr_out <= '1'; tmp1_in <= '1';
-                when 9 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
+                when 3 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 4 => mdr_out <= '1'; tmp0_in <= '1';
+                when 5 => tmp0_out <= '1'; mdr_in <= '1';
+                when 6 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 7 => mdr_out <= '1'; tmp1_in <= '1';
+                when 8 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -9842,13 +9709,12 @@ begin
                 when 2 => alu_out <= '1';
                 when 3 => mdr_out <= '1'; tmp1_in <= '1';
                 when 4 => alu_r_minus_1 <= '1';
-                when 5 => alu_out <= '1'; tmp0_in <= '1';
-                when 6 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 7 => mdr_out <= '1'; tmp0_in <= '1';
-                when 8 => tmp0_out <= '1'; mdr_in <= '1';
-                when 9 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 10 => mdr_out <= '1'; tmp1_in <= '1';
-                when 11 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
+                when 5 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 6 => mdr_out <= '1'; tmp0_in <= '1';
+                when 7 => tmp0_out <= '1'; mdr_in <= '1';
+                when 8 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 9 => mdr_out <= '1'; tmp1_in <= '1';
+                when 10 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -9882,11 +9748,10 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 5 => r_dst_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 4 => r_dst_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -9896,15 +9761,14 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => tmp0_in <= '1'; alu_r_plus_1 <= '1';
-                when 5 => alu_out <= '1';
-                when 6 => tmp0_out <= '1'; mdr_in <= '1';
-                when 7 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 8 => mdr_out <= '1'; tmp1_in <= '1';
-                when 9 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => tmp0_in <= '1'; alu_r_plus_1 <= '1';
+                when 4 => alu_out <= '1';
+                when 5 => tmp0_out <= '1'; mdr_in <= '1';
+                when 6 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 7 => mdr_out <= '1'; tmp1_in <= '1';
+                when 8 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -9914,13 +9778,12 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => alu_r_minus_1 <= '1';
-                when 5 => alu_out <= '1';
-                when 6 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 7 => r_dst_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => alu_r_minus_1 <= '1';
+                when 4 => alu_out <= '1';
+                when 5 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 6 => r_dst_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -9930,20 +9793,19 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => pc_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 5 => pc_out <= '1'; alu_r_plus_1 <= '1';
-                when 6 => alu_out <= '1'; pc_in <= '1';
-                when 7 => mdr_out <= '1'; tmp0_in <= '1';
-                when 8 => alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 9 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 10 => mdr_out <= '1'; tmp0_in <= '1';
-                when 11 => tmp0_out <= '1'; mdr_in <= '1';
-                when 12 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 13 => mdr_out <= '1'; tmp1_in <= '1';
-                when 14 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => pc_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 4 => pc_out <= '1'; alu_r_plus_1 <= '1';
+                when 5 => alu_out <= '1'; pc_in <= '1';
+                when 6 => mdr_out <= '1'; tmp0_in <= '1';
+                when 7 => alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 8 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 9 => mdr_out <= '1'; tmp0_in <= '1';
+                when 10 => tmp0_out <= '1'; mdr_in <= '1';
+                when 11 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 12 => mdr_out <= '1'; tmp1_in <= '1';
+                when 13 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -9953,15 +9815,14 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => mar_in <= '1'; rd <= '1';
-                when 5 => mdr_out <= '1'; tmp0_in <= '1';
-                when 6 => tmp0_out <= '1'; mdr_in <= '1';
-                when 7 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 8 => mdr_out <= '1'; tmp1_in <= '1';
-                when 9 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => mar_in <= '1'; rd <= '1';
+                when 4 => mdr_out <= '1'; tmp0_in <= '1';
+                when 5 => tmp0_out <= '1'; mdr_in <= '1';
+                when 6 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 7 => mdr_out <= '1'; tmp1_in <= '1';
+                when 8 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -9971,17 +9832,16 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => mar_in <= '1'; rd <= '1';
-                when 5 => mar_out <= '1'; alu_r_plus_1 <= '1';
-                when 6 => alu_out <= '1';
-                when 7 => mdr_out <= '1'; tmp0_in <= '1';
-                when 8 => tmp0_out <= '1'; mdr_in <= '1';
-                when 9 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 10 => mdr_out <= '1'; tmp1_in <= '1';
-                when 11 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => mar_in <= '1'; rd <= '1';
+                when 4 => mar_out <= '1'; alu_r_plus_1 <= '1';
+                when 5 => alu_out <= '1';
+                when 6 => mdr_out <= '1'; tmp0_in <= '1';
+                when 7 => tmp0_out <= '1'; mdr_in <= '1';
+                when 8 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 9 => mdr_out <= '1'; tmp1_in <= '1';
+                when 10 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -9991,17 +9851,15 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => alu_r_minus_1 <= '1';
-                when 5 => alu_out <= '1'; tmp0_in <= '1';
-                when 6 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 7 => mdr_out <= '1'; tmp0_in <= '1';
-                when 8 => tmp0_out <= '1'; mdr_in <= '1';
-                when 9 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 10 => mdr_out <= '1'; tmp1_in <= '1';
-                when 11 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => alu_r_minus_1 <= '1';
+                when 4 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 5 => mdr_out <= '1'; tmp0_in <= '1';
+                when 6 => tmp0_out <= '1'; mdr_in <= '1';
+                when 7 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 8 => mdr_out <= '1'; tmp1_in <= '1';
+                when 9 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -10011,21 +9869,20 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp1_in <= '1';
-                when 2 => tmp1_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp1_in <= '1';
-                when 4 => pc_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 5 => pc_out <= '1'; alu_r_plus_1 <= '1';
-                when 6 => alu_out <= '1'; pc_in <= '1';
-                when 7 => mdr_out <= '1'; tmp0_in <= '1';
-                when 8 => alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 9 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 10 => mdr_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 11 => mdr_out <= '1'; tmp0_in <= '1';
-                when 12 => tmp0_out <= '1'; mdr_in <= '1';
-                when 13 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 14 => mdr_out <= '1'; tmp1_in <= '1';
-                when 15 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => pc_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 4 => pc_out <= '1'; alu_r_plus_1 <= '1';
+                when 5 => alu_out <= '1'; pc_in <= '1';
+                when 6 => mdr_out <= '1'; tmp0_in <= '1';
+                when 7 => alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
+                when 8 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 9 => mdr_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 10 => mdr_out <= '1'; tmp0_in <= '1';
+                when 11 => tmp0_out <= '1'; mdr_in <= '1';
+                when 12 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 13 => mdr_out <= '1'; tmp1_in <= '1';
+                when 14 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -10176,13 +10033,12 @@ begin
                 when 6 => mdr_out <= '1'; mar_in <= '1'; rd <= '1';
                 when 7 => mdr_out <= '1'; tmp1_in <= '1';
                 when 8 => alu_r_minus_1 <= '1';
-                when 9 => alu_out <= '1'; tmp0_in <= '1';
-                when 10 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 11 => mdr_out <= '1'; tmp0_in <= '1';
-                when 12 => tmp0_out <= '1'; mdr_in <= '1';
-                when 13 => tmp1_out <= '1'; tmp0_in <= '1';
-                when 14 => mdr_out <= '1'; tmp1_in <= '1';
-                when 15 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
+                when 9 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 10 => mdr_out <= '1'; tmp0_in <= '1';
+                when 11 => tmp0_out <= '1'; mdr_in <= '1';
+                when 12 => tmp1_out <= '1'; tmp0_in <= '1';
+                when 13 => mdr_out <= '1'; tmp1_in <= '1';
+                when 14 => tmp1_out <= '1'; alu_c_eq_0 <= '1'; alu_r_minus_l_minus_c <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -10229,9 +10085,9 @@ begin
         procedure inc_at_x_r_r_plus is
         begin
             case timer is
-                when 0 => tmp0_in <= '1'; alu_r_plus_1 <= '1';
+                when 0 => tmp1_in <= '1'; alu_r_plus_1 <= '1';
                 when 1 => alu_out <= '1';
-                when 2 => tmp0_out <= '1'; alu_r_plus_1 <= '1';
+                when 2 => tmp1_out <= '1'; alu_r_plus_1 <= '1';
                 when 3 => alu_out <= '1'; r_dst_in <= '1';
                 when others => end_flag <= 1;
             end case;
@@ -10259,8 +10115,8 @@ begin
                 when 3 => mdr_out <= '1'; tmp0_in <= '1';
                 when 4 => alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
                 when 5 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 6 => mdr_out <= '1'; tmp0_in <= '1';
-                when 7 => tmp0_out <= '1'; alu_r_plus_1 <= '1';
+                when 6 => mdr_out <= '1'; tmp1_in <= '1';
+                when 7 => tmp1_out <= '1'; alu_r_plus_1 <= '1';
                 when 8 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
@@ -10271,8 +10127,8 @@ begin
         begin
             case timer is
                 when 0 => mar_in <= '1'; rd <= '1';
-                when 1 => mdr_out <= '1'; tmp0_in <= '1';
-                when 2 => tmp0_out <= '1'; alu_r_plus_1 <= '1';
+                when 1 => mdr_out <= '1'; tmp1_in <= '1';
+                when 2 => tmp1_out <= '1'; alu_r_plus_1 <= '1';
                 when 3 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
@@ -10285,8 +10141,8 @@ begin
                 when 0 => mar_in <= '1'; rd <= '1';
                 when 1 => mar_out <= '1'; alu_r_plus_1 <= '1';
                 when 2 => alu_out <= '1';
-                when 3 => mdr_out <= '1'; tmp0_in <= '1';
-                when 4 => tmp0_out <= '1'; alu_r_plus_1 <= '1';
+                when 3 => mdr_out <= '1'; tmp1_in <= '1';
+                when 4 => tmp1_out <= '1'; alu_r_plus_1 <= '1';
                 when 5 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
@@ -10297,11 +10153,10 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp0_in <= '1';
-                when 2 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp0_in <= '1';
-                when 4 => tmp0_out <= '1'; alu_r_plus_1 <= '1';
-                when 5 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => tmp1_out <= '1'; alu_r_plus_1 <= '1';
+                when 4 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -10317,8 +10172,8 @@ begin
                 when 4 => alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
                 when 5 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
                 when 6 => mdr_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 7 => mdr_out <= '1'; tmp0_in <= '1';
-                when 8 => tmp0_out <= '1'; alu_r_plus_1 <= '1';
+                when 7 => mdr_out <= '1'; tmp1_in <= '1';
+                when 8 => tmp1_out <= '1'; alu_r_plus_1 <= '1';
                 when 9 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
@@ -10338,9 +10193,9 @@ begin
         procedure dec_at_x_r_r_plus is
         begin
             case timer is
-                when 0 => tmp0_in <= '1'; alu_r_plus_1 <= '1';
+                when 0 => tmp1_in <= '1'; alu_r_plus_1 <= '1';
                 when 1 => alu_out <= '1';
-                when 2 => tmp0_out <= '1'; alu_r_minus_1 <= '1';
+                when 2 => tmp1_out <= '1'; alu_r_minus_1 <= '1';
                 when 3 => alu_out <= '1'; r_dst_in <= '1';
                 when others => end_flag <= 1;
             end case;
@@ -10368,8 +10223,8 @@ begin
                 when 3 => mdr_out <= '1'; tmp0_in <= '1';
                 when 4 => alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
                 when 5 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 6 => mdr_out <= '1'; tmp0_in <= '1';
-                when 7 => tmp0_out <= '1'; alu_r_minus_1 <= '1';
+                when 6 => mdr_out <= '1'; tmp1_in <= '1';
+                when 7 => tmp1_out <= '1'; alu_r_minus_1 <= '1';
                 when 8 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
@@ -10380,8 +10235,8 @@ begin
         begin
             case timer is
                 when 0 => mar_in <= '1'; rd <= '1';
-                when 1 => mdr_out <= '1'; tmp0_in <= '1';
-                when 2 => tmp0_out <= '1'; alu_r_minus_1 <= '1';
+                when 1 => mdr_out <= '1'; tmp1_in <= '1';
+                when 2 => tmp1_out <= '1'; alu_r_minus_1 <= '1';
                 when 3 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
@@ -10394,8 +10249,8 @@ begin
                 when 0 => mar_in <= '1'; rd <= '1';
                 when 1 => mar_out <= '1'; alu_r_plus_1 <= '1';
                 when 2 => alu_out <= '1';
-                when 3 => mdr_out <= '1'; tmp0_in <= '1';
-                when 4 => tmp0_out <= '1'; alu_r_minus_1 <= '1';
+                when 3 => mdr_out <= '1'; tmp1_in <= '1';
+                when 4 => tmp1_out <= '1'; alu_r_minus_1 <= '1';
                 when 5 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
@@ -10406,11 +10261,10 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp0_in <= '1';
-                when 2 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp0_in <= '1';
-                when 4 => tmp0_out <= '1'; alu_r_minus_1 <= '1';
-                when 5 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => tmp1_out <= '1'; alu_r_minus_1 <= '1';
+                when 4 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -10426,8 +10280,8 @@ begin
                 when 4 => alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
                 when 5 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
                 when 6 => mdr_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 7 => mdr_out <= '1'; tmp0_in <= '1';
-                when 8 => tmp0_out <= '1'; alu_r_minus_1 <= '1';
+                when 7 => mdr_out <= '1'; tmp1_in <= '1';
+                when 8 => tmp1_out <= '1'; alu_r_minus_1 <= '1';
                 when 9 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
@@ -10503,8 +10357,8 @@ begin
         begin
             case timer is
                 when 0 => r_dst_out <= '1'; alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp0_in <= '1'; mar_in <= '1';
-                when 2 => tmp0_out <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1';
+                when 2 => alu_out <= '1';
                 when 3 => alu_zero <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
@@ -10539,9 +10393,9 @@ begin
         procedure inv_at_x_r_r_plus is
         begin
             case timer is
-                when 0 => tmp0_in <= '1'; alu_r_plus_1 <= '1';
+                when 0 => tmp1_in <= '1'; alu_r_plus_1 <= '1';
                 when 1 => alu_out <= '1';
-                when 2 => tmp0_out <= '1'; alu_not_r <= '1';
+                when 2 => tmp1_out <= '1'; alu_not_r <= '1';
                 when 3 => alu_out <= '1'; r_dst_in <= '1';
                 when others => end_flag <= 1;
             end case;
@@ -10569,8 +10423,8 @@ begin
                 when 3 => mdr_out <= '1'; tmp0_in <= '1';
                 when 4 => alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
                 when 5 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 6 => mdr_out <= '1'; tmp0_in <= '1';
-                when 7 => tmp0_out <= '1'; alu_not_r <= '1';
+                when 6 => mdr_out <= '1'; tmp1_in <= '1';
+                when 7 => tmp1_out <= '1'; alu_not_r <= '1';
                 when 8 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
@@ -10581,8 +10435,8 @@ begin
         begin
             case timer is
                 when 0 => mar_in <= '1'; rd <= '1';
-                when 1 => mdr_out <= '1'; tmp0_in <= '1';
-                when 2 => tmp0_out <= '1'; alu_not_r <= '1';
+                when 1 => mdr_out <= '1'; tmp1_in <= '1';
+                when 2 => tmp1_out <= '1'; alu_not_r <= '1';
                 when 3 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
@@ -10595,8 +10449,8 @@ begin
                 when 0 => mar_in <= '1'; rd <= '1';
                 when 1 => mar_out <= '1'; alu_r_plus_1 <= '1';
                 when 2 => alu_out <= '1';
-                when 3 => mdr_out <= '1'; tmp0_in <= '1';
-                when 4 => tmp0_out <= '1'; alu_not_r <= '1';
+                when 3 => mdr_out <= '1'; tmp1_in <= '1';
+                when 4 => tmp1_out <= '1'; alu_not_r <= '1';
                 when 5 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
@@ -10607,11 +10461,10 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp0_in <= '1';
-                when 2 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; tmp0_in <= '1';
-                when 4 => tmp0_out <= '1'; alu_not_r <= '1';
-                when 5 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; tmp1_in <= '1';
+                when 3 => tmp1_out <= '1'; alu_not_r <= '1';
+                when 4 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -10627,8 +10480,8 @@ begin
                 when 4 => alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
                 when 5 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
                 when 6 => mdr_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 7 => mdr_out <= '1'; tmp0_in <= '1';
-                when 8 => tmp0_out <= '1'; alu_not_r <= '1';
+                when 7 => mdr_out <= '1'; tmp1_in <= '1';
+                when 8 => tmp1_out <= '1'; alu_not_r <= '1';
                 when 9 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
@@ -10709,10 +10562,9 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp0_in <= '1';
-                when 2 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; alu_c_eq_0 <= '1'; alu_rrc <= '1';
-                when 4 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; alu_c_eq_0 <= '1'; alu_rrc <= '1';
+                when 3 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -10809,10 +10661,9 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp0_in <= '1';
-                when 2 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; alu_ror <= '1';
-                when 4 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; alu_ror <= '1';
+                when 3 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -10909,10 +10760,9 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp0_in <= '1';
-                when 2 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; alu_rrc <= '1';
-                when 4 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; alu_rrc <= '1';
+                when 3 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -11009,10 +10859,9 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp0_in <= '1';
-                when 2 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; alu_asr <= '1';
-                when 4 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; alu_asr <= '1';
+                when 3 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -11109,10 +10958,9 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp0_in <= '1';
-                when 2 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; alu_c_eq_0 <= '1'; alu_rlc <= '1';
-                when 4 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; alu_c_eq_0 <= '1'; alu_rlc <= '1';
+                when 3 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -11209,10 +11057,9 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp0_in <= '1';
-                when 2 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; alu_rol <= '1';
-                when 4 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; alu_rol <= '1';
+                when 3 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -11309,10 +11156,9 @@ begin
         begin
             case timer is
                 when 0 => alu_r_minus_1 <= '1';
-                when 1 => alu_out <= '1'; tmp0_in <= '1';
-                when 2 => tmp0_out <= '1'; mar_in <= '1'; rd <= '1';
-                when 3 => mdr_out <= '1'; alu_rlc <= '1';
-                when 4 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
+                when 1 => alu_out <= '1'; mar_in <= '1'; rd <= '1';
+                when 2 => mdr_out <= '1'; alu_rlc <= '1';
+                when 3 => alu_out <= '1'; mdr_in <= '1'; wr <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;
@@ -11438,13 +11284,13 @@ begin
                 when 0 => pc_out <= '1'; mar_in <= '1'; rd <= '1';
                 when 1 => pc_out <= '1'; alu_r_plus_1 <= '1';
                 when 2 => alu_out <= '1'; pc_in <= '1';
-                when 3 => mdr_out <= '1'; tmp0_in <= '1';
+                when 3 => mdr_out <= '1'; tmp1_in <= '1';
                 when 4 => alu_c_eq_0 <= '1'; alu_r_plus_l_plus_c <= '1';
-                when 5 => alu_out <= '1'; tmp0_in <= '1';
+                when 5 => alu_out <= '1'; tmp1_in <= '1';
                 when 6 => alu_r_minus_1 <= '1';
                 when 7 => alu_out <= '1'; mar_in <= '1';
                 when 8 => pc_out <= '1'; mdr_in <= '1'; wr <= '1';
-                when 9 => tmp0_out <= '1'; pc_in <= '1';
+                when 9 => tmp1_out <= '1'; pc_in <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;

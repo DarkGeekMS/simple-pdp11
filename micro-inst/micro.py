@@ -49,8 +49,7 @@ def fetch_value_TMP(mode: str, tmp: str):
 
     elif mode == '@-(R)':
         wr(f'R.out, ALU.r-1')
-        wr(f'ALU.out, {tmp}.in')
-        wr(f'{tmp}.out, R.in, MAR.in, RD')
+        wr(f'ALU.out, R.in, MAR.in, RD')
         wr(f'MDR.out, {tmp}.in')
 
         return tmp
@@ -88,8 +87,7 @@ def fetch_addr(mode: str, tmp: str):
 
     elif mode == '@-(R)':
         wr(f'R.out, ALU.r-1')
-        wr(f'ALU.out, {tmp}.in')
-        wr(f'{tmp}.out, R.in, MAR.in')
+        wr(f'ALU.out, R.in, MAR.in')
 
     elif mode == '@X(R)':
         # get x
@@ -236,7 +234,7 @@ def cmpp(src, dst):
 
 
 def inc(dst, func='ALU.r+1'):
-    tmp = fetch_value_TMP(dst, 'TMP0')
+    tmp = fetch_value_TMP(dst, 'TMP1')
 
     if tmp == 'R':
         wr(f'R.out, {func}')
@@ -286,8 +284,8 @@ def clr(dst):
 
     elif dst == '@-(R)':
         wr('R(dst).out, ALU.r-1')
-        wr(f'ALU.out, TMP0.in, MAR.in')
-        wr('TMP0.out, R.in')
+        wr(f'ALU.out, MAR.in')
+        wr('ALU.out, R.in')
 
         wr('ALU.zero, MDR.in, WR')
 
@@ -351,8 +349,7 @@ def lsr(dst, func='ALU.c=0, ALU.rrc'):
 
     elif dst == '@-(R)':
         wr(f'R.out, ALU.r-1')
-        wr(f'ALU.out, TMP0.in')
-        wr(f'TMP0.out, R.in, MAR.in, RD')
+        wr(f'ALU.out, R.in, MAR.in, RD')
         wr(f'MDR.out, {func}')
         wr(f'ALU.out, MDR.in, WR')
 
@@ -414,13 +411,13 @@ def branch(cond: str):
 jsr = '''PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
-MDR.out, TMP0.in
+MDR.out, TMP1.in
 R.out, ALU.c=0, ALU.r+l+c
-ALU.out, TMP0.in
+ALU.out, TMP1.in
 R6.out, ALU.r-1
 ALU.out, R6.in, MAR.in
 PC.out, MDR.in, WR
-TMP0.out, PC.in'''
+TMP1.out, PC.in'''
 
 rts = '''R6.out, MAR.in, RD
 MDR.out, PC.in
