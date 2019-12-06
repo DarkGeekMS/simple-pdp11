@@ -1,5 +1,6 @@
 import sys
 import json
+
 path = sys.argv[1]
 instr = {}
 
@@ -90,6 +91,64 @@ functions = '\n\n'.join([get_function(inst_name, fix_inst(inst_name), inst_lines
                          for (inst_name, inst_lines) in instr['instructions'].items()])
 
 
+# TODO: fill the branches
+opcodes = {
+    'MOV': '0001',
+    'ADD': '0010',
+    'ADC': '0011',
+    'SUB': '0100',
+    'SUBC': '0101',
+    'AND': '0110',
+    'OR': '0111',
+    'XNOR': '1000',
+    'CMP': '1001',
+    'INC': '11110000',
+    'DEC': '11110001',
+    'CLR': '11110010',
+    'INV': '11110011',
+    'LSR': '11110100',
+    'ROR': '11110101',
+    'RRC': '11110110',
+    'ASR': '11110111',
+    'LSL': '11111000',
+    'ROL': '11111001',
+    'RLC': '11111010',
+}
+
+# TODO: fill with actual data
+modes = {
+    'R': '000',
+    '(R)+': '001',
+    '-(R)': '010',
+    'X(R)': '011',
+    '@R': '100',
+    '@(R)+': '101',
+    '@-(R)': '110',
+    '@X(R)': '111',
+}
+
+
+def get_conditions(instr_parts):
+    try:
+        code = opcodes[instr_parts[0]]
+
+        if len(code) == 4:
+            return f'ir_data(15 downto {16-len(code)}) = "{code}" and ir_data(11 downto 9) = "{modes[instr_parts[1]]}" and ir_data(5 downto 3) = "{modes[instr_parts[2]]}"'
+        else:
+            return f'ir_data(15 downto {16-len(code)}) = "{code}" and ir_data(11 downto 9) = "{modes[instr_parts[1]]}"'
+    except:
+        return 'ir_data = x"FF00FF00"'  # TODO remove
+
+
+def get_instr_case(instr_name, fixed_name):
+    instr_name = instr_name.split()
+    sp = ' '*4*3
+    return f'{sp}if {get_conditions(instr_name)} then {fixed_name}; end if;'
+
+
+instr_cases = '\n'.join([get_instr_case(inst_name, fix_inst(inst_name))
+                         for (inst_name, _) in instr['instructions'].items()])
+
 out = f'''-- Auto generated file, any edits will be lost --
 library ieee;
 use ieee.std_logic_1164.all;
@@ -131,14 +190,12 @@ begin
             {' '.join([x for x in map(lambda x: f"{x} <= '0';", sigs)])}
         end procedure;
 
+{functions}
+
         procedure execute_instr is
         begin
-            --case ir_data is
-                -- TODO generate 'when cases' useing opcodes
-            --end case;
+{instr_cases}
         end procedure;
-
-{functions}
     begin
         if hlt_flag = 0 and rising_edge(clk) then
             clk_ticks <= clk_ticks + 1;
@@ -157,8 +214,7 @@ begin
             end if;
         end if;
     end process;
-
 end architecture;'''
 
-with open(sys.argv[2] + 'control_unit_hardwired.vhdl','w') as f:
+with open(sys.argv[2] + 'control_unit_hardwired.vhdl', 'w') as f:
     print(out, file=f)
