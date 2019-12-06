@@ -202,9 +202,9 @@ def sub(src, dst, func='ALU.c=0, ALU.r-l-c', do_write=True):
 
     else:
         # TMP1 carries src, TMP0 carries dst
-        wr(f'TMP0.out, MDR.in')
+        wr(f'ALU.c=0, ALU.r+l+c')
         wr(f'TMP1.out, TMP0.in')
-        wr(f'MDR.out, TMP1.in')
+        wr(f'ALU.out, TMP1.in')
 
         # TMP0 carries src, TMP1 carries dst
         wr(f'TMP1.out, {func}')
