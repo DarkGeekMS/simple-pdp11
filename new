@@ -44,18 +44,18 @@ library vunit_lib;
 context vunit_lib.vunit_context;
 
 entity ${UNIT}_tb is
-    generic (runner_cfg : string);
+    generic (runner_cfg: string);
 end entity; 
 
 architecture tb of ${UNIT}_tb is
-    constant CLK_FREQ : integer := 100e6; -- 100 MHz
-    constant CLK_PERD : time    := 1000 ms / CLK_FREQ;
+    constant CLK_FREQ: integer := 100e6; -- 100 MHz
+    constant CLK_PERD: time    := 1000 ms / CLK_FREQ;
 
     signal clk: std_logic := '0';
 begin
     clk <= not clk after CLK_PERD / 2;
 
-    ${UNIT} : entity work.${UNIT} port map ( );
+    ${UNIT}: entity work.${UNIT} port map ( );
 
     main: process
     begin

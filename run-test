@@ -6,13 +6,21 @@ run-daemon() {
         echo running container daemon...
         docker run --rm -it -d -v "`pwd`":"`pwd`" -w "`pwd`" -u 1000:1000 --name ghdld ghdl/ext sleep 1h >/dev/null
         echo daemon is up
+
+        echo -n 'vunit version: '
+        docker exec -w "$PWD" ghdld python3 vunit-main.py --version
+
+        echo write out/project.json
+        mkdir -p out
+        docker exec -w "$PWD" ghdld python3 vunit-main.py --export-json out/project.json -o out
     fi
 }
 
 main() {
     run-daemon
-
-    docker exec -w "$PWD" ghdld python3 vunit-main.py pdp11.$TEST --minimal --keep-compiling --gtkwave-fmt vcd -o out
+    
+    echo "run tests for pdp11.$TEST"
+    docker exec -w "$PWD" ghdld python3 vunit-main.py pdp11.$TEST  -x out/report.xml  --minimal --keep-compiling --gtkwave-fmt vcd -o out
 }
 
 if [[ "$1" = "" ]]; then
