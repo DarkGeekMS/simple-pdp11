@@ -8,7 +8,7 @@ entity control_unit_hardwired is
         clk: in std_logic;
         ir_data, flags_data: in std_logic_vector(15 downto 0);
 
-        alu_asr, alu_c_eq_0, alu_out, alu_r_not_l, alu_r_xnor_l, alu_r_plus_1, alu_r_plus_l_plus_c, alu_r_minus_1, alu_r_minus_l_minus_c, alu_rlc, alu_rol, alu_ror, alu_rrc, alu_r_or_l, alu_zero, alu_not_r, flags_in, flags_out, hardware_address_out_l, ir_addr_out, mar_in, mar_out, mdr_in, mdr_out, pc_in, pc_out, r_dst_in, r_dst_out, r_src_in, r_src_out, rd, tmp0_in, tmp0_out, tmp1_in, tmp1_out, wr: out std_logic
+        alu_asr, alu_c_eq_0, alu_out, alu_r_not_l, alu_r_xnor_l, alu_r_plus_1, alu_r_plus_l_plus_c, alu_r_minus_1, alu_r_minus_l_minus_c, alu_rlc, alu_rol, alu_ror, alu_rrc, alu_r_or_l, alu_zero, alu_not_r, flags_in, flags_out, hardware_address_out, ir_addr_out, mar_in, mar_out, mdr_in, mdr_out, pc_in, pc_out, r_dst_in, r_dst_out, r_src_in, r_src_out, rd, tmp0_in, tmp0_out, tmp1_in, tmp1_out, wr: out std_logic
     );
 end entity; 
 
@@ -36,7 +36,7 @@ begin
     process (clk)
         procedure zero_all_out is
         begin
-            alu_asr <= '0'; alu_c_eq_0 <= '0'; alu_out <= '0'; alu_r_not_l <= '0'; alu_r_xnor_l <= '0'; alu_r_plus_1 <= '0'; alu_r_plus_l_plus_c <= '0'; alu_r_minus_1 <= '0'; alu_r_minus_l_minus_c <= '0'; alu_rlc <= '0'; alu_rol <= '0'; alu_ror <= '0'; alu_rrc <= '0'; alu_r_or_l <= '0'; alu_zero <= '0'; alu_not_r <= '0'; flags_in <= '0'; flags_out <= '0'; hardware_address_out_l <= '0'; ir_addr_out <= '0'; mar_in <= '0'; mar_out <= '0'; mdr_in <= '0'; mdr_out <= '0'; pc_in <= '0'; pc_out <= '0'; r_dst_in <= '0'; r_dst_out <= '0'; r_src_in <= '0'; r_src_out <= '0'; rd <= '0'; tmp0_in <= '0'; tmp0_out <= '0'; tmp1_in <= '0'; tmp1_out <= '0'; wr <= '0';
+            alu_asr <= '0'; alu_c_eq_0 <= '0'; alu_out <= '0'; alu_r_not_l <= '0'; alu_r_xnor_l <= '0'; alu_r_plus_1 <= '0'; alu_r_plus_l_plus_c <= '0'; alu_r_minus_1 <= '0'; alu_r_minus_l_minus_c <= '0'; alu_rlc <= '0'; alu_rol <= '0'; alu_ror <= '0'; alu_rrc <= '0'; alu_r_or_l <= '0'; alu_zero <= '0'; alu_not_r <= '0'; flags_in <= '0'; flags_out <= '0'; hardware_address_out <= '0'; ir_addr_out <= '0'; mar_in <= '0'; mar_out <= '0'; mdr_in <= '0'; mdr_out <= '0'; pc_in <= '0'; pc_out <= '0'; r_dst_in <= '0'; r_dst_out <= '0'; r_src_in <= '0'; r_src_out <= '0'; rd <= '0'; tmp0_in <= '0'; tmp0_out <= '0'; tmp1_in <= '0'; tmp1_out <= '0'; wr <= '0';
         end procedure;
 
         -- MOV R R
@@ -11473,7 +11473,7 @@ begin
                 when 5 => alu_out <= '1'; mar_in <= '1';
                 when 6 => pc_out <= '1'; mdr_in <= '1';
                 when 7 => mar_in <= '1'; rd <= '1';
-                when 8 => pc_in <= '1'; hardware_address_out_l <= '1';
+                when 8 => pc_in <= '1'; hardware_address_out <= '1';
                 when others => end_flag <= 1;
             end case;
         end procedure;

@@ -435,7 +435,7 @@ R6.out, ALU.r-1
 ALU.out, R6.in, MAR.in
 PC.out, MDR.in
 R6.out, MAR.in, RD
-PC.in, HARDWARE_ADDRESS.out.l'''
+PC.in, HARDWARE_ADDRESS.out'''
 
 iret = '''R6.out, MAR.in, RD
 MDR.out, PC.in

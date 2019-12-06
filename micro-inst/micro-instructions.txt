@@ -11464,7 +11464,7 @@ R6.out, ALU.r-1
 ALU.out, R6.in, MAR.in
 PC.out, MDR.in
 R6.out, MAR.in, RD
-PC.in, HARDWARE_ADDRESS.out.l
+PC.in, HARDWARE_ADDRESS.out
 END
 
 CPU cicles = 14
@@ -11513,7 +11513,7 @@ Total Control Signals (36): {
 	ALU.~r
 	FLAGS.in
 	FLAGS.out
-	HARDWARE_ADDRESS.out.l
+	HARDWARE_ADDRESS.out
 	IR.addr.out
 	MAR.in
 	MAR.out
