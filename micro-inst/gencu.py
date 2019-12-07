@@ -127,8 +127,6 @@ opcodes = {
     'IRET': '111011',
 }
 
-
-# TODO: fill with actual data
 modes = {
     'R': '000',
     '(R)+': '001',
@@ -144,10 +142,12 @@ modes = {
 def get_conditions(instr_parts):
     code = opcodes[instr_parts[0]]
 
-    if len(code) == 4:
+    if len(instr_parts) == 3:
         return f'ir_data(15 downto {16-len(code)}) = "{code}" and ir_data(11 downto 9) = "{modes[instr_parts[1]]}" and ir_data(5 downto 3) = "{modes[instr_parts[2]]}"'
-    else:
+    elif len(instr_parts) == 2:
         return f'ir_data(15 downto {16-len(code)}) = "{code}" and ir_data(11 downto 9) = "{modes[instr_parts[1]]}"'
+    else:
+        return f'ir_data(15 downto {16-len(code)}) = "{code}"'
 
 
 def get_instr_case(instr_name, fixed_name):
@@ -177,16 +177,13 @@ end entity;
 architecture rtl of control_unit_hardwired is
     -- if set, do no operation
     signal hlt_flag: integer := 0;
+
+    -- indicates the end of micro-program
     signal end_flag: integer := 0;
 
     -- from 0 -> n-1, where n is the number of lines for the microprogram
     signal timer: integer := 0;
 
-    -- increment number of clk ticks, when it reachs MAX_CLK_TICKS increment timer and reset clk_ticks
-    constant MAX_CLK_TICKS: integer := 4;
-    signal clk_ticks: integer := 0;
-
-    -- TODO: fix these assumptions according to the scheme
     alias carry_flag: std_logic is flags_data(0);
     alias zero_flag: std_logic is flags_data(1);
     alias neg_flag: std_logic is flags_data(2);
@@ -208,19 +205,12 @@ begin
         end procedure;
     begin
         if hlt_flag = 0 and rising_edge(clk) then
-            clk_ticks <= clk_ticks + 1;
-
-            if clk_ticks = MAX_CLK_TICKS then
-                clk_ticks <= 0;
-
-                zero_all_out;
-                execute_instr;
-            end if;
-
+            zero_all_out;
+            execute_instr;
+            timer <= timer + 1;
             if end_flag = 1 then
                 end_flag <= 0;
                 timer <= 0;
-                zero_all_out;
             end if;
         end if;
     end process;
