@@ -80,6 +80,20 @@ def fetch_addr(mode: str, tmp: str):
     if mode == '@R':
         wr('R.out, MAR.in')
 
+    elif mode == 'X(R)':
+        # get x
+        wr('PC.out, MAR.in, RD')
+
+        # pc++
+        wr('PC.out, ALU.r+1')
+        wr('ALU.out, PC.in')
+
+        # tmp = x+R
+        wr(f'MDR.out, TMP0.in')
+        # mdr = [tmp]
+        wr(f'R.out, ALU.c=0, ALU.r+l+c')
+        wr(f'ALU.out, MAR.in')
+
     elif mode == '@(R)+':
         wr('R.out, MAR.in')
         wr(f'MAR.out, ALU.r+1')
