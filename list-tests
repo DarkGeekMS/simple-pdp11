@@ -12,7 +12,7 @@ run-daemon() {
 main() {
     run-daemon
 
-    docker exec -w "$PWD" ghdld python3 vunit-main.py "$@" -o out
+    docker exec -w "$PWD" ghdld python3 scripts/vunit-main.py "$@" -o out
 }
 
 main -l 2>/dev/null | grep --color=never ${1-pdp11}

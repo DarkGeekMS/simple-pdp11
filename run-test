@@ -8,11 +8,11 @@ run-daemon() {
         echo daemon is up
 
         echo -n 'vunit version: '
-        docker exec -w "$PWD" ghdld python3 vunit-main.py --version
+        docker exec -w "$PWD" ghdld python3 scripts/vunit-main.py --version
 
         echo write out/project.json
         mkdir -p out
-        docker exec -w "$PWD" ghdld python3 vunit-main.py --export-json out/project.json -o out
+        docker exec -w "$PWD" ghdld python3 scripts/vunit-main.py --export-json out/project.json -o out
     fi
 }
 
@@ -20,7 +20,7 @@ main() {
     run-daemon
     
     echo "run tests for pdp11.$TEST"
-    docker exec -w "$PWD" ghdld python3 vunit-main.py pdp11.$TEST -p4  -x out/report.xml  --minimal --keep-compiling --gtkwave-fmt vcd -o out
+    docker exec -w "$PWD" ghdld python3 scripts/vunit-main.py pdp11.$TEST -p4  -x out/report.xml  --minimal --keep-compiling --gtkwave-fmt vcd -o out
 }
 
 if [[ "$1" = "" ]]; then
