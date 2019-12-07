@@ -1,31 +1,31 @@
-def fetch_value_TMP(mode: str, tmp: str):
+def fetch_value_TMP(mode: str, tmp: str, r_name: str):
     if mode == 'R':
-        return 'R'
+        return f'R({r_name})'
 
     elif mode == '(R)+':
-        wr(f'R.out, {tmp}.in, ALU.r+1')
-        wr(f'ALU.out, R.in')
+        wr(f'R({r_name}).out, {tmp}.in, ALU.r+1')
+        wr(f'ALU.out, R({r_name}).in')
 
         return tmp
 
     elif mode == '-(R)':
-        wr('R.out, ALU.r-1')
-        wr('ALU.out, R.in')
+        wr(f'R({r_name}).out, ALU.r-1')
+        wr(f'ALU.out, R({r_name}).in')
 
-        return 'R'
+        return f'R({r_name})'
 
     elif mode == 'X(R)':
         # get x
-        wr('PC.out, MAR.in, RD')
+        wr(f'PC.out, MAR.in, RD')
 
         # pc++
-        wr('PC.out, ALU.r+1')
-        wr('ALU.out, PC.in')
+        wr(f'PC.out, ALU.r+1')
+        wr(f'ALU.out, PC.in')
 
-        # tmp = x+R
+        # tmp = x+R({r_name})
         wr(f'MDR.out, TMP0.in')
         # mdr = [tmp]
-        wr(f'R.out, ALU.c=0, ALU.r+l+c')
+        wr(f'R({r_name}).out, ALU.c=0, ALU.r+l+c')
         wr(f'ALU.out, MAR.in, RD')
 
         # temp = mdr TODO: maybe not optimal?
@@ -34,38 +34,38 @@ def fetch_value_TMP(mode: str, tmp: str):
         return tmp
 
     elif mode == '@R':
-        wr('R.out, MAR.in, RD')
+        wr(f'R({r_name}).out, MAR.in, RD')
         wr(f'MDR.out, {tmp}.in')
 
         return tmp
 
     elif mode == '@(R)+':
-        wr('R.out, MAR.in, RD')
+        wr(f'R({r_name}).out, MAR.in, RD')
         wr(f'MAR.out, ALU.r+1')
-        wr(f'ALU.out, R.in')
+        wr(f'ALU.out, R({r_name}).in')
         wr(f'MDR.out, {tmp}.in')
 
         return tmp
 
     elif mode == '@-(R)':
-        wr(f'R.out, ALU.r-1')
-        wr(f'ALU.out, R.in, MAR.in, RD')
+        wr(f'R({r_name}).out, ALU.r-1')
+        wr(f'ALU.out, R({r_name}).in, MAR.in, RD')
         wr(f'MDR.out, {tmp}.in')
 
         return tmp
 
     elif mode == '@X(R)':
         # get x
-        wr('PC.out, MAR.in, RD')
+        wr(f'PC.out, MAR.in, RD')
 
         # pc++
-        wr('PC.out, ALU.r+1')
-        wr('ALU.out, PC.in')
+        wr(f'PC.out, ALU.r+1')
+        wr(f'ALU.out, PC.in')
 
-        # tmp = x+R
+        # tmp = x+R({r_name})
         wr(f'MDR.out, TMP0.in')
         # get tmp
-        wr(f'R.out, ALU.c=0, ALU.r+l+c')
+        wr(f'R({r_name}).out, ALU.c=0, ALU.r+l+c')
         wr(f'ALU.out, MAR.in, RD')
 
         # get tmp
@@ -76,45 +76,45 @@ def fetch_value_TMP(mode: str, tmp: str):
         return tmp
 
 
-def fetch_addr(mode: str, tmp: str):
+def fetch_addr(mode: str, tmp: str, r_name: str):
     if mode == '@R':
-        wr('R.out, MAR.in')
+        wr(f'R({r_name}).out, MAR.in')
 
     elif mode == 'X(R)':
         # get x
-        wr('PC.out, MAR.in, RD')
+        wr(f'PC.out, MAR.in, RD')
 
         # pc++
-        wr('PC.out, ALU.r+1')
-        wr('ALU.out, PC.in')
+        wr(f'PC.out, ALU.r+1')
+        wr(f'ALU.out, PC.in')
 
-        # tmp = x+R
+        # tmp = x+R({r_name})
         wr(f'MDR.out, TMP0.in')
         # mdr = [tmp]
-        wr(f'R.out, ALU.c=0, ALU.r+l+c')
+        wr(f'R({r_name}).out, ALU.c=0, ALU.r+l+c')
         wr(f'ALU.out, MAR.in')
 
     elif mode == '@(R)+':
-        wr('R.out, MAR.in')
+        wr(f'R({r_name}).out, MAR.in')
         wr(f'MAR.out, ALU.r+1')
-        wr(f'ALU.out, R.in')
+        wr(f'ALU.out, R({r_name}).in')
 
     elif mode == '@-(R)':
-        wr(f'R.out, ALU.r-1')
-        wr(f'ALU.out, R.in, MAR.in')
+        wr(f'R({r_name}).out, ALU.r-1')
+        wr(f'ALU.out, R({r_name}).in, MAR.in')
 
     elif mode == '@X(R)':
         # get x
-        wr('PC.out, MAR.in, RD')
+        wr(f'PC.out, MAR.in, RD')
 
         # pc++
-        wr('PC.out, ALU.r+1')
-        wr('ALU.out, PC.in')
+        wr(f'PC.out, ALU.r+1')
+        wr(f'ALU.out, PC.in')
 
-        # tmp = x+R
+        # tmp = x+R({r_name})
         wr(f'MDR.out, TMP0.in')
         # get tmp
-        wr(f'R.out, ALU.c=0, ALU.r+l+c')
+        wr(f'R({r_name}).out, ALU.c=0, ALU.r+l+c')
         wr(f'ALU.out, MAR.in, RD')
 
         wr(f'MDR.out, MAR.in')
@@ -122,33 +122,33 @@ def fetch_addr(mode: str, tmp: str):
 
 def _write_R(mode: str, need_addr=False):
     if need_addr:
-        fetch_addr(mode, 'TMP0')
+        fetch_addr(mode, 'TMP0', 'dst')
 
     if mode in ('R', '-(R)', '(R)+'):
-        wr('R(src).out, R(dst).in')
+        wr(f'R(src).out, R(dst).in')
     else:
-        wr('R(src).out, MDR.in, WR')
+        wr(f'R(src).out, MDR.in, WR')
 
 
 def _write_ALU(mode: str, need_addr=False):
     if mode in ('R', '-(R)', '(R)+'):
-        wr('ALU.out, R(dst).in')
+        wr(f'ALU.out, R(dst).in')
     else:
         if need_addr:
-            wr('ALU.out, TMP1.in')
-            fetch_addr(mode, 'TMP0')
-            wr('TMP1.out, MDR.in, WR')
+            wr(f'ALU.out, TMP1.in')
+            fetch_addr(mode, 'TMP0', 'dst')
+            wr(f'TMP1.out, MDR.in, WR')
         else:
-            wr('ALU.out, MDR.in, WR')
+            wr(f'ALU.out, MDR.in, WR')
 
 
 def _write_TMP(mode: str, inp: str, need_addr=False):
     if mode in ('R', '-(R)', '(R)+'):
-        wr(f'{inp}.out, R.in')
+        wr(f'{inp}.out, R(dst).in')
     else:
         if need_addr:
             tmp = 'TMP0' if inp != 'TMP0' else 'TMP1'
-            fetch_addr(mode, tmp)
+            fetch_addr(mode, tmp, 'dst')
 
         wr(f'{inp}.out, MDR.in, WR')
 
@@ -165,13 +165,13 @@ def write(mode: str, inp: str, need_addr=False):
 
 
 def mov(src, dst):
-    tmp1 = fetch_value_TMP(src, 'TMP1')
+    tmp1 = fetch_value_TMP(src, 'TMP1', 'src')
     write(dst, tmp1, True)
 
 
 def add(src, dst, func='ALU.c=0, ALU.r+l+c'):
-    tmp1 = fetch_value_TMP(src, 'TMP1')
-    tmp0 = fetch_value_TMP(dst, 'TMP0')
+    tmp1 = fetch_value_TMP(src, 'TMP1', 'src')
+    tmp0 = fetch_value_TMP(dst, 'TMP0', 'dst')
 
     if tmp1 == 'R' and tmp0 == 'R':
         wr(f'R(src).out, TMP0.in')
@@ -197,8 +197,8 @@ def adc(src, dst):
 
 
 def sub(src, dst, func='ALU.c=0, ALU.r-l-c', do_write=True):
-    tmp1 = fetch_value_TMP(src, 'TMP1')
-    tmp0 = fetch_value_TMP(dst, 'TMP0' if tmp1 != 'R' else 'TMP1')
+    tmp1 = fetch_value_TMP(src, 'TMP1', 'src')
+    tmp0 = fetch_value_TMP(dst, 'TMP0' if tmp1 != 'R' else 'TMP1', 'dst')
 
     if tmp0 == 'R' and tmp1 == 'R':
         wr(f'R(src).out, TMP0.in')
@@ -248,7 +248,7 @@ def cmpp(src, dst):
 
 
 def inc(dst, func='ALU.r+1'):
-    tmp = fetch_value_TMP(dst, 'TMP1')
+    tmp = fetch_value_TMP(dst, 'TMP1', 'src')
 
     if tmp == 'R':
         wr(f'R.out, {func}')
@@ -264,59 +264,59 @@ def dec(dst):
 
 def clr(dst):
     if dst in ('R', '-(R)', '(R)+'):
-        wr('ALU.zero, R(dst).in')
+        wr(f'ALU.zero, R(dst).in')
 
     elif dst == 'X(R)':
         # get x
-        wr('PC.out, MAR.in, RD')
+        wr(f'PC.out, MAR.in, RD')
 
         # pc++
-        wr('PC.out, ALU.r+1')
-        wr('ALU.out, PC.in')
+        wr(f'PC.out, ALU.r+1')
+        wr(f'ALU.out, PC.in')
 
         # [x+R] = inp
-        wr('MDR.out, TMP0.in')
-        wr('R.out, ALU.c=0, ALU.r+l+c')
+        wr(f'MDR.out, TMP0.in')
+        wr(f'R.out, ALU.c=0, ALU.r+l+c')
         wr(f'ALU.out, MAR.in')
 
-        wr('ALU.zero, MDR.in, WR')
+        wr(f'ALU.zero, MDR.in, WR')
 
     elif dst == '@R':
-        wr('R(dst).out, MAR.in')
+        wr(f'R(dst).out, MAR.in')
 
-        wr('ALU.zero, MDR.in, WR')
+        wr(f'ALU.zero, MDR.in, WR')
 
     elif dst == '@(R)+':
-        wr('R(dst).out, MAR.in')
+        wr(f'R(dst).out, MAR.in')
 
-        wr('ALU.zero, MDR.in, WR')
+        wr(f'ALU.zero, MDR.in, WR')
 
-        wr('R.out, ALU.r+1')
-        wr('ALU.out, R.in')
+        wr(f'R.out, ALU.r+1')
+        wr(f'ALU.out, R.in')
 
-        wr('ALU.zero, MDR.in, WR')
+        wr(f'ALU.zero, MDR.in, WR')
 
     elif dst == '@-(R)':
-        wr('R(dst).out, ALU.r-1')
+        wr(f'R(dst).out, ALU.r-1')
         wr(f'ALU.out, MAR.in')
-        wr('ALU.out, R.in')
+        wr(f'ALU.out, R.in')
 
-        wr('ALU.zero, MDR.in, WR')
+        wr(f'ALU.zero, MDR.in, WR')
 
     elif dst == '@X(R)':
         # get x
-        wr('PC.out, MAR.in, RD')
+        wr(f'PC.out, MAR.in, RD')
 
         # pc++
-        wr('PC.out, ALU.r+1')
-        wr('ALU.out, PC.in')
+        wr(f'PC.out, ALU.r+1')
+        wr(f'ALU.out, PC.in')
 
         # tmp = x+R
-        wr('MDR.out, TMP0.in')
-        wr('R.out, ALU.c=0, ALU.r+l+c')
+        wr(f'MDR.out, TMP0.in')
+        wr(f'R.out, ALU.c=0, ALU.r+l+c')
         wr(f'ALU.out, MAR.in')
 
-        wr('ALU.zero, MDR.in, WR')
+        wr(f'ALU.zero, MDR.in, WR')
 
 
 def inv(dst):
@@ -329,16 +329,16 @@ def lsr(dst, func='ALU.c=0, ALU.rrc'):
         wr(f'ALU.out, R.in')
 
     elif dst == '-(R)':
-        wr('R.out, ALU.r-1')
+        wr(f'R.out, ALU.r-1')
         wr(f'{func}, ALU.out, R.in')
 
     elif dst == 'X(R)':
         # get x
-        wr('PC.out, MAR.in, RD')
+        wr(f'PC.out, MAR.in, RD')
 
         # pc++
-        wr('PC.out, ALU.r+1')
-        wr('ALU.out, PC.in')
+        wr(f'PC.out, ALU.r+1')
+        wr(f'ALU.out, PC.in')
 
         # tmp = x+R
         wr(f'MDR.out, TMP0.in')
@@ -350,12 +350,12 @@ def lsr(dst, func='ALU.c=0, ALU.rrc'):
         wr(f'ALU.out, MDR.in, WR')
 
     elif dst == '@R':
-        wr('R.out, MAR.in, RD')
+        wr(f'R.out, MAR.in, RD')
         wr(f'MDR.out, {func}')
         wr(f'ALU.out, MDR.in, WR')
 
     elif dst == '@(R)+':
-        wr('R.out, MAR.in, RD')
+        wr(f'R.out, MAR.in, RD')
         wr(f'MAR.out, ALU.r+1')
         wr(f'ALU.out, R.in')
         wr(f'MDR.out, {func}')
@@ -369,11 +369,11 @@ def lsr(dst, func='ALU.c=0, ALU.rrc'):
 
     elif dst == '@X(R)':
         # get x
-        wr('PC.out, MAR.in, RD')
+        wr(f'PC.out, MAR.in, RD')
 
         # pc++
-        wr('PC.out, ALU.r+1')
-        wr('ALU.out, PC.in')
+        wr(f'PC.out, ALU.r+1')
+        wr(f'ALU.out, PC.in')
 
         # tmp = x+R
         wr(f'MDR.out, TMP0.in')
@@ -417,9 +417,9 @@ def branch(cond: str):
     if cond is not None:
         wr(f'IF NOT {cond} THEN END, ', end='')
 
-    wr('IR.addr.out, TMP0.in')
-    wr('PC.out, ALU.c=0, ALU.r+l+c')
-    wr('ALU.out, PC.in')
+    wr(f'IR.addr.out, TMP0.in')
+    wr(f'PC.out, ALU.c=0, ALU.r+l+c')
+    wr(f'ALU.out, PC.in')
 
 
 jsr = '''PC.out, MAR.in, RD
@@ -520,6 +520,8 @@ def wr(x: str, end='\n'):
     lines.extend(x.splitlines())
     get_unique(x)
 
+    assert x.count('r_name') == 0
+
     print(x, end=end)
 
 
@@ -537,7 +539,7 @@ for (instr, instr_name) in [(mov, 'MOV'), (add, 'ADD'), (adc, 'ADC'),
             print('-'*15)
 
             instr(src, dst)
-            wr('END')
+            wr(f'END')
 
             json_out['instructions'][f'{instr_name} {src} {dst}'] = lines
             print()
@@ -558,7 +560,7 @@ for (instr, instr_name) in [(inc, 'INC'), (dec, 'DEC'), (clr, 'CLR'),
         print('-'*15)
 
         instr(dst)
-        wr('END')
+        wr(f'END')
 
         json_out['instructions'][f'{instr_name} {src} {dst}'] = lines
         print()
@@ -579,7 +581,7 @@ for (name, cond) in [('BR', None),
     print('-'*15)
 
     branch(cond)
-    wr('END')
+    wr(f'END')
 
     json_out['instructions'][f'{name}'] = lines
     print()
@@ -603,7 +605,7 @@ for (name, code) in [('HLT', 'HLT'), ('NOP', ''),
     if code != '':
         wr(code)
     if name != 'HLT':
-        wr('END')
+        wr(f'END')
 
     json_out['instructions'][f'{name}'] = lines
     print()
@@ -633,6 +635,7 @@ unique_signals.discard('R6.out')
 unique_signals.discard('R6.in')
 unique_signals.discard('END')
 unique_signals.discard('HLT')
+unique_signals.discard('HARDWARE_ADDRESS.out')
 
 unique_signals = list(unique_signals)
 unique_signals.sort()

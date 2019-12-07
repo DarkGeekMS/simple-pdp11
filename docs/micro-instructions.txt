@@ -68,7 +68,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in
 R(src).out, MDR.in, WR
 END
@@ -79,7 +79,7 @@ MEM access = 3
 ---------------
 MOV R @R
 ---------------
-R.out, MAR.in
+R(dst).out, MAR.in
 R(src).out, MDR.in, WR
 END
 
@@ -89,9 +89,9 @@ MEM access = 2
 ---------------
 MOV R @(R)+
 ---------------
-R.out, MAR.in
+R(dst).out, MAR.in
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 R(src).out, MDR.in, WR
 END
 
@@ -101,8 +101,8 @@ MEM access = 2
 ---------------
 MOV R @-(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in
 R(src).out, MDR.in, WR
 END
 
@@ -116,7 +116,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in
 R(src).out, MDR.in, WR
@@ -128,9 +128,9 @@ MEM access = 4
 ---------------
 MOV (R)+ R
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-TMP1.out, R.in
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+TMP1.out, R(dst).in
 END
 
 CPU cicles = 8
@@ -139,9 +139,9 @@ MEM access = 1
 ---------------
 MOV (R)+ (R)+
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-TMP1.out, R.in
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+TMP1.out, R(dst).in
 END
 
 CPU cicles = 8
@@ -150,9 +150,9 @@ MEM access = 1
 ---------------
 MOV (R)+ -(R)
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-TMP1.out, R.in
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+TMP1.out, R(dst).in
 END
 
 CPU cicles = 8
@@ -161,13 +161,13 @@ MEM access = 1
 ---------------
 MOV (R)+ X(R)
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in
 TMP1.out, MDR.in, WR
 END
@@ -178,9 +178,9 @@ MEM access = 3
 ---------------
 MOV (R)+ @R
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R.out, MAR.in
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+R(dst).out, MAR.in
 TMP1.out, MDR.in, WR
 END
 
@@ -190,11 +190,11 @@ MEM access = 2
 ---------------
 MOV (R)+ @(R)+
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R.out, MAR.in
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+R(dst).out, MAR.in
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 TMP1.out, MDR.in, WR
 END
 
@@ -204,10 +204,10 @@ MEM access = 2
 ---------------
 MOV (R)+ @-(R)
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in
 TMP1.out, MDR.in, WR
 END
 
@@ -217,13 +217,13 @@ MEM access = 2
 ---------------
 MOV (R)+ @X(R)
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in
 TMP1.out, MDR.in, WR
@@ -235,8 +235,8 @@ MEM access = 4
 ---------------
 MOV -(R) R
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
+R(src).out, ALU.r-1
+ALU.out, R(src).in
 R(src).out, R(dst).in
 END
 
@@ -246,8 +246,8 @@ MEM access = 1
 ---------------
 MOV -(R) (R)+
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
+R(src).out, ALU.r-1
+ALU.out, R(src).in
 R(src).out, R(dst).in
 END
 
@@ -257,8 +257,8 @@ MEM access = 1
 ---------------
 MOV -(R) -(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
+R(src).out, ALU.r-1
+ALU.out, R(src).in
 R(src).out, R(dst).in
 END
 
@@ -268,13 +268,13 @@ MEM access = 1
 ---------------
 MOV -(R) X(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
+R(src).out, ALU.r-1
+ALU.out, R(src).in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in
 R(src).out, MDR.in, WR
 END
@@ -285,9 +285,9 @@ MEM access = 3
 ---------------
 MOV -(R) @R
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, MAR.in
+R(src).out, ALU.r-1
+ALU.out, R(src).in
+R(dst).out, MAR.in
 R(src).out, MDR.in, WR
 END
 
@@ -297,11 +297,11 @@ MEM access = 2
 ---------------
 MOV -(R) @(R)+
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, MAR.in
+R(src).out, ALU.r-1
+ALU.out, R(src).in
+R(dst).out, MAR.in
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 R(src).out, MDR.in, WR
 END
 
@@ -311,10 +311,10 @@ MEM access = 2
 ---------------
 MOV -(R) @-(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in
+R(src).out, ALU.r-1
+ALU.out, R(src).in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in
 R(src).out, MDR.in, WR
 END
 
@@ -324,13 +324,13 @@ MEM access = 2
 ---------------
 MOV -(R) @X(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
+R(src).out, ALU.r-1
+ALU.out, R(src).in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in
 R(src).out, MDR.in, WR
@@ -346,10 +346,10 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-TMP1.out, R.in
+TMP1.out, R(dst).in
 END
 
 CPU cicles = 13
@@ -362,10 +362,10 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-TMP1.out, R.in
+TMP1.out, R(dst).in
 END
 
 CPU cicles = 13
@@ -378,10 +378,10 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-TMP1.out, R.in
+TMP1.out, R(dst).in
 END
 
 CPU cicles = 13
@@ -394,14 +394,14 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in
 TMP1.out, MDR.in, WR
 END
@@ -416,10 +416,10 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in
+R(dst).out, MAR.in
 TMP1.out, MDR.in, WR
 END
 
@@ -433,12 +433,12 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in
+R(dst).out, MAR.in
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 TMP1.out, MDR.in, WR
 END
 
@@ -452,11 +452,11 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in
 TMP1.out, MDR.in, WR
 END
 
@@ -470,14 +470,14 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in
 TMP1.out, MDR.in, WR
@@ -489,9 +489,9 @@ MEM access = 6
 ---------------
 MOV @R R
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-TMP1.out, R.in
+TMP1.out, R(dst).in
 END
 
 CPU cicles = 8
@@ -500,9 +500,9 @@ MEM access = 2
 ---------------
 MOV @R (R)+
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-TMP1.out, R.in
+TMP1.out, R(dst).in
 END
 
 CPU cicles = 8
@@ -511,9 +511,9 @@ MEM access = 2
 ---------------
 MOV @R -(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-TMP1.out, R.in
+TMP1.out, R(dst).in
 END
 
 CPU cicles = 8
@@ -522,13 +522,13 @@ MEM access = 2
 ---------------
 MOV @R X(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in
 TMP1.out, MDR.in, WR
 END
@@ -539,9 +539,9 @@ MEM access = 4
 ---------------
 MOV @R @R
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in
+R(dst).out, MAR.in
 TMP1.out, MDR.in, WR
 END
 
@@ -551,11 +551,11 @@ MEM access = 3
 ---------------
 MOV @R @(R)+
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in
+R(dst).out, MAR.in
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 TMP1.out, MDR.in, WR
 END
 
@@ -565,10 +565,10 @@ MEM access = 3
 ---------------
 MOV @R @-(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in
 TMP1.out, MDR.in, WR
 END
 
@@ -578,13 +578,13 @@ MEM access = 3
 ---------------
 MOV @R @X(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in
 TMP1.out, MDR.in, WR
@@ -596,11 +596,11 @@ MEM access = 5
 ---------------
 MOV @(R)+ R
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-TMP1.out, R.in
+TMP1.out, R(dst).in
 END
 
 CPU cicles = 10
@@ -609,11 +609,11 @@ MEM access = 2
 ---------------
 MOV @(R)+ (R)+
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-TMP1.out, R.in
+TMP1.out, R(dst).in
 END
 
 CPU cicles = 10
@@ -622,11 +622,11 @@ MEM access = 2
 ---------------
 MOV @(R)+ -(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-TMP1.out, R.in
+TMP1.out, R(dst).in
 END
 
 CPU cicles = 10
@@ -635,15 +635,15 @@ MEM access = 2
 ---------------
 MOV @(R)+ X(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in
 TMP1.out, MDR.in, WR
 END
@@ -654,11 +654,11 @@ MEM access = 4
 ---------------
 MOV @(R)+ @R
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-R.out, MAR.in
+R(dst).out, MAR.in
 TMP1.out, MDR.in, WR
 END
 
@@ -668,13 +668,13 @@ MEM access = 3
 ---------------
 MOV @(R)+ @(R)+
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-R.out, MAR.in
+R(dst).out, MAR.in
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 TMP1.out, MDR.in, WR
 END
 
@@ -684,12 +684,12 @@ MEM access = 3
 ---------------
 MOV @(R)+ @-(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in
 TMP1.out, MDR.in, WR
 END
 
@@ -699,15 +699,15 @@ MEM access = 3
 ---------------
 MOV @(R)+ @X(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in
 TMP1.out, MDR.in, WR
@@ -719,10 +719,10 @@ MEM access = 5
 ---------------
 MOV @-(R) R
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-TMP1.out, R.in
+TMP1.out, R(dst).in
 END
 
 CPU cicles = 9
@@ -731,10 +731,10 @@ MEM access = 2
 ---------------
 MOV @-(R) (R)+
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-TMP1.out, R.in
+TMP1.out, R(dst).in
 END
 
 CPU cicles = 9
@@ -743,10 +743,10 @@ MEM access = 2
 ---------------
 MOV @-(R) -(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-TMP1.out, R.in
+TMP1.out, R(dst).in
 END
 
 CPU cicles = 9
@@ -755,14 +755,14 @@ MEM access = 2
 ---------------
 MOV @-(R) X(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in
 TMP1.out, MDR.in, WR
 END
@@ -773,10 +773,10 @@ MEM access = 4
 ---------------
 MOV @-(R) @R
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in
+R(dst).out, MAR.in
 TMP1.out, MDR.in, WR
 END
 
@@ -786,12 +786,12 @@ MEM access = 3
 ---------------
 MOV @-(R) @(R)+
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in
+R(dst).out, MAR.in
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 TMP1.out, MDR.in, WR
 END
 
@@ -801,11 +801,11 @@ MEM access = 3
 ---------------
 MOV @-(R) @-(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in
 TMP1.out, MDR.in, WR
 END
 
@@ -815,14 +815,14 @@ MEM access = 3
 ---------------
 MOV @-(R) @X(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in
 TMP1.out, MDR.in, WR
@@ -838,11 +838,11 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-TMP1.out, R.in
+TMP1.out, R(dst).in
 END
 
 CPU cicles = 14
@@ -855,11 +855,11 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-TMP1.out, R.in
+TMP1.out, R(dst).in
 END
 
 CPU cicles = 14
@@ -872,11 +872,11 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-TMP1.out, R.in
+TMP1.out, R(dst).in
 END
 
 CPU cicles = 14
@@ -889,7 +889,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
@@ -897,7 +897,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in
 TMP1.out, MDR.in, WR
 END
@@ -912,11 +912,11 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in
+R(dst).out, MAR.in
 TMP1.out, MDR.in, WR
 END
 
@@ -930,13 +930,13 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in
+R(dst).out, MAR.in
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 TMP1.out, MDR.in, WR
 END
 
@@ -950,12 +950,12 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in
 TMP1.out, MDR.in, WR
 END
 
@@ -969,7 +969,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
@@ -977,7 +977,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in
 TMP1.out, MDR.in, WR
@@ -989,19 +989,18 @@ MEM access = 7
 ---------------
 ADD R R
 ---------------
-R(src).out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r+l+c
-ALU.out, R(src).in
+R(src).out, ALU.c=0, ALU.r+l+c
+ALU.out, R(dst).in
 END
 
-CPU cicles = 8
+CPU cicles = 7
 MEM access = 1
 
 ---------------
 ADD R (R)+
 ---------------
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, R(dst).in
 END
@@ -1012,14 +1011,13 @@ MEM access = 1
 ---------------
 ADD R -(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R(src).out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r+l+c
-ALU.out, R(src).in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+R(src).out, ALU.c=0, ALU.r+l+c
+ALU.out, R(dst).in
 END
 
-CPU cicles = 10
+CPU cicles = 9
 MEM access = 1
 
 ---------------
@@ -1029,7 +1027,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 R(src).out, ALU.c=0, ALU.r+l+c
@@ -1042,7 +1040,7 @@ MEM access = 4
 ---------------
 ADD R @R
 ---------------
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -1054,9 +1052,9 @@ MEM access = 3
 ---------------
 ADD R @(R)+
 ---------------
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -1068,8 +1066,8 @@ MEM access = 3
 ---------------
 ADD R @-(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -1085,7 +1083,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -1099,23 +1097,22 @@ MEM access = 5
 ---------------
 ADD (R)+ R
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r+l+c
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+TMP1.out, ALU.c=0, ALU.r+l+c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 10
+CPU cicles = 9
 MEM access = 1
 
 ---------------
 ADD (R)+ (R)+
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 TMP1.out, ALU.c=0, ALU.r+l+c
 ALU.out, R(dst).in
 END
@@ -1126,28 +1123,27 @@ MEM access = 1
 ---------------
 ADD (R)+ -(R)
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R.out, ALU.r-1
-ALU.out, R.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r+l+c
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+TMP1.out, ALU.c=0, ALU.r+l+c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 12
+CPU cicles = 11
 MEM access = 1
 
 ---------------
 ADD (R)+ X(R)
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.c=0, ALU.r+l+c
@@ -1160,9 +1156,9 @@ MEM access = 4
 ---------------
 ADD (R)+ @R
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R.out, MAR.in, RD
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.c=0, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -1174,11 +1170,11 @@ MEM access = 3
 ---------------
 ADD (R)+ @(R)+
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R.out, MAR.in, RD
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 TMP1.out, ALU.c=0, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -1190,10 +1186,10 @@ MEM access = 3
 ---------------
 ADD (R)+ @-(R)
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.c=0, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -1205,13 +1201,13 @@ MEM access = 3
 ---------------
 ADD (R)+ @X(R)
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -1225,23 +1221,22 @@ MEM access = 5
 ---------------
 ADD -(R) R
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R(src).out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.r-1
 ALU.out, R(src).in
+R(src).out, ALU.c=0, ALU.r+l+c
+ALU.out, R(dst).in
 END
 
-CPU cicles = 10
+CPU cicles = 9
 MEM access = 1
 
 ---------------
 ADD -(R) (R)+
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(src).out, ALU.r-1
+ALU.out, R(src).in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, R(dst).in
 END
@@ -1252,28 +1247,27 @@ MEM access = 1
 ---------------
 ADD -(R) -(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, ALU.r-1
-ALU.out, R.in
-R(src).out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.r-1
 ALU.out, R(src).in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+R(src).out, ALU.c=0, ALU.r+l+c
+ALU.out, R(dst).in
 END
 
-CPU cicles = 12
+CPU cicles = 11
 MEM access = 1
 
 ---------------
 ADD -(R) X(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
+R(src).out, ALU.r-1
+ALU.out, R(src).in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 R(src).out, ALU.c=0, ALU.r+l+c
@@ -1286,9 +1280,9 @@ MEM access = 4
 ---------------
 ADD -(R) @R
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -1300,11 +1294,11 @@ MEM access = 3
 ---------------
 ADD -(R) @(R)+
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -1316,10 +1310,10 @@ MEM access = 3
 ---------------
 ADD -(R) @-(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -1331,13 +1325,13 @@ MEM access = 3
 ---------------
 ADD -(R) @X(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
+R(src).out, ALU.r-1
+ALU.out, R(src).in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -1355,15 +1349,14 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r+l+c
+TMP1.out, ALU.c=0, ALU.r+l+c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 15
+CPU cicles = 14
 MEM access = 3
 
 ---------------
@@ -1373,11 +1366,11 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 TMP1.out, ALU.c=0, ALU.r+l+c
 ALU.out, R(dst).in
 END
@@ -1392,17 +1385,16 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+TMP1.out, ALU.c=0, ALU.r+l+c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 17
+CPU cicles = 16
 MEM access = 3
 
 ---------------
@@ -1412,14 +1404,14 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.c=0, ALU.r+l+c
@@ -1436,10 +1428,10 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.c=0, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -1455,12 +1447,12 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 TMP1.out, ALU.c=0, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -1476,11 +1468,11 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.c=0, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -1496,14 +1488,14 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -1517,23 +1509,22 @@ MEM access = 7
 ---------------
 ADD @R R
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r+l+c
+TMP1.out, ALU.c=0, ALU.r+l+c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 10
+CPU cicles = 9
 MEM access = 2
 
 ---------------
 ADD @R (R)+
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 TMP1.out, ALU.c=0, ALU.r+l+c
 ALU.out, R(dst).in
 END
@@ -1544,28 +1535,27 @@ MEM access = 2
 ---------------
 ADD @R -(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+TMP1.out, ALU.c=0, ALU.r+l+c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 12
+CPU cicles = 11
 MEM access = 2
 
 ---------------
 ADD @R X(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.c=0, ALU.r+l+c
@@ -1578,9 +1568,9 @@ MEM access = 5
 ---------------
 ADD @R @R
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.c=0, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -1592,11 +1582,11 @@ MEM access = 4
 ---------------
 ADD @R @(R)+
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 TMP1.out, ALU.c=0, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -1608,10 +1598,10 @@ MEM access = 4
 ---------------
 ADD @R @-(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.c=0, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -1623,13 +1613,13 @@ MEM access = 4
 ---------------
 ADD @R @X(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -1643,27 +1633,26 @@ MEM access = 6
 ---------------
 ADD @(R)+ R
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r+l+c
+TMP1.out, ALU.c=0, ALU.r+l+c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 12
+CPU cicles = 11
 MEM access = 2
 
 ---------------
 ADD @(R)+ (R)+
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 TMP1.out, ALU.c=0, ALU.r+l+c
 ALU.out, R(dst).in
 END
@@ -1674,32 +1663,31 @@ MEM access = 2
 ---------------
 ADD @(R)+ -(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+TMP1.out, ALU.c=0, ALU.r+l+c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 14
+CPU cicles = 13
 MEM access = 2
 
 ---------------
 ADD @(R)+ X(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.c=0, ALU.r+l+c
@@ -1712,11 +1700,11 @@ MEM access = 5
 ---------------
 ADD @(R)+ @R
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.c=0, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -1728,13 +1716,13 @@ MEM access = 4
 ---------------
 ADD @(R)+ @(R)+
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 TMP1.out, ALU.c=0, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -1746,12 +1734,12 @@ MEM access = 4
 ---------------
 ADD @(R)+ @-(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.c=0, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -1763,15 +1751,15 @@ MEM access = 4
 ---------------
 ADD @(R)+ @X(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -1785,25 +1773,24 @@ MEM access = 6
 ---------------
 ADD @-(R) R
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r+l+c
+TMP1.out, ALU.c=0, ALU.r+l+c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 11
+CPU cicles = 10
 MEM access = 2
 
 ---------------
 ADD @-(R) (R)+
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 TMP1.out, ALU.c=0, ALU.r+l+c
 ALU.out, R(dst).in
 END
@@ -1814,30 +1801,29 @@ MEM access = 2
 ---------------
 ADD @-(R) -(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+TMP1.out, ALU.c=0, ALU.r+l+c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 13
+CPU cicles = 12
 MEM access = 2
 
 ---------------
 ADD @-(R) X(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.c=0, ALU.r+l+c
@@ -1850,10 +1836,10 @@ MEM access = 5
 ---------------
 ADD @-(R) @R
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.c=0, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -1865,12 +1851,12 @@ MEM access = 4
 ---------------
 ADD @-(R) @(R)+
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 TMP1.out, ALU.c=0, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -1882,11 +1868,11 @@ MEM access = 4
 ---------------
 ADD @-(R) @-(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.c=0, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -1898,14 +1884,14 @@ MEM access = 4
 ---------------
 ADD @-(R) @X(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -1923,16 +1909,15 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r+l+c
+TMP1.out, ALU.c=0, ALU.r+l+c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 16
+CPU cicles = 15
 MEM access = 4
 
 ---------------
@@ -1942,12 +1927,12 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 TMP1.out, ALU.c=0, ALU.r+l+c
 ALU.out, R(dst).in
 END
@@ -1962,18 +1947,17 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+TMP1.out, ALU.c=0, ALU.r+l+c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 18
+CPU cicles = 17
 MEM access = 4
 
 ---------------
@@ -1983,7 +1967,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
@@ -1991,7 +1975,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.c=0, ALU.r+l+c
@@ -2008,11 +1992,11 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.c=0, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -2028,13 +2012,13 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 TMP1.out, ALU.c=0, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -2050,12 +2034,12 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.c=0, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -2071,7 +2055,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
@@ -2079,7 +2063,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -2093,19 +2077,18 @@ MEM access = 8
 ---------------
 ADC R R
 ---------------
-R(src).out, TMP0.in
-R(dst).out, ALU.r+l+c
-ALU.out, R(src).in
+R(src).out, ALU.r+l+c
+ALU.out, R(dst).in
 END
 
-CPU cicles = 8
+CPU cicles = 7
 MEM access = 1
 
 ---------------
 ADC R (R)+
 ---------------
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 R(src).out, ALU.r+l+c
 ALU.out, R(dst).in
 END
@@ -2116,14 +2099,13 @@ MEM access = 1
 ---------------
 ADC R -(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R(src).out, TMP0.in
-R(dst).out, ALU.r+l+c
-ALU.out, R(src).in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+R(src).out, ALU.r+l+c
+ALU.out, R(dst).in
 END
 
-CPU cicles = 10
+CPU cicles = 9
 MEM access = 1
 
 ---------------
@@ -2133,7 +2115,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 R(src).out, ALU.r+l+c
@@ -2146,7 +2128,7 @@ MEM access = 4
 ---------------
 ADC R @R
 ---------------
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 R(src).out, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -2158,9 +2140,9 @@ MEM access = 3
 ---------------
 ADC R @(R)+
 ---------------
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 R(src).out, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -2172,8 +2154,8 @@ MEM access = 3
 ---------------
 ADC R @-(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 R(src).out, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -2189,7 +2171,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -2203,23 +2185,22 @@ MEM access = 5
 ---------------
 ADC (R)+ R
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r+l+c
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+TMP1.out, ALU.r+l+c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 10
+CPU cicles = 9
 MEM access = 1
 
 ---------------
 ADC (R)+ (R)+
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 TMP1.out, ALU.r+l+c
 ALU.out, R(dst).in
 END
@@ -2230,28 +2211,27 @@ MEM access = 1
 ---------------
 ADC (R)+ -(R)
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R.out, ALU.r-1
-ALU.out, R.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r+l+c
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+TMP1.out, ALU.r+l+c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 12
+CPU cicles = 11
 MEM access = 1
 
 ---------------
 ADC (R)+ X(R)
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r+l+c
@@ -2264,9 +2244,9 @@ MEM access = 4
 ---------------
 ADC (R)+ @R
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R.out, MAR.in, RD
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -2278,11 +2258,11 @@ MEM access = 3
 ---------------
 ADC (R)+ @(R)+
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R.out, MAR.in, RD
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 TMP1.out, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -2294,10 +2274,10 @@ MEM access = 3
 ---------------
 ADC (R)+ @-(R)
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -2309,13 +2289,13 @@ MEM access = 3
 ---------------
 ADC (R)+ @X(R)
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -2329,23 +2309,22 @@ MEM access = 5
 ---------------
 ADC -(R) R
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R(src).out, TMP0.in
-R(dst).out, ALU.r+l+c
+R(src).out, ALU.r-1
 ALU.out, R(src).in
+R(src).out, ALU.r+l+c
+ALU.out, R(dst).in
 END
 
-CPU cicles = 10
+CPU cicles = 9
 MEM access = 1
 
 ---------------
 ADC -(R) (R)+
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(src).out, ALU.r-1
+ALU.out, R(src).in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 R(src).out, ALU.r+l+c
 ALU.out, R(dst).in
 END
@@ -2356,28 +2335,27 @@ MEM access = 1
 ---------------
 ADC -(R) -(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, ALU.r-1
-ALU.out, R.in
-R(src).out, TMP0.in
-R(dst).out, ALU.r+l+c
+R(src).out, ALU.r-1
 ALU.out, R(src).in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+R(src).out, ALU.r+l+c
+ALU.out, R(dst).in
 END
 
-CPU cicles = 12
+CPU cicles = 11
 MEM access = 1
 
 ---------------
 ADC -(R) X(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
+R(src).out, ALU.r-1
+ALU.out, R(src).in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 R(src).out, ALU.r+l+c
@@ -2390,9 +2368,9 @@ MEM access = 4
 ---------------
 ADC -(R) @R
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 R(src).out, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -2404,11 +2382,11 @@ MEM access = 3
 ---------------
 ADC -(R) @(R)+
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 R(src).out, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -2420,10 +2398,10 @@ MEM access = 3
 ---------------
 ADC -(R) @-(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 R(src).out, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -2435,13 +2413,13 @@ MEM access = 3
 ---------------
 ADC -(R) @X(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
+R(src).out, ALU.r-1
+ALU.out, R(src).in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -2459,15 +2437,14 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r+l+c
+TMP1.out, ALU.r+l+c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 15
+CPU cicles = 14
 MEM access = 3
 
 ---------------
@@ -2477,11 +2454,11 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 TMP1.out, ALU.r+l+c
 ALU.out, R(dst).in
 END
@@ -2496,17 +2473,16 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r+l+c
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+TMP1.out, ALU.r+l+c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 17
+CPU cicles = 16
 MEM access = 3
 
 ---------------
@@ -2516,14 +2492,14 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r+l+c
@@ -2540,10 +2516,10 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -2559,12 +2535,12 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 TMP1.out, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -2580,11 +2556,11 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -2600,14 +2576,14 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -2621,23 +2597,22 @@ MEM access = 7
 ---------------
 ADC @R R
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r+l+c
+TMP1.out, ALU.r+l+c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 10
+CPU cicles = 9
 MEM access = 2
 
 ---------------
 ADC @R (R)+
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 TMP1.out, ALU.r+l+c
 ALU.out, R(dst).in
 END
@@ -2648,28 +2623,27 @@ MEM access = 2
 ---------------
 ADC @R -(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r+l+c
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+TMP1.out, ALU.r+l+c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 12
+CPU cicles = 11
 MEM access = 2
 
 ---------------
 ADC @R X(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r+l+c
@@ -2682,9 +2656,9 @@ MEM access = 5
 ---------------
 ADC @R @R
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -2696,11 +2670,11 @@ MEM access = 4
 ---------------
 ADC @R @(R)+
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 TMP1.out, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -2712,10 +2686,10 @@ MEM access = 4
 ---------------
 ADC @R @-(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -2727,13 +2701,13 @@ MEM access = 4
 ---------------
 ADC @R @X(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -2747,27 +2721,26 @@ MEM access = 6
 ---------------
 ADC @(R)+ R
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r+l+c
+TMP1.out, ALU.r+l+c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 12
+CPU cicles = 11
 MEM access = 2
 
 ---------------
 ADC @(R)+ (R)+
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 TMP1.out, ALU.r+l+c
 ALU.out, R(dst).in
 END
@@ -2778,32 +2751,31 @@ MEM access = 2
 ---------------
 ADC @(R)+ -(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r+l+c
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+TMP1.out, ALU.r+l+c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 14
+CPU cicles = 13
 MEM access = 2
 
 ---------------
 ADC @(R)+ X(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r+l+c
@@ -2816,11 +2788,11 @@ MEM access = 5
 ---------------
 ADC @(R)+ @R
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -2832,13 +2804,13 @@ MEM access = 4
 ---------------
 ADC @(R)+ @(R)+
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 TMP1.out, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -2850,12 +2822,12 @@ MEM access = 4
 ---------------
 ADC @(R)+ @-(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -2867,15 +2839,15 @@ MEM access = 4
 ---------------
 ADC @(R)+ @X(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -2889,25 +2861,24 @@ MEM access = 6
 ---------------
 ADC @-(R) R
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r+l+c
+TMP1.out, ALU.r+l+c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 11
+CPU cicles = 10
 MEM access = 2
 
 ---------------
 ADC @-(R) (R)+
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 TMP1.out, ALU.r+l+c
 ALU.out, R(dst).in
 END
@@ -2918,30 +2889,29 @@ MEM access = 2
 ---------------
 ADC @-(R) -(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r+l+c
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+TMP1.out, ALU.r+l+c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 13
+CPU cicles = 12
 MEM access = 2
 
 ---------------
 ADC @-(R) X(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r+l+c
@@ -2954,10 +2924,10 @@ MEM access = 5
 ---------------
 ADC @-(R) @R
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -2969,12 +2939,12 @@ MEM access = 4
 ---------------
 ADC @-(R) @(R)+
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 TMP1.out, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -2986,11 +2956,11 @@ MEM access = 4
 ---------------
 ADC @-(R) @-(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -3002,14 +2972,14 @@ MEM access = 4
 ---------------
 ADC @-(R) @X(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -3027,16 +2997,15 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r+l+c
+TMP1.out, ALU.r+l+c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 16
+CPU cicles = 15
 MEM access = 4
 
 ---------------
@@ -3046,12 +3015,12 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 TMP1.out, ALU.r+l+c
 ALU.out, R(dst).in
 END
@@ -3066,18 +3035,17 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r+l+c
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+TMP1.out, ALU.r+l+c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 18
+CPU cicles = 17
 MEM access = 4
 
 ---------------
@@ -3087,7 +3055,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
@@ -3095,7 +3063,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r+l+c
@@ -3112,11 +3080,11 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -3132,13 +3100,13 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 TMP1.out, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -3154,12 +3122,12 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r+l+c
 ALU.out, MDR.in, WR
@@ -3175,7 +3143,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
@@ -3183,7 +3151,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -3197,20 +3165,9 @@ MEM access = 8
 ---------------
 SUB R R
 ---------------
-R(src).out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r-l-c
-ALU.out, R(dst).in
-END
-
-CPU cicles = 8
-MEM access = 1
-
----------------
-SUB R (R)+
----------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R(src).out, TMP0.in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
 TMP1.out, ALU.c=0, ALU.r-l-c
 ALU.out, R(dst).in
 END
@@ -3219,16 +3176,33 @@ CPU cicles = 10
 MEM access = 1
 
 ---------------
-SUB R -(R)
+SUB R (R)+
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R(src).out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r-l-c
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
+TMP1.out, ALU.c=0, ALU.r-l-c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 10
+CPU cicles = 12
+MEM access = 1
+
+---------------
+SUB R -(R)
+---------------
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
+TMP1.out, ALU.c=0, ALU.r-l-c
+ALU.out, R(dst).in
+END
+
+CPU cicles = 12
 MEM access = 1
 
 ---------------
@@ -3238,38 +3212,27 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
-MDR.out, TMP1.in
-R(src).out, TMP0.in
+MDR.out, TMP0.in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
 TMP1.out, ALU.c=0, ALU.r-l-c
 ALU.out, MDR.in, WR
 END
 
-CPU cicles = 15
+CPU cicles = 17
 MEM access = 4
 
 ---------------
 SUB R @R
 ---------------
-R.out, MAR.in, RD
-MDR.out, TMP1.in
-R(src).out, TMP0.in
-TMP1.out, ALU.c=0, ALU.r-l-c
-ALU.out, MDR.in, WR
-END
-
-CPU cicles = 10
-MEM access = 3
-
----------------
-SUB R @(R)+
----------------
-R.out, MAR.in, RD
-MAR.out, ALU.r+1
-ALU.out, R.in
-MDR.out, TMP1.in
-R(src).out, TMP0.in
+R(dst).out, MAR.in, RD
+MDR.out, TMP0.in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
 TMP1.out, ALU.c=0, ALU.r-l-c
 ALU.out, MDR.in, WR
 END
@@ -3278,17 +3241,36 @@ CPU cicles = 12
 MEM access = 3
 
 ---------------
-SUB R @-(R)
+SUB R @(R)+
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
-MDR.out, TMP1.in
-R(src).out, TMP0.in
+R(dst).out, MAR.in, RD
+MAR.out, ALU.r+1
+ALU.out, R(dst).in
+MDR.out, TMP0.in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
 TMP1.out, ALU.c=0, ALU.r-l-c
 ALU.out, MDR.in, WR
 END
 
-CPU cicles = 11
+CPU cicles = 14
+MEM access = 3
+
+---------------
+SUB R @-(R)
+---------------
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
+MDR.out, TMP0.in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
+TMP1.out, ALU.c=0, ALU.r-l-c
+ALU.out, MDR.in, WR
+END
+
+CPU cicles = 13
 MEM access = 3
 
 ---------------
@@ -3298,38 +3280,42 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
-MDR.out, TMP1.in
-R(src).out, TMP0.in
+MDR.out, TMP0.in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
 TMP1.out, ALU.c=0, ALU.r-l-c
 ALU.out, MDR.in, WR
 END
 
-CPU cicles = 16
+CPU cicles = 18
 MEM access = 5
 
 ---------------
 SUB (R)+ R
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r-l-c
+ALU.out, TMP1.in
+TMP1.out, ALU.c=0, ALU.r-l-c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 10
+CPU cicles = 12
 MEM access = 1
 
 ---------------
 SUB (R)+ (R)+
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
 ALU.out, TMP1.in
@@ -3343,28 +3329,30 @@ MEM access = 1
 ---------------
 SUB (R)+ -(R)
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R.out, ALU.r-1
-ALU.out, R.in
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r-l-c
+ALU.out, TMP1.in
+TMP1.out, ALU.c=0, ALU.r-l-c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 12
+CPU cicles = 14
 MEM access = 1
 
 ---------------
 SUB (R)+ X(R)
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
@@ -3380,9 +3368,9 @@ MEM access = 4
 ---------------
 SUB (R)+ @R
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R.out, MAR.in, RD
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -3397,11 +3385,11 @@ MEM access = 3
 ---------------
 SUB (R)+ @(R)+
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R.out, MAR.in, RD
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -3416,10 +3404,10 @@ MEM access = 3
 ---------------
 SUB (R)+ @-(R)
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -3434,13 +3422,13 @@ MEM access = 3
 ---------------
 SUB (R)+ @X(R)
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -3457,91 +3445,84 @@ MEM access = 5
 ---------------
 SUB -(R) R
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R(src).out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r-l-c
+R(src).out, ALU.r-1
+ALU.out, R(src).in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
+TMP1.out, ALU.c=0, ALU.r-l-c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 10
+CPU cicles = 12
 MEM access = 1
 
 ---------------
 SUB -(R) (R)+
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R(src).out, TMP0.in
+R(src).out, ALU.r-1
+ALU.out, R(src).in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
 TMP1.out, ALU.c=0, ALU.r-l-c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 12
+CPU cicles = 14
 MEM access = 1
 
 ---------------
 SUB -(R) -(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, ALU.r-1
-ALU.out, R.in
-R(src).out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r-l-c
+R(src).out, ALU.r-1
+ALU.out, R(src).in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
+TMP1.out, ALU.c=0, ALU.r-l-c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 12
+CPU cicles = 14
 MEM access = 1
 
 ---------------
 SUB -(R) X(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
+R(src).out, ALU.r-1
+ALU.out, R(src).in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
-MDR.out, TMP1.in
-R(src).out, TMP0.in
+MDR.out, TMP0.in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
 TMP1.out, ALU.c=0, ALU.r-l-c
 ALU.out, MDR.in, WR
 END
 
-CPU cicles = 17
+CPU cicles = 19
 MEM access = 4
 
 ---------------
 SUB -(R) @R
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, MAR.in, RD
-MDR.out, TMP1.in
-R(src).out, TMP0.in
-TMP1.out, ALU.c=0, ALU.r-l-c
-ALU.out, MDR.in, WR
-END
-
-CPU cicles = 12
-MEM access = 3
-
----------------
-SUB -(R) @(R)+
----------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, MAR.in, RD
-MAR.out, ALU.r+1
-ALU.out, R.in
-MDR.out, TMP1.in
-R(src).out, TMP0.in
+R(src).out, ALU.r-1
+ALU.out, R(src).in
+R(dst).out, MAR.in, RD
+MDR.out, TMP0.in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
 TMP1.out, ALU.c=0, ALU.r-l-c
 ALU.out, MDR.in, WR
 END
@@ -3550,40 +3531,63 @@ CPU cicles = 14
 MEM access = 3
 
 ---------------
-SUB -(R) @-(R)
+SUB -(R) @(R)+
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
-MDR.out, TMP1.in
-R(src).out, TMP0.in
+R(src).out, ALU.r-1
+ALU.out, R(src).in
+R(dst).out, MAR.in, RD
+MAR.out, ALU.r+1
+ALU.out, R(dst).in
+MDR.out, TMP0.in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
 TMP1.out, ALU.c=0, ALU.r-l-c
 ALU.out, MDR.in, WR
 END
 
-CPU cicles = 13
+CPU cicles = 16
+MEM access = 3
+
+---------------
+SUB -(R) @-(R)
+---------------
+R(src).out, ALU.r-1
+ALU.out, R(src).in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
+MDR.out, TMP0.in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
+TMP1.out, ALU.c=0, ALU.r-l-c
+ALU.out, MDR.in, WR
+END
+
+CPU cicles = 15
 MEM access = 3
 
 ---------------
 SUB -(R) @X(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
+R(src).out, ALU.r-1
+ALU.out, R(src).in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
-MDR.out, TMP1.in
-R(src).out, TMP0.in
+MDR.out, TMP0.in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
 TMP1.out, ALU.c=0, ALU.r-l-c
 ALU.out, MDR.in, WR
 END
 
-CPU cicles = 18
+CPU cicles = 20
 MEM access = 5
 
 ---------------
@@ -3593,15 +3597,17 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
+ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r-l-c
+ALU.out, TMP1.in
+TMP1.out, ALU.c=0, ALU.r-l-c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 15
+CPU cicles = 17
 MEM access = 3
 
 ---------------
@@ -3611,11 +3617,11 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
 ALU.out, TMP1.in
@@ -3633,17 +3639,19 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r-l-c
+ALU.out, TMP1.in
+TMP1.out, ALU.c=0, ALU.r-l-c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 17
+CPU cicles = 19
 MEM access = 3
 
 ---------------
@@ -3653,14 +3661,14 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
@@ -3680,10 +3688,10 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -3702,12 +3710,12 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -3726,11 +3734,11 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -3749,14 +3757,14 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -3773,23 +3781,25 @@ MEM access = 7
 ---------------
 SUB @R R
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
+ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r-l-c
+ALU.out, TMP1.in
+TMP1.out, ALU.c=0, ALU.r-l-c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 10
+CPU cicles = 12
 MEM access = 2
 
 ---------------
 SUB @R (R)+
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
 ALU.out, TMP1.in
@@ -3803,28 +3813,30 @@ MEM access = 2
 ---------------
 SUB @R -(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r-l-c
+ALU.out, TMP1.in
+TMP1.out, ALU.c=0, ALU.r-l-c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 12
+CPU cicles = 14
 MEM access = 2
 
 ---------------
 SUB @R X(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
@@ -3840,9 +3852,9 @@ MEM access = 5
 ---------------
 SUB @R @R
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -3857,11 +3869,11 @@ MEM access = 4
 ---------------
 SUB @R @(R)+
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -3876,10 +3888,10 @@ MEM access = 4
 ---------------
 SUB @R @-(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -3894,13 +3906,13 @@ MEM access = 4
 ---------------
 SUB @R @X(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -3917,27 +3929,29 @@ MEM access = 6
 ---------------
 SUB @(R)+ R
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
+ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r-l-c
+ALU.out, TMP1.in
+TMP1.out, ALU.c=0, ALU.r-l-c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 12
+CPU cicles = 14
 MEM access = 2
 
 ---------------
 SUB @(R)+ (R)+
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
 ALU.out, TMP1.in
@@ -3951,32 +3965,34 @@ MEM access = 2
 ---------------
 SUB @(R)+ -(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r-l-c
+ALU.out, TMP1.in
+TMP1.out, ALU.c=0, ALU.r-l-c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 14
+CPU cicles = 16
 MEM access = 2
 
 ---------------
 SUB @(R)+ X(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
@@ -3992,11 +4008,11 @@ MEM access = 5
 ---------------
 SUB @(R)+ @R
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -4011,13 +4027,13 @@ MEM access = 4
 ---------------
 SUB @(R)+ @(R)+
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -4032,12 +4048,12 @@ MEM access = 4
 ---------------
 SUB @(R)+ @-(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -4052,15 +4068,15 @@ MEM access = 4
 ---------------
 SUB @(R)+ @X(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -4077,25 +4093,27 @@ MEM access = 6
 ---------------
 SUB @-(R) R
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
+ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r-l-c
+ALU.out, TMP1.in
+TMP1.out, ALU.c=0, ALU.r-l-c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 11
+CPU cicles = 13
 MEM access = 2
 
 ---------------
 SUB @-(R) (R)+
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
 ALU.out, TMP1.in
@@ -4109,30 +4127,32 @@ MEM access = 2
 ---------------
 SUB @-(R) -(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r-l-c
+ALU.out, TMP1.in
+TMP1.out, ALU.c=0, ALU.r-l-c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 13
+CPU cicles = 15
 MEM access = 2
 
 ---------------
 SUB @-(R) X(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
@@ -4148,10 +4168,10 @@ MEM access = 5
 ---------------
 SUB @-(R) @R
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -4166,12 +4186,12 @@ MEM access = 4
 ---------------
 SUB @-(R) @(R)+
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -4186,11 +4206,11 @@ MEM access = 4
 ---------------
 SUB @-(R) @-(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -4205,14 +4225,14 @@ MEM access = 4
 ---------------
 SUB @-(R) @X(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -4233,16 +4253,18 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
+ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r-l-c
+ALU.out, TMP1.in
+TMP1.out, ALU.c=0, ALU.r-l-c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 16
+CPU cicles = 18
 MEM access = 4
 
 ---------------
@@ -4252,12 +4274,12 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
 ALU.out, TMP1.in
@@ -4275,18 +4297,20 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r-l-c
+ALU.out, TMP1.in
+TMP1.out, ALU.c=0, ALU.r-l-c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 18
+CPU cicles = 20
 MEM access = 4
 
 ---------------
@@ -4296,7 +4320,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
@@ -4304,7 +4328,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
@@ -4324,11 +4348,11 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -4347,13 +4371,13 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -4372,12 +4396,12 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -4396,7 +4420,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
@@ -4404,7 +4428,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -4421,20 +4445,9 @@ MEM access = 8
 ---------------
 SUBC R R
 ---------------
-R(src).out, TMP0.in
-R(dst).out, ALU.r-l-c
-ALU.out, R(dst).in
-END
-
-CPU cicles = 8
-MEM access = 1
-
----------------
-SUBC R (R)+
----------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R(src).out, TMP0.in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
 TMP1.out, ALU.r-l-c
 ALU.out, R(dst).in
 END
@@ -4443,16 +4456,33 @@ CPU cicles = 10
 MEM access = 1
 
 ---------------
-SUBC R -(R)
+SUBC R (R)+
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R(src).out, TMP0.in
-R(dst).out, ALU.r-l-c
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
+TMP1.out, ALU.r-l-c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 10
+CPU cicles = 12
+MEM access = 1
+
+---------------
+SUBC R -(R)
+---------------
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
+TMP1.out, ALU.r-l-c
+ALU.out, R(dst).in
+END
+
+CPU cicles = 12
 MEM access = 1
 
 ---------------
@@ -4462,38 +4492,27 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
-MDR.out, TMP1.in
-R(src).out, TMP0.in
+MDR.out, TMP0.in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
 TMP1.out, ALU.r-l-c
 ALU.out, MDR.in, WR
 END
 
-CPU cicles = 15
+CPU cicles = 17
 MEM access = 4
 
 ---------------
 SUBC R @R
 ---------------
-R.out, MAR.in, RD
-MDR.out, TMP1.in
-R(src).out, TMP0.in
-TMP1.out, ALU.r-l-c
-ALU.out, MDR.in, WR
-END
-
-CPU cicles = 10
-MEM access = 3
-
----------------
-SUBC R @(R)+
----------------
-R.out, MAR.in, RD
-MAR.out, ALU.r+1
-ALU.out, R.in
-MDR.out, TMP1.in
-R(src).out, TMP0.in
+R(dst).out, MAR.in, RD
+MDR.out, TMP0.in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
 TMP1.out, ALU.r-l-c
 ALU.out, MDR.in, WR
 END
@@ -4502,17 +4521,36 @@ CPU cicles = 12
 MEM access = 3
 
 ---------------
-SUBC R @-(R)
+SUBC R @(R)+
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
-MDR.out, TMP1.in
-R(src).out, TMP0.in
+R(dst).out, MAR.in, RD
+MAR.out, ALU.r+1
+ALU.out, R(dst).in
+MDR.out, TMP0.in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
 TMP1.out, ALU.r-l-c
 ALU.out, MDR.in, WR
 END
 
-CPU cicles = 11
+CPU cicles = 14
+MEM access = 3
+
+---------------
+SUBC R @-(R)
+---------------
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
+MDR.out, TMP0.in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
+TMP1.out, ALU.r-l-c
+ALU.out, MDR.in, WR
+END
+
+CPU cicles = 13
 MEM access = 3
 
 ---------------
@@ -4522,38 +4560,42 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
-MDR.out, TMP1.in
-R(src).out, TMP0.in
+MDR.out, TMP0.in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
 TMP1.out, ALU.r-l-c
 ALU.out, MDR.in, WR
 END
 
-CPU cicles = 16
+CPU cicles = 18
 MEM access = 5
 
 ---------------
 SUBC (R)+ R
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
-R(dst).out, ALU.r-l-c
+ALU.out, TMP1.in
+TMP1.out, ALU.r-l-c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 10
+CPU cicles = 12
 MEM access = 1
 
 ---------------
 SUBC (R)+ (R)+
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
 ALU.out, TMP1.in
@@ -4567,28 +4609,30 @@ MEM access = 1
 ---------------
 SUBC (R)+ -(R)
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R.out, ALU.r-1
-ALU.out, R.in
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
-R(dst).out, ALU.r-l-c
+ALU.out, TMP1.in
+TMP1.out, ALU.r-l-c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 12
+CPU cicles = 14
 MEM access = 1
 
 ---------------
 SUBC (R)+ X(R)
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
@@ -4604,9 +4648,9 @@ MEM access = 4
 ---------------
 SUBC (R)+ @R
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R.out, MAR.in, RD
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -4621,11 +4665,11 @@ MEM access = 3
 ---------------
 SUBC (R)+ @(R)+
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R.out, MAR.in, RD
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -4640,10 +4684,10 @@ MEM access = 3
 ---------------
 SUBC (R)+ @-(R)
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -4658,13 +4702,13 @@ MEM access = 3
 ---------------
 SUBC (R)+ @X(R)
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -4681,91 +4725,84 @@ MEM access = 5
 ---------------
 SUBC -(R) R
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R(src).out, TMP0.in
-R(dst).out, ALU.r-l-c
+R(src).out, ALU.r-1
+ALU.out, R(src).in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
+TMP1.out, ALU.r-l-c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 10
+CPU cicles = 12
 MEM access = 1
 
 ---------------
 SUBC -(R) (R)+
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R(src).out, TMP0.in
+R(src).out, ALU.r-1
+ALU.out, R(src).in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
 TMP1.out, ALU.r-l-c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 12
+CPU cicles = 14
 MEM access = 1
 
 ---------------
 SUBC -(R) -(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, ALU.r-1
-ALU.out, R.in
-R(src).out, TMP0.in
-R(dst).out, ALU.r-l-c
+R(src).out, ALU.r-1
+ALU.out, R(src).in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
+TMP1.out, ALU.r-l-c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 12
+CPU cicles = 14
 MEM access = 1
 
 ---------------
 SUBC -(R) X(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
+R(src).out, ALU.r-1
+ALU.out, R(src).in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
-MDR.out, TMP1.in
-R(src).out, TMP0.in
+MDR.out, TMP0.in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
 TMP1.out, ALU.r-l-c
 ALU.out, MDR.in, WR
 END
 
-CPU cicles = 17
+CPU cicles = 19
 MEM access = 4
 
 ---------------
 SUBC -(R) @R
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, MAR.in, RD
-MDR.out, TMP1.in
-R(src).out, TMP0.in
-TMP1.out, ALU.r-l-c
-ALU.out, MDR.in, WR
-END
-
-CPU cicles = 12
-MEM access = 3
-
----------------
-SUBC -(R) @(R)+
----------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, MAR.in, RD
-MAR.out, ALU.r+1
-ALU.out, R.in
-MDR.out, TMP1.in
-R(src).out, TMP0.in
+R(src).out, ALU.r-1
+ALU.out, R(src).in
+R(dst).out, MAR.in, RD
+MDR.out, TMP0.in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
 TMP1.out, ALU.r-l-c
 ALU.out, MDR.in, WR
 END
@@ -4774,40 +4811,63 @@ CPU cicles = 14
 MEM access = 3
 
 ---------------
-SUBC -(R) @-(R)
+SUBC -(R) @(R)+
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
-MDR.out, TMP1.in
-R(src).out, TMP0.in
+R(src).out, ALU.r-1
+ALU.out, R(src).in
+R(dst).out, MAR.in, RD
+MAR.out, ALU.r+1
+ALU.out, R(dst).in
+MDR.out, TMP0.in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
 TMP1.out, ALU.r-l-c
 ALU.out, MDR.in, WR
 END
 
-CPU cicles = 13
+CPU cicles = 16
+MEM access = 3
+
+---------------
+SUBC -(R) @-(R)
+---------------
+R(src).out, ALU.r-1
+ALU.out, R(src).in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
+MDR.out, TMP0.in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
+TMP1.out, ALU.r-l-c
+ALU.out, MDR.in, WR
+END
+
+CPU cicles = 15
 MEM access = 3
 
 ---------------
 SUBC -(R) @X(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
+R(src).out, ALU.r-1
+ALU.out, R(src).in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
-MDR.out, TMP1.in
-R(src).out, TMP0.in
+MDR.out, TMP0.in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
 TMP1.out, ALU.r-l-c
 ALU.out, MDR.in, WR
 END
 
-CPU cicles = 18
+CPU cicles = 20
 MEM access = 5
 
 ---------------
@@ -4817,15 +4877,17 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
+ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
-R(dst).out, ALU.r-l-c
+ALU.out, TMP1.in
+TMP1.out, ALU.r-l-c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 15
+CPU cicles = 17
 MEM access = 3
 
 ---------------
@@ -4835,11 +4897,11 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
 ALU.out, TMP1.in
@@ -4857,17 +4919,19 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
-R(dst).out, ALU.r-l-c
+ALU.out, TMP1.in
+TMP1.out, ALU.r-l-c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 17
+CPU cicles = 19
 MEM access = 3
 
 ---------------
@@ -4877,14 +4941,14 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
@@ -4904,10 +4968,10 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -4926,12 +4990,12 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -4950,11 +5014,11 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -4973,14 +5037,14 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -4997,23 +5061,25 @@ MEM access = 7
 ---------------
 SUBC @R R
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
+ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
-R(dst).out, ALU.r-l-c
+ALU.out, TMP1.in
+TMP1.out, ALU.r-l-c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 10
+CPU cicles = 12
 MEM access = 2
 
 ---------------
 SUBC @R (R)+
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
 ALU.out, TMP1.in
@@ -5027,28 +5093,30 @@ MEM access = 2
 ---------------
 SUBC @R -(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
-R(dst).out, ALU.r-l-c
+ALU.out, TMP1.in
+TMP1.out, ALU.r-l-c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 12
+CPU cicles = 14
 MEM access = 2
 
 ---------------
 SUBC @R X(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
@@ -5064,9 +5132,9 @@ MEM access = 5
 ---------------
 SUBC @R @R
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -5081,11 +5149,11 @@ MEM access = 4
 ---------------
 SUBC @R @(R)+
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -5100,10 +5168,10 @@ MEM access = 4
 ---------------
 SUBC @R @-(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -5118,13 +5186,13 @@ MEM access = 4
 ---------------
 SUBC @R @X(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -5141,27 +5209,29 @@ MEM access = 6
 ---------------
 SUBC @(R)+ R
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
+ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
-R(dst).out, ALU.r-l-c
+ALU.out, TMP1.in
+TMP1.out, ALU.r-l-c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 12
+CPU cicles = 14
 MEM access = 2
 
 ---------------
 SUBC @(R)+ (R)+
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
 ALU.out, TMP1.in
@@ -5175,32 +5245,34 @@ MEM access = 2
 ---------------
 SUBC @(R)+ -(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
-R(dst).out, ALU.r-l-c
+ALU.out, TMP1.in
+TMP1.out, ALU.r-l-c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 14
+CPU cicles = 16
 MEM access = 2
 
 ---------------
 SUBC @(R)+ X(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
@@ -5216,11 +5288,11 @@ MEM access = 5
 ---------------
 SUBC @(R)+ @R
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -5235,13 +5307,13 @@ MEM access = 4
 ---------------
 SUBC @(R)+ @(R)+
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -5256,12 +5328,12 @@ MEM access = 4
 ---------------
 SUBC @(R)+ @-(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -5276,15 +5348,15 @@ MEM access = 4
 ---------------
 SUBC @(R)+ @X(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -5301,25 +5373,27 @@ MEM access = 6
 ---------------
 SUBC @-(R) R
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
+ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
-R(dst).out, ALU.r-l-c
+ALU.out, TMP1.in
+TMP1.out, ALU.r-l-c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 11
+CPU cicles = 13
 MEM access = 2
 
 ---------------
 SUBC @-(R) (R)+
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
 ALU.out, TMP1.in
@@ -5333,30 +5407,32 @@ MEM access = 2
 ---------------
 SUBC @-(R) -(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
-R(dst).out, ALU.r-l-c
+ALU.out, TMP1.in
+TMP1.out, ALU.r-l-c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 13
+CPU cicles = 15
 MEM access = 2
 
 ---------------
 SUBC @-(R) X(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
@@ -5372,10 +5448,10 @@ MEM access = 5
 ---------------
 SUBC @-(R) @R
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -5390,12 +5466,12 @@ MEM access = 4
 ---------------
 SUBC @-(R) @(R)+
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -5410,11 +5486,11 @@ MEM access = 4
 ---------------
 SUBC @-(R) @-(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -5429,14 +5505,14 @@ MEM access = 4
 ---------------
 SUBC @-(R) @X(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -5457,16 +5533,18 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
+ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
-R(dst).out, ALU.r-l-c
+ALU.out, TMP1.in
+TMP1.out, ALU.r-l-c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 16
+CPU cicles = 18
 MEM access = 4
 
 ---------------
@@ -5476,12 +5554,12 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
 ALU.out, TMP1.in
@@ -5499,18 +5577,20 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
-R(dst).out, ALU.r-l-c
+ALU.out, TMP1.in
+TMP1.out, ALU.r-l-c
 ALU.out, R(dst).in
 END
 
-CPU cicles = 18
+CPU cicles = 20
 MEM access = 4
 
 ---------------
@@ -5520,7 +5600,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
@@ -5528,7 +5608,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
@@ -5548,11 +5628,11 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -5571,13 +5651,13 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -5596,12 +5676,12 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -5620,7 +5700,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
@@ -5628,7 +5708,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -5645,19 +5725,18 @@ MEM access = 8
 ---------------
 AND R R
 ---------------
-R(src).out, TMP0.in
-R(dst).out, ALU.r&l
-ALU.out, R(src).in
+R(src).out, ALU.r&l
+ALU.out, R(dst).in
 END
 
-CPU cicles = 8
+CPU cicles = 7
 MEM access = 1
 
 ---------------
 AND R (R)+
 ---------------
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 R(src).out, ALU.r&l
 ALU.out, R(dst).in
 END
@@ -5668,14 +5747,13 @@ MEM access = 1
 ---------------
 AND R -(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R(src).out, TMP0.in
-R(dst).out, ALU.r&l
-ALU.out, R(src).in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+R(src).out, ALU.r&l
+ALU.out, R(dst).in
 END
 
-CPU cicles = 10
+CPU cicles = 9
 MEM access = 1
 
 ---------------
@@ -5685,7 +5763,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 R(src).out, ALU.r&l
@@ -5698,7 +5776,7 @@ MEM access = 4
 ---------------
 AND R @R
 ---------------
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 R(src).out, ALU.r&l
 ALU.out, MDR.in, WR
@@ -5710,9 +5788,9 @@ MEM access = 3
 ---------------
 AND R @(R)+
 ---------------
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 R(src).out, ALU.r&l
 ALU.out, MDR.in, WR
@@ -5724,8 +5802,8 @@ MEM access = 3
 ---------------
 AND R @-(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 R(src).out, ALU.r&l
 ALU.out, MDR.in, WR
@@ -5741,7 +5819,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -5755,23 +5833,22 @@ MEM access = 5
 ---------------
 AND (R)+ R
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r&l
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+TMP1.out, ALU.r&l
 ALU.out, R(dst).in
 END
 
-CPU cicles = 10
+CPU cicles = 9
 MEM access = 1
 
 ---------------
 AND (R)+ (R)+
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 TMP1.out, ALU.r&l
 ALU.out, R(dst).in
 END
@@ -5782,28 +5859,27 @@ MEM access = 1
 ---------------
 AND (R)+ -(R)
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R.out, ALU.r-1
-ALU.out, R.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r&l
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+TMP1.out, ALU.r&l
 ALU.out, R(dst).in
 END
 
-CPU cicles = 12
+CPU cicles = 11
 MEM access = 1
 
 ---------------
 AND (R)+ X(R)
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r&l
@@ -5816,9 +5892,9 @@ MEM access = 4
 ---------------
 AND (R)+ @R
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R.out, MAR.in, RD
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
@@ -5830,11 +5906,11 @@ MEM access = 3
 ---------------
 AND (R)+ @(R)+
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R.out, MAR.in, RD
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
@@ -5846,10 +5922,10 @@ MEM access = 3
 ---------------
 AND (R)+ @-(R)
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
@@ -5861,13 +5937,13 @@ MEM access = 3
 ---------------
 AND (R)+ @X(R)
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -5881,23 +5957,22 @@ MEM access = 5
 ---------------
 AND -(R) R
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R(src).out, TMP0.in
-R(dst).out, ALU.r&l
+R(src).out, ALU.r-1
 ALU.out, R(src).in
+R(src).out, ALU.r&l
+ALU.out, R(dst).in
 END
 
-CPU cicles = 10
+CPU cicles = 9
 MEM access = 1
 
 ---------------
 AND -(R) (R)+
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(src).out, ALU.r-1
+ALU.out, R(src).in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 R(src).out, ALU.r&l
 ALU.out, R(dst).in
 END
@@ -5908,28 +5983,27 @@ MEM access = 1
 ---------------
 AND -(R) -(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, ALU.r-1
-ALU.out, R.in
-R(src).out, TMP0.in
-R(dst).out, ALU.r&l
+R(src).out, ALU.r-1
 ALU.out, R(src).in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+R(src).out, ALU.r&l
+ALU.out, R(dst).in
 END
 
-CPU cicles = 12
+CPU cicles = 11
 MEM access = 1
 
 ---------------
 AND -(R) X(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
+R(src).out, ALU.r-1
+ALU.out, R(src).in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 R(src).out, ALU.r&l
@@ -5942,9 +6016,9 @@ MEM access = 4
 ---------------
 AND -(R) @R
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 R(src).out, ALU.r&l
 ALU.out, MDR.in, WR
@@ -5956,11 +6030,11 @@ MEM access = 3
 ---------------
 AND -(R) @(R)+
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 R(src).out, ALU.r&l
 ALU.out, MDR.in, WR
@@ -5972,10 +6046,10 @@ MEM access = 3
 ---------------
 AND -(R) @-(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 R(src).out, ALU.r&l
 ALU.out, MDR.in, WR
@@ -5987,13 +6061,13 @@ MEM access = 3
 ---------------
 AND -(R) @X(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
+R(src).out, ALU.r-1
+ALU.out, R(src).in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -6011,15 +6085,14 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r&l
+TMP1.out, ALU.r&l
 ALU.out, R(dst).in
 END
 
-CPU cicles = 15
+CPU cicles = 14
 MEM access = 3
 
 ---------------
@@ -6029,11 +6102,11 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 TMP1.out, ALU.r&l
 ALU.out, R(dst).in
 END
@@ -6048,17 +6121,16 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r&l
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+TMP1.out, ALU.r&l
 ALU.out, R(dst).in
 END
 
-CPU cicles = 17
+CPU cicles = 16
 MEM access = 3
 
 ---------------
@@ -6068,14 +6140,14 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r&l
@@ -6092,10 +6164,10 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
@@ -6111,12 +6183,12 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
@@ -6132,11 +6204,11 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
@@ -6152,14 +6224,14 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -6173,23 +6245,22 @@ MEM access = 7
 ---------------
 AND @R R
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r&l
+TMP1.out, ALU.r&l
 ALU.out, R(dst).in
 END
 
-CPU cicles = 10
+CPU cicles = 9
 MEM access = 2
 
 ---------------
 AND @R (R)+
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 TMP1.out, ALU.r&l
 ALU.out, R(dst).in
 END
@@ -6200,28 +6271,27 @@ MEM access = 2
 ---------------
 AND @R -(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r&l
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+TMP1.out, ALU.r&l
 ALU.out, R(dst).in
 END
 
-CPU cicles = 12
+CPU cicles = 11
 MEM access = 2
 
 ---------------
 AND @R X(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r&l
@@ -6234,9 +6304,9 @@ MEM access = 5
 ---------------
 AND @R @R
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
@@ -6248,11 +6318,11 @@ MEM access = 4
 ---------------
 AND @R @(R)+
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
@@ -6264,10 +6334,10 @@ MEM access = 4
 ---------------
 AND @R @-(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
@@ -6279,13 +6349,13 @@ MEM access = 4
 ---------------
 AND @R @X(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -6299,27 +6369,26 @@ MEM access = 6
 ---------------
 AND @(R)+ R
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r&l
+TMP1.out, ALU.r&l
 ALU.out, R(dst).in
 END
 
-CPU cicles = 12
+CPU cicles = 11
 MEM access = 2
 
 ---------------
 AND @(R)+ (R)+
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 TMP1.out, ALU.r&l
 ALU.out, R(dst).in
 END
@@ -6330,32 +6399,31 @@ MEM access = 2
 ---------------
 AND @(R)+ -(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r&l
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+TMP1.out, ALU.r&l
 ALU.out, R(dst).in
 END
 
-CPU cicles = 14
+CPU cicles = 13
 MEM access = 2
 
 ---------------
 AND @(R)+ X(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r&l
@@ -6368,11 +6436,11 @@ MEM access = 5
 ---------------
 AND @(R)+ @R
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
@@ -6384,13 +6452,13 @@ MEM access = 4
 ---------------
 AND @(R)+ @(R)+
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
@@ -6402,12 +6470,12 @@ MEM access = 4
 ---------------
 AND @(R)+ @-(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
@@ -6419,15 +6487,15 @@ MEM access = 4
 ---------------
 AND @(R)+ @X(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -6441,25 +6509,24 @@ MEM access = 6
 ---------------
 AND @-(R) R
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r&l
+TMP1.out, ALU.r&l
 ALU.out, R(dst).in
 END
 
-CPU cicles = 11
+CPU cicles = 10
 MEM access = 2
 
 ---------------
 AND @-(R) (R)+
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 TMP1.out, ALU.r&l
 ALU.out, R(dst).in
 END
@@ -6470,30 +6537,29 @@ MEM access = 2
 ---------------
 AND @-(R) -(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r&l
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+TMP1.out, ALU.r&l
 ALU.out, R(dst).in
 END
 
-CPU cicles = 13
+CPU cicles = 12
 MEM access = 2
 
 ---------------
 AND @-(R) X(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r&l
@@ -6506,10 +6572,10 @@ MEM access = 5
 ---------------
 AND @-(R) @R
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
@@ -6521,12 +6587,12 @@ MEM access = 4
 ---------------
 AND @-(R) @(R)+
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
@@ -6538,11 +6604,11 @@ MEM access = 4
 ---------------
 AND @-(R) @-(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
@@ -6554,14 +6620,14 @@ MEM access = 4
 ---------------
 AND @-(R) @X(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -6579,16 +6645,15 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r&l
+TMP1.out, ALU.r&l
 ALU.out, R(dst).in
 END
 
-CPU cicles = 16
+CPU cicles = 15
 MEM access = 4
 
 ---------------
@@ -6598,12 +6663,12 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 TMP1.out, ALU.r&l
 ALU.out, R(dst).in
 END
@@ -6618,18 +6683,17 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r&l
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+TMP1.out, ALU.r&l
 ALU.out, R(dst).in
 END
 
-CPU cicles = 18
+CPU cicles = 17
 MEM access = 4
 
 ---------------
@@ -6639,7 +6703,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
@@ -6647,7 +6711,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r&l
@@ -6664,11 +6728,11 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
@@ -6684,13 +6748,13 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
@@ -6706,12 +6770,12 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r&l
 ALU.out, MDR.in, WR
@@ -6727,7 +6791,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
@@ -6735,7 +6799,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -6749,19 +6813,18 @@ MEM access = 8
 ---------------
 OR R R
 ---------------
-R(src).out, TMP0.in
-R(dst).out, ALU.r|l
-ALU.out, R(src).in
+R(src).out, ALU.r|l
+ALU.out, R(dst).in
 END
 
-CPU cicles = 8
+CPU cicles = 7
 MEM access = 1
 
 ---------------
 OR R (R)+
 ---------------
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 R(src).out, ALU.r|l
 ALU.out, R(dst).in
 END
@@ -6772,14 +6835,13 @@ MEM access = 1
 ---------------
 OR R -(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R(src).out, TMP0.in
-R(dst).out, ALU.r|l
-ALU.out, R(src).in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+R(src).out, ALU.r|l
+ALU.out, R(dst).in
 END
 
-CPU cicles = 10
+CPU cicles = 9
 MEM access = 1
 
 ---------------
@@ -6789,7 +6851,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 R(src).out, ALU.r|l
@@ -6802,7 +6864,7 @@ MEM access = 4
 ---------------
 OR R @R
 ---------------
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 R(src).out, ALU.r|l
 ALU.out, MDR.in, WR
@@ -6814,9 +6876,9 @@ MEM access = 3
 ---------------
 OR R @(R)+
 ---------------
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 R(src).out, ALU.r|l
 ALU.out, MDR.in, WR
@@ -6828,8 +6890,8 @@ MEM access = 3
 ---------------
 OR R @-(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 R(src).out, ALU.r|l
 ALU.out, MDR.in, WR
@@ -6845,7 +6907,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -6859,23 +6921,22 @@ MEM access = 5
 ---------------
 OR (R)+ R
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r|l
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+TMP1.out, ALU.r|l
 ALU.out, R(dst).in
 END
 
-CPU cicles = 10
+CPU cicles = 9
 MEM access = 1
 
 ---------------
 OR (R)+ (R)+
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 TMP1.out, ALU.r|l
 ALU.out, R(dst).in
 END
@@ -6886,28 +6947,27 @@ MEM access = 1
 ---------------
 OR (R)+ -(R)
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R.out, ALU.r-1
-ALU.out, R.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r|l
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+TMP1.out, ALU.r|l
 ALU.out, R(dst).in
 END
 
-CPU cicles = 12
+CPU cicles = 11
 MEM access = 1
 
 ---------------
 OR (R)+ X(R)
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r|l
@@ -6920,9 +6980,9 @@ MEM access = 4
 ---------------
 OR (R)+ @R
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R.out, MAR.in, RD
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r|l
 ALU.out, MDR.in, WR
@@ -6934,11 +6994,11 @@ MEM access = 3
 ---------------
 OR (R)+ @(R)+
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R.out, MAR.in, RD
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 TMP1.out, ALU.r|l
 ALU.out, MDR.in, WR
@@ -6950,10 +7010,10 @@ MEM access = 3
 ---------------
 OR (R)+ @-(R)
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r|l
 ALU.out, MDR.in, WR
@@ -6965,13 +7025,13 @@ MEM access = 3
 ---------------
 OR (R)+ @X(R)
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -6985,23 +7045,22 @@ MEM access = 5
 ---------------
 OR -(R) R
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R(src).out, TMP0.in
-R(dst).out, ALU.r|l
+R(src).out, ALU.r-1
 ALU.out, R(src).in
+R(src).out, ALU.r|l
+ALU.out, R(dst).in
 END
 
-CPU cicles = 10
+CPU cicles = 9
 MEM access = 1
 
 ---------------
 OR -(R) (R)+
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(src).out, ALU.r-1
+ALU.out, R(src).in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 R(src).out, ALU.r|l
 ALU.out, R(dst).in
 END
@@ -7012,28 +7071,27 @@ MEM access = 1
 ---------------
 OR -(R) -(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, ALU.r-1
-ALU.out, R.in
-R(src).out, TMP0.in
-R(dst).out, ALU.r|l
+R(src).out, ALU.r-1
 ALU.out, R(src).in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+R(src).out, ALU.r|l
+ALU.out, R(dst).in
 END
 
-CPU cicles = 12
+CPU cicles = 11
 MEM access = 1
 
 ---------------
 OR -(R) X(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
+R(src).out, ALU.r-1
+ALU.out, R(src).in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 R(src).out, ALU.r|l
@@ -7046,9 +7104,9 @@ MEM access = 4
 ---------------
 OR -(R) @R
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 R(src).out, ALU.r|l
 ALU.out, MDR.in, WR
@@ -7060,11 +7118,11 @@ MEM access = 3
 ---------------
 OR -(R) @(R)+
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 R(src).out, ALU.r|l
 ALU.out, MDR.in, WR
@@ -7076,10 +7134,10 @@ MEM access = 3
 ---------------
 OR -(R) @-(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 R(src).out, ALU.r|l
 ALU.out, MDR.in, WR
@@ -7091,13 +7149,13 @@ MEM access = 3
 ---------------
 OR -(R) @X(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
+R(src).out, ALU.r-1
+ALU.out, R(src).in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -7115,15 +7173,14 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r|l
+TMP1.out, ALU.r|l
 ALU.out, R(dst).in
 END
 
-CPU cicles = 15
+CPU cicles = 14
 MEM access = 3
 
 ---------------
@@ -7133,11 +7190,11 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 TMP1.out, ALU.r|l
 ALU.out, R(dst).in
 END
@@ -7152,17 +7209,16 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r|l
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+TMP1.out, ALU.r|l
 ALU.out, R(dst).in
 END
 
-CPU cicles = 17
+CPU cicles = 16
 MEM access = 3
 
 ---------------
@@ -7172,14 +7228,14 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r|l
@@ -7196,10 +7252,10 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r|l
 ALU.out, MDR.in, WR
@@ -7215,12 +7271,12 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 TMP1.out, ALU.r|l
 ALU.out, MDR.in, WR
@@ -7236,11 +7292,11 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r|l
 ALU.out, MDR.in, WR
@@ -7256,14 +7312,14 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -7277,23 +7333,22 @@ MEM access = 7
 ---------------
 OR @R R
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r|l
+TMP1.out, ALU.r|l
 ALU.out, R(dst).in
 END
 
-CPU cicles = 10
+CPU cicles = 9
 MEM access = 2
 
 ---------------
 OR @R (R)+
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 TMP1.out, ALU.r|l
 ALU.out, R(dst).in
 END
@@ -7304,28 +7359,27 @@ MEM access = 2
 ---------------
 OR @R -(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r|l
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+TMP1.out, ALU.r|l
 ALU.out, R(dst).in
 END
 
-CPU cicles = 12
+CPU cicles = 11
 MEM access = 2
 
 ---------------
 OR @R X(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r|l
@@ -7338,9 +7392,9 @@ MEM access = 5
 ---------------
 OR @R @R
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r|l
 ALU.out, MDR.in, WR
@@ -7352,11 +7406,11 @@ MEM access = 4
 ---------------
 OR @R @(R)+
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 TMP1.out, ALU.r|l
 ALU.out, MDR.in, WR
@@ -7368,10 +7422,10 @@ MEM access = 4
 ---------------
 OR @R @-(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r|l
 ALU.out, MDR.in, WR
@@ -7383,13 +7437,13 @@ MEM access = 4
 ---------------
 OR @R @X(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -7403,27 +7457,26 @@ MEM access = 6
 ---------------
 OR @(R)+ R
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r|l
+TMP1.out, ALU.r|l
 ALU.out, R(dst).in
 END
 
-CPU cicles = 12
+CPU cicles = 11
 MEM access = 2
 
 ---------------
 OR @(R)+ (R)+
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 TMP1.out, ALU.r|l
 ALU.out, R(dst).in
 END
@@ -7434,32 +7487,31 @@ MEM access = 2
 ---------------
 OR @(R)+ -(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r|l
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+TMP1.out, ALU.r|l
 ALU.out, R(dst).in
 END
 
-CPU cicles = 14
+CPU cicles = 13
 MEM access = 2
 
 ---------------
 OR @(R)+ X(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r|l
@@ -7472,11 +7524,11 @@ MEM access = 5
 ---------------
 OR @(R)+ @R
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r|l
 ALU.out, MDR.in, WR
@@ -7488,13 +7540,13 @@ MEM access = 4
 ---------------
 OR @(R)+ @(R)+
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 TMP1.out, ALU.r|l
 ALU.out, MDR.in, WR
@@ -7506,12 +7558,12 @@ MEM access = 4
 ---------------
 OR @(R)+ @-(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r|l
 ALU.out, MDR.in, WR
@@ -7523,15 +7575,15 @@ MEM access = 4
 ---------------
 OR @(R)+ @X(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -7545,25 +7597,24 @@ MEM access = 6
 ---------------
 OR @-(R) R
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r|l
+TMP1.out, ALU.r|l
 ALU.out, R(dst).in
 END
 
-CPU cicles = 11
+CPU cicles = 10
 MEM access = 2
 
 ---------------
 OR @-(R) (R)+
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 TMP1.out, ALU.r|l
 ALU.out, R(dst).in
 END
@@ -7574,30 +7625,29 @@ MEM access = 2
 ---------------
 OR @-(R) -(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r|l
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+TMP1.out, ALU.r|l
 ALU.out, R(dst).in
 END
 
-CPU cicles = 13
+CPU cicles = 12
 MEM access = 2
 
 ---------------
 OR @-(R) X(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r|l
@@ -7610,10 +7660,10 @@ MEM access = 5
 ---------------
 OR @-(R) @R
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r|l
 ALU.out, MDR.in, WR
@@ -7625,12 +7675,12 @@ MEM access = 4
 ---------------
 OR @-(R) @(R)+
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 TMP1.out, ALU.r|l
 ALU.out, MDR.in, WR
@@ -7642,11 +7692,11 @@ MEM access = 4
 ---------------
 OR @-(R) @-(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r|l
 ALU.out, MDR.in, WR
@@ -7658,14 +7708,14 @@ MEM access = 4
 ---------------
 OR @-(R) @X(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -7683,16 +7733,15 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r|l
+TMP1.out, ALU.r|l
 ALU.out, R(dst).in
 END
 
-CPU cicles = 16
+CPU cicles = 15
 MEM access = 4
 
 ---------------
@@ -7702,12 +7751,12 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 TMP1.out, ALU.r|l
 ALU.out, R(dst).in
 END
@@ -7722,18 +7771,17 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r|l
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+TMP1.out, ALU.r|l
 ALU.out, R(dst).in
 END
 
-CPU cicles = 18
+CPU cicles = 17
 MEM access = 4
 
 ---------------
@@ -7743,7 +7791,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
@@ -7751,7 +7799,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r|l
@@ -7768,11 +7816,11 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r|l
 ALU.out, MDR.in, WR
@@ -7788,13 +7836,13 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 TMP1.out, ALU.r|l
 ALU.out, MDR.in, WR
@@ -7810,12 +7858,12 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r|l
 ALU.out, MDR.in, WR
@@ -7831,7 +7879,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
@@ -7839,7 +7887,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -7853,19 +7901,18 @@ MEM access = 8
 ---------------
 XNOR R R
 ---------------
-R(src).out, TMP0.in
-R(dst).out, ALU.r(XNOR)l
-ALU.out, R(src).in
+R(src).out, ALU.r(XNOR)l
+ALU.out, R(dst).in
 END
 
-CPU cicles = 8
+CPU cicles = 7
 MEM access = 1
 
 ---------------
 XNOR R (R)+
 ---------------
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 R(src).out, ALU.r(XNOR)l
 ALU.out, R(dst).in
 END
@@ -7876,14 +7923,13 @@ MEM access = 1
 ---------------
 XNOR R -(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R(src).out, TMP0.in
-R(dst).out, ALU.r(XNOR)l
-ALU.out, R(src).in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+R(src).out, ALU.r(XNOR)l
+ALU.out, R(dst).in
 END
 
-CPU cicles = 10
+CPU cicles = 9
 MEM access = 1
 
 ---------------
@@ -7893,7 +7939,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 R(src).out, ALU.r(XNOR)l
@@ -7906,7 +7952,7 @@ MEM access = 4
 ---------------
 XNOR R @R
 ---------------
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 R(src).out, ALU.r(XNOR)l
 ALU.out, MDR.in, WR
@@ -7918,9 +7964,9 @@ MEM access = 3
 ---------------
 XNOR R @(R)+
 ---------------
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 R(src).out, ALU.r(XNOR)l
 ALU.out, MDR.in, WR
@@ -7932,8 +7978,8 @@ MEM access = 3
 ---------------
 XNOR R @-(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 R(src).out, ALU.r(XNOR)l
 ALU.out, MDR.in, WR
@@ -7949,7 +7995,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -7963,23 +8009,22 @@ MEM access = 5
 ---------------
 XNOR (R)+ R
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r(XNOR)l
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+TMP1.out, ALU.r(XNOR)l
 ALU.out, R(dst).in
 END
 
-CPU cicles = 10
+CPU cicles = 9
 MEM access = 1
 
 ---------------
 XNOR (R)+ (R)+
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 TMP1.out, ALU.r(XNOR)l
 ALU.out, R(dst).in
 END
@@ -7990,28 +8035,27 @@ MEM access = 1
 ---------------
 XNOR (R)+ -(R)
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R.out, ALU.r-1
-ALU.out, R.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r(XNOR)l
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+TMP1.out, ALU.r(XNOR)l
 ALU.out, R(dst).in
 END
 
-CPU cicles = 12
+CPU cicles = 11
 MEM access = 1
 
 ---------------
 XNOR (R)+ X(R)
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r(XNOR)l
@@ -8024,9 +8068,9 @@ MEM access = 4
 ---------------
 XNOR (R)+ @R
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R.out, MAR.in, RD
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r(XNOR)l
 ALU.out, MDR.in, WR
@@ -8038,11 +8082,11 @@ MEM access = 3
 ---------------
 XNOR (R)+ @(R)+
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R.out, MAR.in, RD
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 TMP1.out, ALU.r(XNOR)l
 ALU.out, MDR.in, WR
@@ -8054,10 +8098,10 @@ MEM access = 3
 ---------------
 XNOR (R)+ @-(R)
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r(XNOR)l
 ALU.out, MDR.in, WR
@@ -8069,13 +8113,13 @@ MEM access = 3
 ---------------
 XNOR (R)+ @X(R)
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -8089,23 +8133,22 @@ MEM access = 5
 ---------------
 XNOR -(R) R
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R(src).out, TMP0.in
-R(dst).out, ALU.r(XNOR)l
+R(src).out, ALU.r-1
 ALU.out, R(src).in
+R(src).out, ALU.r(XNOR)l
+ALU.out, R(dst).in
 END
 
-CPU cicles = 10
+CPU cicles = 9
 MEM access = 1
 
 ---------------
 XNOR -(R) (R)+
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(src).out, ALU.r-1
+ALU.out, R(src).in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 R(src).out, ALU.r(XNOR)l
 ALU.out, R(dst).in
 END
@@ -8116,28 +8159,27 @@ MEM access = 1
 ---------------
 XNOR -(R) -(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, ALU.r-1
-ALU.out, R.in
-R(src).out, TMP0.in
-R(dst).out, ALU.r(XNOR)l
+R(src).out, ALU.r-1
 ALU.out, R(src).in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+R(src).out, ALU.r(XNOR)l
+ALU.out, R(dst).in
 END
 
-CPU cicles = 12
+CPU cicles = 11
 MEM access = 1
 
 ---------------
 XNOR -(R) X(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
+R(src).out, ALU.r-1
+ALU.out, R(src).in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 R(src).out, ALU.r(XNOR)l
@@ -8150,9 +8192,9 @@ MEM access = 4
 ---------------
 XNOR -(R) @R
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 R(src).out, ALU.r(XNOR)l
 ALU.out, MDR.in, WR
@@ -8164,11 +8206,11 @@ MEM access = 3
 ---------------
 XNOR -(R) @(R)+
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 R(src).out, ALU.r(XNOR)l
 ALU.out, MDR.in, WR
@@ -8180,10 +8222,10 @@ MEM access = 3
 ---------------
 XNOR -(R) @-(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 R(src).out, ALU.r(XNOR)l
 ALU.out, MDR.in, WR
@@ -8195,13 +8237,13 @@ MEM access = 3
 ---------------
 XNOR -(R) @X(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
+R(src).out, ALU.r-1
+ALU.out, R(src).in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -8219,15 +8261,14 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r(XNOR)l
+TMP1.out, ALU.r(XNOR)l
 ALU.out, R(dst).in
 END
 
-CPU cicles = 15
+CPU cicles = 14
 MEM access = 3
 
 ---------------
@@ -8237,11 +8278,11 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 TMP1.out, ALU.r(XNOR)l
 ALU.out, R(dst).in
 END
@@ -8256,17 +8297,16 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r(XNOR)l
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+TMP1.out, ALU.r(XNOR)l
 ALU.out, R(dst).in
 END
 
-CPU cicles = 17
+CPU cicles = 16
 MEM access = 3
 
 ---------------
@@ -8276,14 +8316,14 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r(XNOR)l
@@ -8300,10 +8340,10 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r(XNOR)l
 ALU.out, MDR.in, WR
@@ -8319,12 +8359,12 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 TMP1.out, ALU.r(XNOR)l
 ALU.out, MDR.in, WR
@@ -8340,11 +8380,11 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r(XNOR)l
 ALU.out, MDR.in, WR
@@ -8360,14 +8400,14 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -8381,23 +8421,22 @@ MEM access = 7
 ---------------
 XNOR @R R
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r(XNOR)l
+TMP1.out, ALU.r(XNOR)l
 ALU.out, R(dst).in
 END
 
-CPU cicles = 10
+CPU cicles = 9
 MEM access = 2
 
 ---------------
 XNOR @R (R)+
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 TMP1.out, ALU.r(XNOR)l
 ALU.out, R(dst).in
 END
@@ -8408,28 +8447,27 @@ MEM access = 2
 ---------------
 XNOR @R -(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r(XNOR)l
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+TMP1.out, ALU.r(XNOR)l
 ALU.out, R(dst).in
 END
 
-CPU cicles = 12
+CPU cicles = 11
 MEM access = 2
 
 ---------------
 XNOR @R X(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r(XNOR)l
@@ -8442,9 +8480,9 @@ MEM access = 5
 ---------------
 XNOR @R @R
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r(XNOR)l
 ALU.out, MDR.in, WR
@@ -8456,11 +8494,11 @@ MEM access = 4
 ---------------
 XNOR @R @(R)+
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 TMP1.out, ALU.r(XNOR)l
 ALU.out, MDR.in, WR
@@ -8472,10 +8510,10 @@ MEM access = 4
 ---------------
 XNOR @R @-(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r(XNOR)l
 ALU.out, MDR.in, WR
@@ -8487,13 +8525,13 @@ MEM access = 4
 ---------------
 XNOR @R @X(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -8507,27 +8545,26 @@ MEM access = 6
 ---------------
 XNOR @(R)+ R
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r(XNOR)l
+TMP1.out, ALU.r(XNOR)l
 ALU.out, R(dst).in
 END
 
-CPU cicles = 12
+CPU cicles = 11
 MEM access = 2
 
 ---------------
 XNOR @(R)+ (R)+
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 TMP1.out, ALU.r(XNOR)l
 ALU.out, R(dst).in
 END
@@ -8538,32 +8575,31 @@ MEM access = 2
 ---------------
 XNOR @(R)+ -(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r(XNOR)l
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+TMP1.out, ALU.r(XNOR)l
 ALU.out, R(dst).in
 END
 
-CPU cicles = 14
+CPU cicles = 13
 MEM access = 2
 
 ---------------
 XNOR @(R)+ X(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r(XNOR)l
@@ -8576,11 +8612,11 @@ MEM access = 5
 ---------------
 XNOR @(R)+ @R
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r(XNOR)l
 ALU.out, MDR.in, WR
@@ -8592,13 +8628,13 @@ MEM access = 4
 ---------------
 XNOR @(R)+ @(R)+
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 TMP1.out, ALU.r(XNOR)l
 ALU.out, MDR.in, WR
@@ -8610,12 +8646,12 @@ MEM access = 4
 ---------------
 XNOR @(R)+ @-(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r(XNOR)l
 ALU.out, MDR.in, WR
@@ -8627,15 +8663,15 @@ MEM access = 4
 ---------------
 XNOR @(R)+ @X(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -8649,25 +8685,24 @@ MEM access = 6
 ---------------
 XNOR @-(R) R
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r(XNOR)l
+TMP1.out, ALU.r(XNOR)l
 ALU.out, R(dst).in
 END
 
-CPU cicles = 11
+CPU cicles = 10
 MEM access = 2
 
 ---------------
 XNOR @-(R) (R)+
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 TMP1.out, ALU.r(XNOR)l
 ALU.out, R(dst).in
 END
@@ -8678,30 +8713,29 @@ MEM access = 2
 ---------------
 XNOR @-(R) -(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r(XNOR)l
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+TMP1.out, ALU.r(XNOR)l
 ALU.out, R(dst).in
 END
 
-CPU cicles = 13
+CPU cicles = 12
 MEM access = 2
 
 ---------------
 XNOR @-(R) X(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r(XNOR)l
@@ -8714,10 +8748,10 @@ MEM access = 5
 ---------------
 XNOR @-(R) @R
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r(XNOR)l
 ALU.out, MDR.in, WR
@@ -8729,12 +8763,12 @@ MEM access = 4
 ---------------
 XNOR @-(R) @(R)+
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 TMP1.out, ALU.r(XNOR)l
 ALU.out, MDR.in, WR
@@ -8746,11 +8780,11 @@ MEM access = 4
 ---------------
 XNOR @-(R) @-(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r(XNOR)l
 ALU.out, MDR.in, WR
@@ -8762,14 +8796,14 @@ MEM access = 4
 ---------------
 XNOR @-(R) @X(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -8787,16 +8821,15 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r(XNOR)l
+TMP1.out, ALU.r(XNOR)l
 ALU.out, R(dst).in
 END
 
-CPU cicles = 16
+CPU cicles = 15
 MEM access = 4
 
 ---------------
@@ -8806,12 +8839,12 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 TMP1.out, ALU.r(XNOR)l
 ALU.out, R(dst).in
 END
@@ -8826,18 +8859,17 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in
-TMP1.out, TMP0.in
-R(dst).out, ALU.r(XNOR)l
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+TMP1.out, ALU.r(XNOR)l
 ALU.out, R(dst).in
 END
 
-CPU cicles = 18
+CPU cicles = 17
 MEM access = 4
 
 ---------------
@@ -8847,7 +8879,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
@@ -8855,7 +8887,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r(XNOR)l
@@ -8872,11 +8904,11 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r(XNOR)l
 ALU.out, MDR.in, WR
@@ -8892,13 +8924,13 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 TMP1.out, ALU.r(XNOR)l
 ALU.out, MDR.in, WR
@@ -8914,12 +8946,12 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 TMP1.out, ALU.r(XNOR)l
 ALU.out, MDR.in, WR
@@ -8935,7 +8967,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
@@ -8943,7 +8975,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -8957,19 +8989,9 @@ MEM access = 8
 ---------------
 CMP R R
 ---------------
-R(src).out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r-l-c
-END
-
-CPU cicles = 7
-MEM access = 1
-
----------------
-CMP R (R)+
----------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R(src).out, TMP0.in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
 TMP1.out, ALU.c=0, ALU.r-l-c
 END
 
@@ -8977,15 +8999,31 @@ CPU cicles = 9
 MEM access = 1
 
 ---------------
-CMP R -(R)
+CMP R (R)+
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R(src).out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r-l-c
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
+TMP1.out, ALU.c=0, ALU.r-l-c
 END
 
-CPU cicles = 9
+CPU cicles = 11
+MEM access = 1
+
+---------------
+CMP R -(R)
+---------------
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
+TMP1.out, ALU.c=0, ALU.r-l-c
+END
+
+CPU cicles = 11
 MEM access = 1
 
 ---------------
@@ -8995,36 +9033,26 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
-MDR.out, TMP1.in
-R(src).out, TMP0.in
+MDR.out, TMP0.in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
 TMP1.out, ALU.c=0, ALU.r-l-c
 END
 
-CPU cicles = 14
+CPU cicles = 16
 MEM access = 3
 
 ---------------
 CMP R @R
 ---------------
-R.out, MAR.in, RD
-MDR.out, TMP1.in
-R(src).out, TMP0.in
-TMP1.out, ALU.c=0, ALU.r-l-c
-END
-
-CPU cicles = 9
-MEM access = 2
-
----------------
-CMP R @(R)+
----------------
-R.out, MAR.in, RD
-MAR.out, ALU.r+1
-ALU.out, R.in
-MDR.out, TMP1.in
-R(src).out, TMP0.in
+R(dst).out, MAR.in, RD
+MDR.out, TMP0.in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
 TMP1.out, ALU.c=0, ALU.r-l-c
 END
 
@@ -9032,16 +9060,34 @@ CPU cicles = 11
 MEM access = 2
 
 ---------------
-CMP R @-(R)
+CMP R @(R)+
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
-MDR.out, TMP1.in
-R(src).out, TMP0.in
+R(dst).out, MAR.in, RD
+MAR.out, ALU.r+1
+ALU.out, R(dst).in
+MDR.out, TMP0.in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
 TMP1.out, ALU.c=0, ALU.r-l-c
 END
 
-CPU cicles = 10
+CPU cicles = 13
+MEM access = 2
+
+---------------
+CMP R @-(R)
+---------------
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
+MDR.out, TMP0.in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
+TMP1.out, ALU.c=0, ALU.r-l-c
+END
+
+CPU cicles = 12
 MEM access = 2
 
 ---------------
@@ -9051,36 +9097,40 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
-MDR.out, TMP1.in
-R(src).out, TMP0.in
+MDR.out, TMP0.in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
 TMP1.out, ALU.c=0, ALU.r-l-c
 END
 
-CPU cicles = 15
+CPU cicles = 17
 MEM access = 4
 
 ---------------
 CMP (R)+ R
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r-l-c
+ALU.out, TMP1.in
+TMP1.out, ALU.c=0, ALU.r-l-c
 END
 
-CPU cicles = 9
+CPU cicles = 11
 MEM access = 1
 
 ---------------
 CMP (R)+ (R)+
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
 ALU.out, TMP1.in
@@ -9093,27 +9143,29 @@ MEM access = 1
 ---------------
 CMP (R)+ -(R)
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R.out, ALU.r-1
-ALU.out, R.in
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r-l-c
+ALU.out, TMP1.in
+TMP1.out, ALU.c=0, ALU.r-l-c
 END
 
-CPU cicles = 11
+CPU cicles = 13
 MEM access = 1
 
 ---------------
 CMP (R)+ X(R)
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
@@ -9128,9 +9180,9 @@ MEM access = 3
 ---------------
 CMP (R)+ @R
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R.out, MAR.in, RD
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -9144,11 +9196,11 @@ MEM access = 2
 ---------------
 CMP (R)+ @(R)+
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R.out, MAR.in, RD
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -9162,10 +9214,10 @@ MEM access = 2
 ---------------
 CMP (R)+ @-(R)
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -9179,13 +9231,13 @@ MEM access = 2
 ---------------
 CMP (R)+ @X(R)
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -9201,86 +9253,80 @@ MEM access = 4
 ---------------
 CMP -(R) R
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R(src).out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r-l-c
+R(src).out, ALU.r-1
+ALU.out, R(src).in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
+TMP1.out, ALU.c=0, ALU.r-l-c
 END
 
-CPU cicles = 9
+CPU cicles = 11
 MEM access = 1
 
 ---------------
 CMP -(R) (R)+
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
-R(src).out, TMP0.in
+R(src).out, ALU.r-1
+ALU.out, R(src).in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
 TMP1.out, ALU.c=0, ALU.r-l-c
 END
 
-CPU cicles = 11
+CPU cicles = 13
 MEM access = 1
 
 ---------------
 CMP -(R) -(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, ALU.r-1
-ALU.out, R.in
-R(src).out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r-l-c
+R(src).out, ALU.r-1
+ALU.out, R(src).in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
+TMP1.out, ALU.c=0, ALU.r-l-c
 END
 
-CPU cicles = 11
+CPU cicles = 13
 MEM access = 1
 
 ---------------
 CMP -(R) X(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
+R(src).out, ALU.r-1
+ALU.out, R(src).in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
-MDR.out, TMP1.in
-R(src).out, TMP0.in
+MDR.out, TMP0.in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
 TMP1.out, ALU.c=0, ALU.r-l-c
 END
 
-CPU cicles = 16
+CPU cicles = 18
 MEM access = 3
 
 ---------------
 CMP -(R) @R
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, MAR.in, RD
-MDR.out, TMP1.in
-R(src).out, TMP0.in
-TMP1.out, ALU.c=0, ALU.r-l-c
-END
-
-CPU cicles = 11
-MEM access = 2
-
----------------
-CMP -(R) @(R)+
----------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, MAR.in, RD
-MAR.out, ALU.r+1
-ALU.out, R.in
-MDR.out, TMP1.in
-R(src).out, TMP0.in
+R(src).out, ALU.r-1
+ALU.out, R(src).in
+R(dst).out, MAR.in, RD
+MDR.out, TMP0.in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
 TMP1.out, ALU.c=0, ALU.r-l-c
 END
 
@@ -9288,38 +9334,60 @@ CPU cicles = 13
 MEM access = 2
 
 ---------------
-CMP -(R) @-(R)
+CMP -(R) @(R)+
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
-MDR.out, TMP1.in
-R(src).out, TMP0.in
+R(src).out, ALU.r-1
+ALU.out, R(src).in
+R(dst).out, MAR.in, RD
+MAR.out, ALU.r+1
+ALU.out, R(dst).in
+MDR.out, TMP0.in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
 TMP1.out, ALU.c=0, ALU.r-l-c
 END
 
-CPU cicles = 12
+CPU cicles = 15
+MEM access = 2
+
+---------------
+CMP -(R) @-(R)
+---------------
+R(src).out, ALU.r-1
+ALU.out, R(src).in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
+MDR.out, TMP0.in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
+TMP1.out, ALU.c=0, ALU.r-l-c
+END
+
+CPU cicles = 14
 MEM access = 2
 
 ---------------
 CMP -(R) @X(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
+R(src).out, ALU.r-1
+ALU.out, R(src).in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
-MDR.out, TMP1.in
-R(src).out, TMP0.in
+MDR.out, TMP0.in
+ALU.c=0, ALU.r+l+c
+TMP1.out, TMP0.in
+ALU.out, TMP1.in
 TMP1.out, ALU.c=0, ALU.r-l-c
 END
 
-CPU cicles = 17
+CPU cicles = 19
 MEM access = 4
 
 ---------------
@@ -9329,14 +9397,16 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
+ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r-l-c
+ALU.out, TMP1.in
+TMP1.out, ALU.c=0, ALU.r-l-c
 END
 
-CPU cicles = 14
+CPU cicles = 16
 MEM access = 3
 
 ---------------
@@ -9346,11 +9416,11 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
 ALU.out, TMP1.in
@@ -9367,16 +9437,18 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r-l-c
+ALU.out, TMP1.in
+TMP1.out, ALU.c=0, ALU.r-l-c
 END
 
-CPU cicles = 16
+CPU cicles = 18
 MEM access = 3
 
 ---------------
@@ -9386,14 +9458,14 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
@@ -9412,10 +9484,10 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -9433,12 +9505,12 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -9456,11 +9528,11 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -9478,14 +9550,14 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -9501,22 +9573,24 @@ MEM access = 6
 ---------------
 CMP @R R
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
+ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r-l-c
+ALU.out, TMP1.in
+TMP1.out, ALU.c=0, ALU.r-l-c
 END
 
-CPU cicles = 9
+CPU cicles = 11
 MEM access = 2
 
 ---------------
 CMP @R (R)+
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
 ALU.out, TMP1.in
@@ -9529,27 +9603,29 @@ MEM access = 2
 ---------------
 CMP @R -(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r-l-c
+ALU.out, TMP1.in
+TMP1.out, ALU.c=0, ALU.r-l-c
 END
 
-CPU cicles = 11
+CPU cicles = 13
 MEM access = 2
 
 ---------------
 CMP @R X(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
@@ -9564,9 +9640,9 @@ MEM access = 4
 ---------------
 CMP @R @R
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -9580,11 +9656,11 @@ MEM access = 3
 ---------------
 CMP @R @(R)+
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -9598,10 +9674,10 @@ MEM access = 3
 ---------------
 CMP @R @-(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -9615,13 +9691,13 @@ MEM access = 3
 ---------------
 CMP @R @X(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -9637,26 +9713,28 @@ MEM access = 5
 ---------------
 CMP @(R)+ R
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
+ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r-l-c
+ALU.out, TMP1.in
+TMP1.out, ALU.c=0, ALU.r-l-c
 END
 
-CPU cicles = 11
+CPU cicles = 13
 MEM access = 2
 
 ---------------
 CMP @(R)+ (R)+
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
 ALU.out, TMP1.in
@@ -9669,31 +9747,33 @@ MEM access = 2
 ---------------
 CMP @(R)+ -(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r-l-c
+ALU.out, TMP1.in
+TMP1.out, ALU.c=0, ALU.r-l-c
 END
 
-CPU cicles = 13
+CPU cicles = 15
 MEM access = 2
 
 ---------------
 CMP @(R)+ X(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
@@ -9708,11 +9788,11 @@ MEM access = 4
 ---------------
 CMP @(R)+ @R
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -9726,13 +9806,13 @@ MEM access = 3
 ---------------
 CMP @(R)+ @(R)+
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -9746,12 +9826,12 @@ MEM access = 3
 ---------------
 CMP @(R)+ @-(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -9765,15 +9845,15 @@ MEM access = 3
 ---------------
 CMP @(R)+ @X(R)
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -9789,24 +9869,26 @@ MEM access = 5
 ---------------
 CMP @-(R) R
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
+ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r-l-c
+ALU.out, TMP1.in
+TMP1.out, ALU.c=0, ALU.r-l-c
 END
 
-CPU cicles = 10
+CPU cicles = 12
 MEM access = 2
 
 ---------------
 CMP @-(R) (R)+
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
 ALU.out, TMP1.in
@@ -9819,29 +9901,31 @@ MEM access = 2
 ---------------
 CMP @-(R) -(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r-l-c
+ALU.out, TMP1.in
+TMP1.out, ALU.c=0, ALU.r-l-c
 END
 
-CPU cicles = 12
+CPU cicles = 14
 MEM access = 2
 
 ---------------
 CMP @-(R) X(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
@@ -9856,10 +9940,10 @@ MEM access = 4
 ---------------
 CMP @-(R) @R
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -9873,12 +9957,12 @@ MEM access = 3
 ---------------
 CMP @-(R) @(R)+
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -9892,11 +9976,11 @@ MEM access = 3
 ---------------
 CMP @-(R) @-(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -9910,14 +9994,14 @@ MEM access = 3
 ---------------
 CMP @-(R) @X(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
 PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -9937,15 +10021,17 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
+ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r-l-c
+ALU.out, TMP1.in
+TMP1.out, ALU.c=0, ALU.r-l-c
 END
 
-CPU cicles = 15
+CPU cicles = 17
 MEM access = 4
 
 ---------------
@@ -9955,12 +10041,12 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, TMP0.in, ALU.r+1
-ALU.out, R.in
+R(dst).out, TMP0.in, ALU.r+1
+ALU.out, R(dst).in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
 ALU.out, TMP1.in
@@ -9977,17 +10063,19 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in
+ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
-R(dst).out, ALU.c=0, ALU.r-l-c
+ALU.out, TMP1.in
+TMP1.out, ALU.c=0, ALU.r-l-c
 END
 
-CPU cicles = 17
+CPU cicles = 19
 MEM access = 4
 
 ---------------
@@ -9997,7 +10085,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
@@ -10005,7 +10093,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
@@ -10024,11 +10112,11 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -10046,13 +10134,13 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, MAR.in, RD
+R(dst).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(dst).in
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -10070,12 +10158,12 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(dst).out, ALU.r-1
+ALU.out, R(dst).in, MAR.in, RD
 MDR.out, TMP0.in
 ALU.c=0, ALU.r+l+c
 TMP1.out, TMP0.in
@@ -10093,7 +10181,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
@@ -10101,7 +10189,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(dst).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP0.in
@@ -10117,7 +10205,7 @@ MEM access = 7
 ---------------
 INC R
 ---------------
-R.out, ALU.r+1
+R(src).out, ALU.r+1
 ALU.out, R(dst).in
 END
 
@@ -10127,8 +10215,8 @@ MEM access = 1
 ---------------
 INC (R)+
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
 TMP1.out, ALU.r+1
 ALU.out, R(dst).in
 END
@@ -10139,9 +10227,9 @@ MEM access = 1
 ---------------
 INC -(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, ALU.r+1
+R(src).out, ALU.r-1
+ALU.out, R(src).in
+R(src).out, ALU.r+1
 ALU.out, R(dst).in
 END
 
@@ -10155,7 +10243,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
 TMP1.out, ALU.r+1
@@ -10168,7 +10256,7 @@ MEM access = 4
 ---------------
 INC @R
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
 TMP1.out, ALU.r+1
 ALU.out, MDR.in, WR
@@ -10180,9 +10268,9 @@ MEM access = 3
 ---------------
 INC @(R)+
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
 TMP1.out, ALU.r+1
 ALU.out, MDR.in, WR
@@ -10194,8 +10282,8 @@ MEM access = 3
 ---------------
 INC @-(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
 TMP1.out, ALU.r+1
 ALU.out, MDR.in, WR
@@ -10211,7 +10299,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
@@ -10225,7 +10313,7 @@ MEM access = 5
 ---------------
 DEC R
 ---------------
-R.out, ALU.r-1
+R(src).out, ALU.r-1
 ALU.out, R(dst).in
 END
 
@@ -10235,8 +10323,8 @@ MEM access = 1
 ---------------
 DEC (R)+
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
 TMP1.out, ALU.r-1
 ALU.out, R(dst).in
 END
@@ -10247,9 +10335,9 @@ MEM access = 1
 ---------------
 DEC -(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, ALU.r-1
+R(src).out, ALU.r-1
+ALU.out, R(src).in
+R(src).out, ALU.r-1
 ALU.out, R(dst).in
 END
 
@@ -10263,7 +10351,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
 TMP1.out, ALU.r-1
@@ -10276,7 +10364,7 @@ MEM access = 4
 ---------------
 DEC @R
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
 TMP1.out, ALU.r-1
 ALU.out, MDR.in, WR
@@ -10288,9 +10376,9 @@ MEM access = 3
 ---------------
 DEC @(R)+
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
 TMP1.out, ALU.r-1
 ALU.out, MDR.in, WR
@@ -10302,8 +10390,8 @@ MEM access = 3
 ---------------
 DEC @-(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
 TMP1.out, ALU.r-1
 ALU.out, MDR.in, WR
@@ -10319,7 +10407,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
@@ -10425,7 +10513,7 @@ MEM access = 3
 ---------------
 INV R
 ---------------
-R.out, ALU.~r
+R(src).out, ALU.~r
 ALU.out, R(dst).in
 END
 
@@ -10435,8 +10523,8 @@ MEM access = 1
 ---------------
 INV (R)+
 ---------------
-R.out, TMP1.in, ALU.r+1
-ALU.out, R.in
+R(src).out, TMP1.in, ALU.r+1
+ALU.out, R(src).in
 TMP1.out, ALU.~r
 ALU.out, R(dst).in
 END
@@ -10447,9 +10535,9 @@ MEM access = 1
 ---------------
 INV -(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in
-R.out, ALU.~r
+R(src).out, ALU.r-1
+ALU.out, R(src).in
+R(src).out, ALU.~r
 ALU.out, R(dst).in
 END
 
@@ -10463,7 +10551,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, TMP1.in
 TMP1.out, ALU.~r
@@ -10476,7 +10564,7 @@ MEM access = 4
 ---------------
 INV @R
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MDR.out, TMP1.in
 TMP1.out, ALU.~r
 ALU.out, MDR.in, WR
@@ -10488,9 +10576,9 @@ MEM access = 3
 ---------------
 INV @(R)+
 ---------------
-R.out, MAR.in, RD
+R(src).out, MAR.in, RD
 MAR.out, ALU.r+1
-ALU.out, R.in
+ALU.out, R(src).in
 MDR.out, TMP1.in
 TMP1.out, ALU.~r
 ALU.out, MDR.in, WR
@@ -10502,8 +10590,8 @@ MEM access = 3
 ---------------
 INV @-(R)
 ---------------
-R.out, ALU.r-1
-ALU.out, R.in, MAR.in, RD
+R(src).out, ALU.r-1
+ALU.out, R(src).in, MAR.in, RD
 MDR.out, TMP1.in
 TMP1.out, ALU.~r
 ALU.out, MDR.in, WR
@@ -10519,7 +10607,7 @@ PC.out, MAR.in, RD
 PC.out, ALU.r+1
 ALU.out, PC.in
 MDR.out, TMP0.in
-R.out, ALU.c=0, ALU.r+l+c
+R(src).out, ALU.c=0, ALU.r+l+c
 ALU.out, MAR.in, RD
 MDR.out, MAR.in, RD
 MDR.out, TMP1.in
@@ -11380,14 +11468,14 @@ CPU cicles = 13
 MEM access = 3
 --------------------
 --------------------
-Total CPU cicles = 9320
+Total CPU cicles = 9408
 Total MEM access = 2255
 
 Average MEM access = 3.331
-CPI = 13.767
+CPI = 13.897
 --------------------
 --------------------
-Total Control Signals (35): {
+Total Control Signals (34): {
 	ALU.asr
 	ALU.c=0
 	ALU.out
@@ -11406,7 +11494,6 @@ Total Control Signals (35): {
 	ALU.~r
 	FLAGS.in
 	FLAGS.out
-	HARDWARE_ADDRESS.out
 	IR.addr.out
 	MAR.in
 	MAR.out
