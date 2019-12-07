@@ -453,13 +453,12 @@ PDP11-Simplified 2-Bus Micro-instructions
 Notes:
     - Right bus is shortened as `r`, left is `l`.
     - FLAGS register is connected (out) to `r` and (in) to `l`.
-    - ALU has output register to buffer its output.
+    - ALU has output register to buffer its output, 
+        where ALU.out outs it to bus.
     - Instruction fetch micro-instructions are performed one time before each instruction, 
         they are omitted for clearity.
     - ALU functions:
-        -- enable output:             ALU.out
-        -- clears internal register and 
-                outs zero:            ALU.zero
+        -- outs zero:                 ALU.zero
         -- clear carry:               ALU.c=0
         -- increment:                 ALU.r+1
         -- decrement:                 ALU.r-1
@@ -481,7 +480,7 @@ Fetch micro-instructions
 PC.out, MAR.in, ALU.r+1, RD
 ALU.out, PC.in
 MDR.out, IR.in
-''')
+''') 
 
 cicles, memaccess = 4, 1
 

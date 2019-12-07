@@ -91,7 +91,6 @@ functions = '\n\n'.join([get_function(inst_name, fix_inst(inst_name), inst_lines
                          for (inst_name, inst_lines) in instr['instructions'].items()])
 
 
-# TODO: fill the branches
 opcodes = {
     'MOV': '0001',
     'ADD': '0010',
@@ -113,7 +112,21 @@ opcodes = {
     'LSL': '11111000',
     'ROL': '11111001',
     'RLC': '11111010',
+    'BR': '000000',
+    'BEQ': '000001',
+    'BNE': '000010',
+    'BLO': '000011',
+    'BLS': '110000',
+    'BHI': '110001',
+    'BHS': '110011',
+    'HLT': '1010',
+    'NOP': '1011',
+    'JSR': '110100',
+    'RTS': '111001',
+    'INT': '111010',
+    'IRET': '111011',
 }
+
 
 # TODO: fill with actual data
 modes = {
@@ -129,15 +142,12 @@ modes = {
 
 
 def get_conditions(instr_parts):
-    try:
-        code = opcodes[instr_parts[0]]
+    code = opcodes[instr_parts[0]]
 
-        if len(code) == 4:
-            return f'ir_data(15 downto {16-len(code)}) = "{code}" and ir_data(11 downto 9) = "{modes[instr_parts[1]]}" and ir_data(5 downto 3) = "{modes[instr_parts[2]]}"'
-        else:
-            return f'ir_data(15 downto {16-len(code)}) = "{code}" and ir_data(11 downto 9) = "{modes[instr_parts[1]]}"'
-    except:
-        return 'ir_data = x"FF00FF00"'  # TODO remove
+    if len(code) == 4:
+        return f'ir_data(15 downto {16-len(code)}) = "{code}" and ir_data(11 downto 9) = "{modes[instr_parts[1]]}" and ir_data(5 downto 3) = "{modes[instr_parts[2]]}"'
+    else:
+        return f'ir_data(15 downto {16-len(code)}) = "{code}" and ir_data(11 downto 9) = "{modes[instr_parts[1]]}"'
 
 
 def get_instr_case(instr_name, fixed_name):
