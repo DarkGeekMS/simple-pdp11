@@ -496,9 +496,11 @@ ALU.out, PC.in
 MDR.out, IR.in
 ''') 
 
-cicles, memaccess = 4, 1
+cycles, memaccess = 4, 1
 
-all_cicles = []
+inst_to_cycles = {}
+
+all_cycles = []
 all_memaccess = []
 unique_signals = set()
 json_out = {'instructions': {}, 'signals': {}}
@@ -514,8 +516,8 @@ def get_unique(inp: str):
 
 
 def wr(x: str, end='\n'):
-    global cicles, memaccess, lines
-    cicles += 1 + x.count('\n')
+    global cycles, memaccess, lines
+    cycles += 1 + x.count('\n')
     memaccess += x.count('RD') + x.count('WR')
     lines.extend(x.splitlines())
     get_unique(x)
@@ -531,6 +533,8 @@ modes = ['R', '(R)+', '-(R)', 'X(R)', '@R',
 for (instr, instr_name) in [(mov, 'MOV'), (add, 'ADD'), (adc, 'ADC'),
                             (sub, 'SUB'), (subc, 'SUBC'), (andd, 'AND'),
                             (orr, 'OR'), (xnor, 'XNOR'), (cmpp, 'CMP')]:
+    inst_cycles = []
+
     for src in modes:
         for dst in modes:
             print()
@@ -543,16 +547,26 @@ for (instr, instr_name) in [(mov, 'MOV'), (add, 'ADD'), (adc, 'ADC'),
 
             json_out['instructions'][f'{instr_name} {src} {dst}'] = lines
             print()
-            print(f'CPU cicles = {cicles}')
+            print(f'CPU cycles = {cycles}')
             print(f'MEM access = {memaccess}')
-            all_cicles.append(cicles)
+            all_cycles.append(cycles)
+            inst_cycles.append(cycles)
             all_memaccess.append(memaccess)
-            cicles, memaccess = 4, 1
+            cycles, memaccess = 4, 1
             lines = []
+
+    inst_to_cycles[instr_name] = {
+        'avg': sum(inst_cycles)/len(inst_cycles),
+        'max': max(inst_cycles),
+        'min': min(inst_cycles)
+    }
+    
 
 for (instr, instr_name) in [(inc, 'INC'), (dec, 'DEC'), (clr, 'CLR'),
                             (inv, 'INV'), (lsr, 'LSR'), (ror, 'ROR'), (rrc, 'RRC'),
                             (asr, 'ASR'), (lsl, 'LSL'), (rol, 'ROL'), (rlc, 'RLC')]:
+    inst_cycles = []
+
     for dst in modes:
         print()
         print('-'*15)
@@ -564,17 +578,26 @@ for (instr, instr_name) in [(inc, 'INC'), (dec, 'DEC'), (clr, 'CLR'),
 
         json_out['instructions'][f'{instr_name} {src} {dst}'] = lines
         print()
-        print(f'CPU cicles = {cicles}')
+        print(f'CPU cycles = {cycles}')
         print(f'MEM access = {memaccess}')
-        all_cicles.append(cicles)
+        all_cycles.append(cycles)
+        inst_cycles.append(cycles)
         all_memaccess.append(memaccess)
-        cicles, memaccess = 4, 1
+        cycles, memaccess = 4, 1
         lines = []
+
+    inst_to_cycles[instr_name] = {
+        'avg': sum(inst_cycles)/len(inst_cycles),
+        'max': max(inst_cycles),
+        'min': min(inst_cycles)
+    }
 
 for (name, cond) in [('BR', None),
                      ('BEQ', '(Z=1)'), ('BNE', '(Z=0)'),
                      ('BLO', '(C=0)'), ('BLS', '(C=0 or Z=1)'),
                      ('BHI', '(C=1)'), ('BHS', '(C=1 or Z=1)')]:
+    inst_cycles = []
+
     print()
     print('-'*15)
     print(name, '<OFFSET>')
@@ -585,12 +608,19 @@ for (name, cond) in [('BR', None),
 
     json_out['instructions'][f'{name}'] = lines
     print()
-    print(f'CPU cicles = {cicles}')
+    print(f'CPU cycles = {cycles}')
     print(f'MEM access = {memaccess}')
-    all_cicles.append(cicles)
+    all_cycles.append(cycles)
+    inst_cycles.append(cycles)
     all_memaccess.append(memaccess)
-    cicles, memaccess = 4, 1
+    cycles, memaccess = 4, 1
     lines = []
+
+    inst_to_cycles[name] = {
+        'avg': sum(inst_cycles)/len(inst_cycles),
+        'max': max(inst_cycles),
+        'min': min(inst_cycles)
+    }
 
 for (name, code) in [('HLT', 'HLT'), ('NOP', ''),
                      ('JSR X(R)', jsr),
@@ -609,23 +639,38 @@ for (name, code) in [('HLT', 'HLT'), ('NOP', ''),
 
     json_out['instructions'][f'{name}'] = lines
     print()
-    print(f'CPU cicles = {cicles}')
+    print(f'CPU cycles = {cycles}')
     print(f'MEM access = {memaccess}')
-    all_cicles.append(cicles)
+    all_cycles.append(cycles)
     all_memaccess.append(memaccess)
-    cicles, memaccess = 4, 1
+    cycles, memaccess = 4, 1
     lines = []
 
+    inst_to_cycles[name] = {
+        'avg': cycles,
+        'max': cycles,
+        'min': cycles
+    }
+
 
 print('-'*20)
 print('-'*20)
-print(f'Total CPU cicles = {sum(all_cicles)}')
+print(f'Total CPU cycles = {sum(all_cycles)}')
 print(f'Total MEM access = {sum(all_memaccess)}')
 
 
 print()
 print(f'Average MEM access = {sum(all_memaccess)/len(all_memaccess):3.3f}')
-print(f'CPI = {sum(all_cicles)/len(all_cicles):3.3f}')
+print(f'CPI = {sum(all_cycles)/len(all_cycles):3.3f}')
+
+print()
+print('-'*20)
+print('-'*20)
+print('INSTRUCTION  MIN  MAX  AVG')
+items = sorted([(x, y) for (x,y) in inst_to_cycles.items()], key=lambda x: x[0])
+
+for name, cyc in items:
+    print(name, '\t', cyc['min'], cyc['max'], int(cyc['avg']))
 
 
 unique_signals.discard('')
