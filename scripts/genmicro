@@ -1,0 +1,2 @@
+#!/bin/bash
+python3 scripts/_genmicro.py >docs/micro-instructions.txt 2>/dev/null

@@ -1,0 +1,4 @@
+#!/bin/bash
+python3 scripts/_genmicro.py >/dev/null 2>micro-instructions.json
+python3 scripts/_gencu.py micro-instructions.json src/
+rm micro-instructions.json
