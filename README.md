@@ -40,3 +40,9 @@ $ ./logs <optional name of test file with no suffix>
 ```bash
 $ ./wave <test file name>.<test case name>
 ```
+
+# To run the assembler on a given program
+- Place the program in "assembler/io" as "program.txt"
+```bash
+$ python assembler/assembler.py 
+```
