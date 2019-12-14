@@ -68,7 +68,6 @@ adder1: nadder PORT MAP(B, secInput, carryIn, ALUOUT, carryOut);
 adder2: nadder PORT MAP(temp0,"0000000000000000", flagIn(0), temp0Bar, unusedSignal);
 
 PROCESS(temp0, B, mode, en, flagIn)
-    VARIABLE X: signed(n-1 DOWNTO 0); 
     BEGIN
     IF (en='0') THEN
         F <= "ZZZZZZZZZZZZZZZZ";
