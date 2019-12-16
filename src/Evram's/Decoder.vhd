@@ -72,7 +72,7 @@ END COMPONENT;
 COMPONENT Ri_Decoder IS
 PORT(
 	en:  IN std_logic;
-	IR_SUB: IN std_logic_vector(2 DOWNTO 0);
+	IR_SUB_RI: IN std_logic_vector(2 DOWNTO 0);
 	Ri : OUT std_logic_vector(7 DOWNTO 0)
 );
 END COMPONENT;
@@ -87,7 +87,7 @@ SIGNAL Rsrc_in: std_logic;
 SIGNAL Rdst_in: std_logic;
 
 --That signal wont be outed from decoder unless AL_OP is selected
-SIGNAL ALU_MODE std_logic_vector(3 DOWNTO 0);
+SIGNAL ALU_MODE :std_logic_vector(3 DOWNTO 0);
 
 
 SIGNAL EV : std_logic;
@@ -95,10 +95,10 @@ SIGNAL EV : std_logic;
 
 BEGIN
 aludDEC: ALU_DECODER PORT MAP(IR(15 DOWNTO 8),ALU_MODE);
-Rsrc_out: Ri_Decoder PORT MAP(Rsrc_out,IR(8 DOWNTO 6) ,controlSignal(19 DOWNTO 12));
-Rdst_out: Ri_Decoder PORT MAP(Rdst_out,IR(2 DOWNTO 0) ,controlSignal(19 DOWNTO 12));
-Rsrc_int: Ri_Decoder PORT MAP(Rsrc_in,IR(8 DOWNTO 6) ,controlSignal(7 DOWNTO 0));
-Rdst_in: Ri_Decoder PORT MAP(Rdst_in,IR(2 DOWNTO 0) ,controlSignal(7 DOWNTO 0));
+Rsrc_out_label: Ri_Decoder PORT MAP(Rsrc_out,IR(8 DOWNTO 6) ,controlSignal(19 DOWNTO 12));
+Rdst_out_label: Ri_Decoder PORT MAP(Rdst_out,IR(2 DOWNTO 0) ,controlSignal(19 DOWNTO 12));
+Rsrc_int_label: Ri_Decoder PORT MAP(Rsrc_in,IR(8 DOWNTO 6) ,controlSignal(7 DOWNTO 0));
+Rdst_in_label : Ri_Decoder PORT MAP(Rdst_in,IR(2 DOWNTO 0) ,controlSignal(7 DOWNTO 0));
 
 
 PROCESS(IR,MeuInst,decoder_clk)
@@ -137,6 +137,8 @@ PROCESS(IR,MeuInst,decoder_clk)
 				Rdst_in <= '1';
 			WHEN "101" =>
 				controlSignal(20) <= '1';
+			WHEN OTHERS =>
+				Ev <= '0'; --Like no operation ^_^
 		END CASE;
 
 		--Group 3
@@ -147,6 +149,8 @@ PROCESS(IR,MeuInst,decoder_clk)
 				controlSignal(8) <= '1';
 			WHEN "11" =>
 				controlSignal(9) <= '1';
+			WHEN OTHERS =>
+				Ev <= '0'; --Like no operation ^_^
 		END CASE;
 
 		--Group 4
@@ -155,6 +159,8 @@ PROCESS(IR,MeuInst,decoder_clk)
 				controlSignal(10) <= '1';
 			WHEN "10" =>
 				controlSignal(27) <= '1';
+			WHEN OTHERS =>
+				Ev <= '0'; --Like no operation ^_^
 		END CASE;
 
 		--Group 5
@@ -178,6 +184,8 @@ PROCESS(IR,MeuInst,decoder_clk)
 				controlSignal(22) <= '1';
 			WHEN "01" =>
 				controlSignal(23) <= '1';
+			WHEN OTHERS =>
+				Ev <= '0'; --Like no operation ^_^
 		END CASE;
 
 		--Group 7
@@ -186,12 +194,16 @@ PROCESS(IR,MeuInst,decoder_clk)
 				controlSignal(28) <= '1';
 			WHEN "01" =>
 				controlSignal(29) <= '1';
+			WHEN OTHERS =>
+				Ev <= '0'; --Like no operation ^_^
 		END CASE;
 
 		--Group 8
 		CASE MeuInst(4 DOWNTO 3) IS
 			WHEN "01" =>
 				controlSignal(30) <= '1';
+			WHEN OTHERS =>
+				Ev <= '0'; --Like no operation ^_^
 		END CASE;
 
 		--Group 9
@@ -200,6 +212,8 @@ PROCESS(IR,MeuInst,decoder_clk)
 				controlSignal(35) <= '1';
 			WHEN "111" =>
 				controlSignal(21) <= '1';
+			WHEN OTHERS =>
+				Ev <= '0'; --Like no operation ^_^
 		END CASE;
 
 	END IF;

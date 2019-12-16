@@ -3,11 +3,11 @@ use IEEE.std_logic_1164.all;
 use IEEE.NUMERIC_STD.ALL;
 
 ENTITY Ri_Decoder IS
---IR_SUB: the IR register from 2 to 0(Destination), or 8 to 6 (Source)
+--IR_SUB_RI: the IR register from 2 to 0(Destination), or 8 to 6 (Source)
 --Ri: which R of them
 PORT(
 	en:  IN std_logic;
-	IR_SUB: IN std_logic_vector(2 DOWNTO 0);
+	IR_SUB_RI: IN std_logic_vector(2 DOWNTO 0);
 	Ri : OUT std_logic_vector(7 DOWNTO 0)
 );
 END entity Ri_Decoder;
@@ -16,12 +16,12 @@ ARCHITECTURE archRiDec of Ri_Decoder is
 
 
 BEGIN
-PROCESS(IR_SUB)
+PROCESS(IR_SUB_RI,en)
 	BEGIN
-	IF (en = "0") THEN
+	IF (en = '0') THEN
 		Ri <= "00000000";
 	ELSE
-		CASE IR_SUB IS
+		CASE IR_SUB_RI IS
 			WHEN "000" =>
 				Ri <= "00000001";
 			WHEN "001" =>
@@ -36,9 +36,9 @@ PROCESS(IR_SUB)
 				Ri <= "00100000";
 			WHEN "110" =>
 				Ri <= "01000000";
-			WHEN "111" =>
+			WHEN OTHERS =>
 				Ri <= "10000000";
-			END CASE;
+		END CASE;
 	END IF;
 	END PROCESS;
 END ARCHITECTURE;
