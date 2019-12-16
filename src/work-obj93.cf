@@ -1,0 +1,4 @@
+v 4
+file . "iterator.vhd" "eb4a495109cabfd4705d840eaf93dfbe07aa1aec" "20191216122723.181":
+  entity iterator at 1( 0) + 0 on 17;
+  architecture arch_iterator of iterator at 22( 790) + 0 on 18;

@@ -12,7 +12,7 @@ entity rom is
 
 	port (
 		clk, rd, reset: in std_logic;
-		address: in std_logic_vector(15 downto 0);
+		address: in std_logic_vector(5 downto 0);
 
 		data_out: out std_logic_vector(WORD_WIDTH-1 downto 0)
 	);
