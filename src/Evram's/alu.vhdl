@@ -35,7 +35,7 @@ GENERIC (n : integer := 16);
 port(
     temp0 , B : in std_logic_vector(n-1 downto 0);
     mode : in std_logic_vector(3 downto 0);
-    en : in std_logic;
+    alu_clk,en : in std_logic;
     flagIn:  in std_logic_vector(4 downto 0);
     F : out std_logic_vector(15 downto 0);
     flagOut : out std_logic_vector(4 downto 0)
@@ -67,12 +67,9 @@ BEGIN
 adder1: nadder PORT MAP(B, secInput, carryIn, ALUOUT, carryOut);
 adder2: nadder PORT MAP(temp0,"0000000000000000", flagIn(0), temp0Bar, unusedSignal);
 
-PROCESS(temp0, B, mode, en, flagIn)
+PROCESS(temp0, B, mode, en, flagIn,alu_clk)
     BEGIN
-    IF (en='0') THEN
-        F <= "ZZZZZZZZZZZZZZZZ";
-        flagOut <= "ZZZZZ";
-    ELSE
+    IF (en='1' and rising_edge(alu_clk)) THEN
         CASE mode IS
             WHEN "0000" =>
                 --ADD
@@ -207,6 +204,9 @@ PROCESS(temp0, B, mode, en, flagIn)
         END IF;
         --Parity Flag
         flagOut(3) <= ALUOUT(0) xor (ALUOUT(1) xor (ALUOUT(2) xor (ALUOUT(3) xor (ALUOUT(4) xor (ALUOUT(5) xor (ALUOUT(6) xor (ALUOUT(7) xor (ALUOUT(8) xor (ALUOUT(9) xor (ALUOUT(10) xor (ALUOUT(11) xor (ALUOUT(12) xor (ALUOUT(13) xor ( ALUOUT(14)  xor ALUOUT(15) ) )   ))))))))))) );
+    ELSE
+        F <= "ZZZZZZZZZZZZZZZZ";
+        flagOut <= "ZZZZZ";
     END IF;
     END PROCESS;
 
