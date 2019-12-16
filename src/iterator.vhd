@@ -40,7 +40,8 @@ COMPONENT STARTER IS
     GENERIC (n: integer);
     PORT(
         IR: IN std_logic_vector(n-1 DOWNTO 0);
-        MeuAR_ADD : OUT std_logic_vector(5 DOWNTO 0)
+        MeuAR_ADD : OUT std_logic_vector(5 DOWNTO 0);
+        starter_clk : IN std_logic
     );
 END COMPONENT;
 
@@ -54,7 +55,7 @@ SIGNAL StarterOut: std_logic_vector(5 DOWNTO 0);
 BEGIN
 
 U1: rom GENERIC MAP (PATH, WORD_WIDTH, ROM_SIZE) PORT MAP (clk, '1', '0', address, out1);
-U2: STARTER GENERIC MAP (16) PORT MAP (IR, StarterOut);
+U2: STARTER GENERIC MAP (16) PORT MAP (IR, StarterOut , clk);
 
 process (ir, address)
 begin
