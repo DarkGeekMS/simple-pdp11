@@ -20,7 +20,7 @@ main() {
     run-daemon
     
     echo "run tests for pdp11.$TEST"
-    docker exec -w "$PWD" ghdld python3 scripts/vunit-main.py pdp11.$TEST -p4  -x out/report.xml  --minimal --keep-compiling --gtkwave-fmt vcd -o out
+    docker exec -w "$PWD" ghdld python3 scripts/vunit-main.py pdp11.$TEST -x out/report.xml  --minimal --keep-compiling --gtkwave-fmt vcd -o out
 }
 
 if [[ "$1" = "" ]]; then
