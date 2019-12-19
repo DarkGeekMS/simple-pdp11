@@ -38,11 +38,8 @@ package body common is
     end function;
 
     function to_vec(i: std_logic_vector; size: integer) return std_logic_vector is
-        variable v: std_logic_vector(size-1 downto 0);
+        variable v: std_logic_vector(size-1 downto 0) := i;
     begin
-        for j in 0 to size-1 loop
-            v(j) := i(j);
-        end loop;
         return v;
     end function;
 end package body;

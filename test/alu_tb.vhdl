@@ -28,25 +28,6 @@ architecture tb of alu_tb is
     signal IR_SUB: std_logic_vector(7 downto 0); --in
     signal ALU_MODE: std_logic_vector(3 downto 0);
 
-    -- type case_type is record
-    --     name: string;
-
-    --     -- inputs
-    --     temp0, B: std_logic_vector(16-1 downto 0);
-    --     en: std_logic;
-    --     flagIn: std_logic_vector(4 downto 0);
-    --     IR_SUB: std_logic_vector(7 downto 0);
-        
-    --     -- expected outputs
-    --     F: std_logic_vector(15 downto 0);
-    --     flagOut: std_logic_vector(4 downto 0);
-    -- end record;
-    -- --  The patterns to apply.
-    -- type case_array is array (natural range <>) of case_type;
-    
-    -- constant cases : case_array :=
-    --   (("add", (others => '0'), (others => '0'), '1', (others => '0'), (others => '0'), (others => '0'), (others => '0')));
-
     function parity(n: integer) return std_logic is
         variable v: std_logic_vector(15 downto 0);
         variable tmp: std_logic := '0';
@@ -306,6 +287,90 @@ begin
             check_equal(flagOut(NEG_FLAG),    '0');
             check_equal(flagOut(OVERFL_FLAG), overflow_sub(31,5,1));
             check_equal(flagOut(PARITY_FLAG), parity(25));
+        end if;
+
+        if run("and") then
+            IR_SUB(7 downto 4) <= "0110";
+            B <= x"0F0F";
+            temp0 <= x"00FF";
+
+            wait for CLK_PERD;
+
+            check_equal(F, to_vec(x"000F", 16));
+            check_equal(flagOut(ZERO_FLAG),   '0');
+            check_equal(flagOut(NEG_FLAG),    '1');
+            check_equal(flagOut(OVERFL_FLAG), '0');
+            check_equal(flagOut(PARITY_FLAG), parity(15));
+        end if;
+
+        if run("or") then
+            IR_SUB(7 downto 4) <= "0111";
+            B <= x"0F0F";
+            temp0 <= x"00FF";
+
+            wait for CLK_PERD;
+
+            check_equal(F, to_vec(x"0FFF", 16));
+            check_equal(flagOut(ZERO_FLAG),   '0');
+            check_equal(flagOut(NEG_FLAG),    '1');
+            check_equal(flagOut(OVERFL_FLAG), '0');
+            check_equal(flagOut(PARITY_FLAG), parity(4095));
+        end if;
+
+        if run("xnor") then
+            IR_SUB(7 downto 4) <= "1000";
+            B <= x"0F0F";
+            temp0 <= x"00FF";
+
+            wait for CLK_PERD;
+
+            check_equal(F, to_vec(x"000F", 16));
+            check_equal(flagOut(ZERO_FLAG),   '0');
+            check_equal(flagOut(NEG_FLAG),    '1');
+            check_equal(flagOut(OVERFL_FLAG), '0');
+            check_equal(flagOut(PARITY_FLAG), parity(15));
+        end if;
+
+        if run("cmp_bigger") then
+            IR_SUB(7 downto 4) <= "1001";
+            B <= to_vec(200, 16);
+            temp0 <= to_vec(30, 16);
+
+            wait for CLK_PERD;
+
+            check_equal(F, to_vec(200-30, 16));
+            check_equal(flagOut(ZERO_FLAG),   '0');
+            check_equal(flagOut(NEG_FLAG),    '0');
+            check_equal(flagOut(OVERFL_FLAG), '0');
+            check_equal(flagOut(PARITY_FLAG), parity(200-30));
+        end if;
+
+        if run("cmp_smaller") then
+            IR_SUB(7 downto 4) <= "1001";
+            B <= to_vec(20, 16);
+            temp0 <= to_vec(30, 16);
+
+            wait for CLK_PERD;
+
+            check_equal(F, to_vec(20-30, 16));
+            check_equal(flagOut(ZERO_FLAG),   '0');
+            check_equal(flagOut(NEG_FLAG),    '1');
+            check_equal(flagOut(OVERFL_FLAG), '0');
+            check_equal(flagOut(PARITY_FLAG), parity(20-30));
+        end if;
+
+        if run("cmp_equal") then
+            IR_SUB(7 downto 4) <= "1001";
+            B <= to_vec(200, 16);
+            temp0 <= to_vec(200, 16);
+
+            wait for CLK_PERD;
+
+            check_equal(F, to_vec(200-200, 16));
+            check_equal(flagOut(ZERO_FLAG),   '1');
+            check_equal(flagOut(NEG_FLAG),    '0');
+            check_equal(flagOut(OVERFL_FLAG), '0');
+            check_equal(flagOut(PARITY_FLAG), parity(200-200));
         end if;
 
         test_runner_cleanup(runner);
