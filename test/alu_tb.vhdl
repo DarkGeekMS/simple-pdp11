@@ -373,6 +373,96 @@ begin
             check_equal(flagOut(PARITY_FLAG), parity(200-200));
         end if;
 
+        if run("inc_carry0") then
+            IR_SUB <= "1111" & "0000";
+            B <= to_vec(10, 16);
+            temp0 <= to_vec('-', 16);
+            flagIn(CARRY_FLAG) <= '0';
+
+            wait for CLK_PERD;
+
+            check_equal(F, to_vec(11, 16));
+            check_equal(flagOut(CARRY_FLAG),  '0');
+            check_equal(flagOut(ZERO_FLAG),   '0');
+            check_equal(flagOut(NEG_FLAG),    '0');
+            check_equal(flagOut(PARITY_FLAG), parity(10+1));
+        end if;
+
+        if run("inc_carry1") then
+            IR_SUB <= "1111" & "0000";
+            B <= to_vec(10, 16);
+            temp0 <= to_vec('-', 16);
+            flagIn(CARRY_FLAG) <= '1';
+
+            wait for CLK_PERD;
+
+            check_equal(F, to_vec(11, 16));
+            check_equal(flagOut(CARRY_FLAG),  '0');
+            check_equal(flagOut(ZERO_FLAG),   '0');
+            check_equal(flagOut(NEG_FLAG),    '0');
+            check_equal(flagOut(PARITY_FLAG), parity(10+1));
+        end if;
+
+        if run("inc_carry1_outcarry") then
+            IR_SUB <= "1111" & "0000";
+            B <= to_vec(x"FFFF", 16);
+            temp0 <= to_vec('-', 16);
+            flagIn(CARRY_FLAG) <= '1';
+
+            wait for CLK_PERD;
+
+            check_equal(F, to_vec(0, 16));
+            check_equal(flagOut(CARRY_FLAG),  '1');
+            check_equal(flagOut(ZERO_FLAG),   '1');
+            check_equal(flagOut(NEG_FLAG),    '0');
+            check_equal(flagOut(PARITY_FLAG), parity(1));
+        end if;
+
+        if run("dec_carry0") then
+            IR_SUB <= "1111" & "0001";
+            B <= to_vec(10, 16);
+            temp0 <= to_vec('-', 16);
+            flagIn(CARRY_FLAG) <= '0';
+
+            wait for CLK_PERD;
+
+            check_equal(F, to_vec(9, 16));
+            check_equal(flagOut(CARRY_FLAG),  '0');
+            check_equal(flagOut(ZERO_FLAG),   '0');
+            check_equal(flagOut(NEG_FLAG),    '0');
+            check_equal(flagOut(PARITY_FLAG), parity(9));
+        end if;
+
+        if run("dec_carry1") then
+            IR_SUB <= "1111" & "0001";
+            B <= to_vec(10, 16);
+            temp0 <= to_vec('-', 16);
+            flagIn(CARRY_FLAG) <= '1';
+
+            wait for CLK_PERD;
+
+            check_equal(F, to_vec(9, 16));
+            check_equal(flagOut(CARRY_FLAG),  '0');
+            check_equal(flagOut(ZERO_FLAG),   '0');
+            check_equal(flagOut(NEG_FLAG),    '0');
+            check_equal(flagOut(PARITY_FLAG), parity(9));
+        end if;
+
+        if run("dec_negative") then
+            IR_SUB <= "1111" & "0001";
+            B <= to_vec(0, 16);
+            temp0 <= to_vec('-', 16);
+            flagIn(CARRY_FLAG) <= '-';
+
+            wait for CLK_PERD;
+
+            check_equal(F, to_vec(-1, 16));
+            check_equal(flagOut(CARRY_FLAG),  '0');
+            check_equal(flagOut(ZERO_FLAG),   '0');
+            check_equal(flagOut(NEG_FLAG),    '1');
+            check_equal(flagOut(PARITY_FLAG), parity(-1));
+        end if;
+
         test_runner_cleanup(runner);
         wait;
     end process;
