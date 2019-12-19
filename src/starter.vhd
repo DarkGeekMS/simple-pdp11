@@ -67,7 +67,7 @@ begin
 					ELSIF (IR(11)= '1' and IR(10) = '0') then
 						--itr
 						MeuAR_ADD <= "011101";
-					ELSE
+					else
 						--iret
 						MeuAR_ADD <= "100100";
 					end if;

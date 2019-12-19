@@ -20,36 +20,11 @@ entity iterator is
 end entity;
 
 architecture arch_iterator OF iterator is
-    -- definition of ROM component for control store handling
-    COMPONENT rom is
-        generic (
-            PATH: string;
-            WORD_WIDTH: natural;
-            ROM_SIZE: natural
-        );
-        port (
-            clk, rd, reset: in std_logic;
-            address: in std_logic_vector(5 downto 0);
-            data_out: out std_logic_vector(WORD_WIDTH-1 downto 0)
-        );
-    end COMPONENT;
-
-    -- definition of starter component for starting address navigation
-    COMPONENT STARTER is
-        generic (n: integer);
-        port (
-            IR: in std_logic_vector(n-1 downto 0);
-            MeuAR_ADD : out std_logic_vector(5 downto 0);
-            starter_clk : in std_logic
-        );
-    end COMPONENT;
-
-    -- useful signals
     signal out1: std_logic_vector(WORD_WIDTH-1 downto 0);
     signal StarterOut: std_logic_vector(5 downto 0);
 begin
-    U1: rom generic map (PATH, WORD_WIDTH, ROM_SIZE) port map (clk, '1', '0', address, out1);
-    U2: STARTER generic map (16) port map (IR, StarterOut , clk);
+    U1: entity work.rom generic map (PATH, WORD_WIDTH, ROM_SIZE) port map (clk, '1', '0', address, out1);
+    U2: entity work.starter generic map (16) port map (IR, StarterOut , clk);
 
     process (ir, address)
     begin

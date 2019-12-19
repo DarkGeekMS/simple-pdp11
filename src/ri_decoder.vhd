@@ -18,7 +18,7 @@ begin
 	begin
 		if (en = '0') then
 			Ri <= "00000000";
-		ELSE
+		else
 			case IR_SUB_RI is
 				when "000" =>
 					Ri <= "00000001";

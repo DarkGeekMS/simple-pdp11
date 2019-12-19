@@ -16,9 +16,9 @@ architecture nadder_arch OF nadder is
 	signal CARRY : std_logic_vector(n-1 downto 0);
 begin
 	adder0: entity work.bitadder port map(A(0),B(0),Cin,SUM(0),CARRY(0));
-	l: FOR i in 1 TO n-1 generate
+	l: for i in 1 to n-1 generate
 		adderX: entity work.bitadder port map (A(i),B(i), CARRY(i-1), SUM(i), CARRY(i));
 	end generate;
 
 	Cout <= CARRY(n-1);
-end nadder_arch;
+end architecture;
