@@ -463,6 +463,22 @@ begin
             check_equal(flagOut(PARITY_FLAG), parity(-1));
         end if;
 
+        if run("clr") then
+            IR_SUB <= "1111" & "0010";
+            B <= to_vec('-', 16);
+            temp0 <= to_vec('-', 16);
+            flagIn(CARRY_FLAG) <= '-';
+
+            wait for CLK_PERD;
+
+            check_equal(F, to_vec(0, 16));
+            check_equal(flagOut(CARRY_FLAG),  '0');
+            check_equal(flagOut(ZERO_FLAG),   '1');
+            check_equal(flagOut(NEG_FLAG),    '0');
+            check_equal(flagOut(OVERFL_FLAG), '0');
+            check_equal(flagOut(PARITY_FLAG), parity(0));
+        end if;
+
         test_runner_cleanup(runner);
         wait;
     end process;
