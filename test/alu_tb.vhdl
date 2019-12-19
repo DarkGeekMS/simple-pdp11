@@ -17,7 +17,7 @@ architecture tb of alu_tb is
     signal clk: std_logic := '0';
 
     -- alu
-    signal temp0 ,B: std_logic_vector(16-1 downto 0); --in
+    signal temp0, B: std_logic_vector(16-1 downto 0); --in
     signal en: std_logic; --in
     signal flagIn: std_logic_vector(4 downto 0); --in
 
@@ -27,6 +27,70 @@ architecture tb of alu_tb is
     -- alu_decoder
     signal IR_SUB: std_logic_vector(7 downto 0); --in
     signal ALU_MODE: std_logic_vector(3 downto 0);
+
+    -- type case_type is record
+    --     name: string;
+
+    --     -- inputs
+    --     temp0, B: std_logic_vector(16-1 downto 0);
+    --     en: std_logic;
+    --     flagIn: std_logic_vector(4 downto 0);
+    --     IR_SUB: std_logic_vector(7 downto 0);
+        
+    --     -- expected outputs
+    --     F: std_logic_vector(15 downto 0);
+    --     flagOut: std_logic_vector(4 downto 0);
+    -- end record;
+    -- --  The patterns to apply.
+    -- type case_array is array (natural range <>) of case_type;
+    
+    -- constant cases : case_array :=
+    --   (("add", (others => '0'), (others => '0'), '1', (others => '0'), (others => '0'), (others => '0'), (others => '0')));
+
+    function parity(n: integer) return std_logic is
+        variable v: std_logic_vector(15 downto 0);
+        variable tmp: std_logic := '0';
+    begin
+        v := to_vec(n, 16);
+        for i in 0 to 15 loop
+            tmp := tmp xor v(i);
+        end loop;
+        return tmp;
+    end function;
+
+    function overflow_add(a, bb, c: integer) return std_logic is
+        variable tmp: unsigned(15 downto 0);
+    begin
+        if a < 0 and bb < 0 then
+            tmp := not to_unsigned(-a, 16) + 1;
+            tmp := tmp + not to_unsigned(-bb, 16) + 1 + to_unsigned(c, 16);
+            return not tmp(15);
+        end if;
+
+        if a > 0 and bb > 0 then    
+            tmp := to_unsigned(a, 16) + to_unsigned(bb, 16) + to_unsigned(c, 16);
+            return tmp(15);
+        end if;
+
+        return '0';
+    end function;
+
+    function overflow_sub(a, bb, c: integer) return std_logic is
+        variable tmp: unsigned(15 downto 0);
+    begin
+        if a < 0 and bb < 0 then
+            tmp := not to_unsigned(-a, 16) + 1;
+            tmp := tmp - (not to_unsigned(-bb, 16) + 1) - to_unsigned(c, 16);
+            return not tmp(15);
+        end if;
+
+        if a > 0 and bb > 0 then    
+            tmp := to_unsigned(a, 16) - to_unsigned(bb, 16) - to_unsigned(c, 16);
+            return tmp(15);
+        end if;
+
+        return '0';
+    end function;
 begin
     clk <= not clk after CLK_PERD / 2;
 
@@ -52,22 +116,84 @@ begin
 
         if run("no_enable") then
             en <= '0';
+
             wait for CLK_PERD;
+
             check_equal(F, to_vec('Z', 16));
+            check_equal(flagOut, to_vec('Z', 5));
         end if;
 
         if run("enable") then
             en <= '1';
+
             wait for CLK_PERD;
-            check_equal(F, to_vec('U', 16));
+
+            check(F /= to_vec('Z', 16));
+            check(flagOut /= to_vec('Z', 5));
         end if;
 
-        if run("add") then
+        if run("add_carry0") then
             IR_SUB(7 downto 4) <= "0010";
             B <= to_vec(5, 16);
             temp0 <= to_vec(10, 16);
+            flagIn(CARRY_FLAG) <= '0';
+
             wait for CLK_PERD;
+
             check_equal(F, to_vec(15, 16));
+            check_equal(flagOut(CARRY_FLAG),  '0');
+            check_equal(flagOut(ZERO_FLAG),   '0');
+            check_equal(flagOut(NEG_FLAG),    '0');
+            check_equal(flagOut(OVERFL_FLAG), overflow_add(5, 10, 0));
+            check_equal(flagOut(PARITY_FLAG), parity(15));
+        end if;
+
+        if run("add_carry0_out0") then
+            IR_SUB(7 downto 4) <= "0010";
+            B <= to_vec(0, 16);
+            temp0 <= to_vec(0, 16);
+            flagIn(CARRY_FLAG) <= '0';
+
+            wait for CLK_PERD;
+
+            check_equal(F, to_vec(0, 16));
+            check_equal(flagOut(CARRY_FLAG),  '0');
+            check_equal(flagOut(ZERO_FLAG),   '1');
+            check_equal(flagOut(NEG_FLAG),    '0');
+            check_equal(flagOut(OVERFL_FLAG), overflow_add(0,0, 0));
+            check_equal(flagOut(PARITY_FLAG), parity(15));
+        end if;
+
+        if run("add_carry1") then
+            IR_SUB(7 downto 4) <= "0010";
+            B <= to_vec(5, 16);
+            temp0 <= to_vec(10, 16);
+            flagIn(CARRY_FLAG) <= '1';
+
+            wait for CLK_PERD;
+
+            check_equal(F, to_vec(15, 16));
+            check_equal(flagOut(CARRY_FLAG),  '0');
+            check_equal(flagOut(ZERO_FLAG),   '0');
+            check_equal(flagOut(NEG_FLAG),    '0');
+            check_equal(flagOut(OVERFL_FLAG), overflow_add(5,10,0));
+            check_equal(flagOut(PARITY_FLAG), parity(15));
+        end if;
+
+        if run("add_overflows") then
+            IR_SUB(7 downto 4) <= "0010";
+            B <= to_vec('1', 16);
+            temp0 <= to_vec(1, 16);
+            flagIn(CARRY_FLAG) <= '0';
+
+            wait for CLK_PERD;
+
+            check_equal(F, to_vec(0, 16));
+            check_equal(flagOut(CARRY_FLAG),  '1');
+            check_equal(flagOut(ZERO_FLAG),   '1');
+            check_equal(flagOut(NEG_FLAG),    '0');
+            check_equal(flagOut(OVERFL_FLAG), overflow_add(1, to_integer(unsigned(to_vec('1',16))),0));
+            check_equal(flagOut(PARITY_FLAG), parity(0));
         end if;
 
         if run("adc_carry0") then
@@ -75,8 +201,15 @@ begin
             B <= to_vec(5, 16);
             temp0 <= to_vec(10, 16);
             flagIn(CARRY_FLAG) <= '0';
+
             wait for CLK_PERD;
+
             check_equal(F, to_vec(15, 16));
+            check_equal(flagOut(CARRY_FLAG),  '0');
+            check_equal(flagOut(ZERO_FLAG),   '0');
+            check_equal(flagOut(NEG_FLAG),    '0');
+            check_equal(flagOut(OVERFL_FLAG), overflow_add(5, 10,0));
+            check_equal(flagOut(PARITY_FLAG), parity(15));
         end if;
 
         if run("adc_carry1") then
@@ -84,8 +217,95 @@ begin
             B <= to_vec(5, 16);
             temp0 <= to_vec(10, 16);
             flagIn(CARRY_FLAG) <= '1';
+
             wait for CLK_PERD;
+
             check_equal(F, to_vec(16, 16));
+            check_equal(flagOut(CARRY_FLAG),  '0');
+            check_equal(flagOut(ZERO_FLAG),   '0');
+            check_equal(flagOut(NEG_FLAG),    '0');
+            check_equal(flagOut(OVERFL_FLAG), overflow_add(5,10,1));
+            check_equal(flagOut(PARITY_FLAG), parity(16));
+        end if;
+
+        if run("sub_carry0") then
+            IR_SUB(7 downto 4) <= "0100";
+            B <= to_vec(31, 16);
+            temp0 <= to_vec(5, 16);
+            flagIn(CARRY_FLAG) <= '0';
+
+            wait for CLK_PERD;
+
+            check_equal(F, to_vec(26, 16));
+            check_equal(flagOut(CARRY_FLAG),  '0');
+            check_equal(flagOut(ZERO_FLAG),   '0');
+            check_equal(flagOut(NEG_FLAG),    '0');
+            check_equal(flagOut(OVERFL_FLAG), overflow_sub(31,5,0));
+            check_equal(flagOut(PARITY_FLAG), parity(26));
+        end if;
+
+        if run("sub_carry1") then
+            IR_SUB(7 downto 4) <= "0100";
+            B <= to_vec(31, 16);
+            temp0 <= to_vec(5, 16);
+            flagIn(CARRY_FLAG) <= '1';
+
+            wait for CLK_PERD;
+
+            check_equal(F, to_vec(26, 16));
+            check_equal(flagOut(CARRY_FLAG),  '0');
+            check_equal(flagOut(ZERO_FLAG),   '0');
+            check_equal(flagOut(NEG_FLAG),    '0');
+            check_equal(flagOut(OVERFL_FLAG), overflow_sub(31,5,0));
+            check_equal(flagOut(PARITY_FLAG), parity(26));
+        end if;
+
+        if run("sub_carry0_outNegative") then
+            IR_SUB(7 downto 4) <= "0100";
+            B <= to_vec(5, 16);
+            temp0 <= to_vec(31, 16);
+            flagIn(CARRY_FLAG) <= '0';
+
+            wait for CLK_PERD;
+
+            check_equal(F, to_vec(-26, 16));
+            check_equal(flagOut(CARRY_FLAG),  '0');
+            check_equal(flagOut(ZERO_FLAG),   '0');
+            check_equal(flagOut(NEG_FLAG),    '1');
+            check_equal(flagOut(OVERFL_FLAG), overflow_sub(5,31,0));
+            check_equal(flagOut(PARITY_FLAG), parity(-26));
+        end if;
+
+        if run("subc_carry0") then
+            IR_SUB(7 downto 4) <= "0100";
+            B <= to_vec(31, 16);
+            temp0 <= to_vec(5, 16);
+            flagIn(CARRY_FLAG) <= '0';
+
+            wait for CLK_PERD;
+
+            check_equal(F, to_vec(26, 16));
+            check_equal(flagOut(CARRY_FLAG),  '0');
+            check_equal(flagOut(ZERO_FLAG),   '0');
+            check_equal(flagOut(NEG_FLAG),    '0');
+            check_equal(flagOut(OVERFL_FLAG), overflow_sub(31,5,0));
+            check_equal(flagOut(PARITY_FLAG), parity(26));
+        end if;
+
+        if run("subc_carry1") then
+            IR_SUB(7 downto 4) <= "0100";
+            B <= to_vec(31, 16);
+            temp0 <= to_vec(5, 16);
+            flagIn(CARRY_FLAG) <= '1';
+
+            wait for CLK_PERD;
+
+            check_equal(F, to_vec(25, 16));
+            check_equal(flagOut(CARRY_FLAG),  '0');
+            check_equal(flagOut(ZERO_FLAG),   '0');
+            check_equal(flagOut(NEG_FLAG),    '0');
+            check_equal(flagOut(OVERFL_FLAG), overflow_sub(31,5,1));
+            check_equal(flagOut(PARITY_FLAG), parity(25));
         end if;
 
         test_runner_cleanup(runner);
