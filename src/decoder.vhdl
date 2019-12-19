@@ -71,7 +71,7 @@ architecture archDEC of decoder is
 
 	signal EV : std_logic;
 begin
-	aludDEC: entity work.alu_dec port map(IR(15 downto 8),ALU_MODE);
+	aludDEC: entity work.alu_decoder port map(IR(15 downto 8),ALU_MODE);
 	Rsrc_out_label: entity work.ri_decoder port map(Rsrc_out,IR(8 downto 6), controlSignal(19 downto 12));
 	Rdst_out_label: entity work.ri_decoder port map(Rdst_out,IR(2 downto 0), controlSignal(19 downto 12));
 	Rsrc_int_label: entity work.ri_decoder port map(Rsrc_in,IR(8 downto 6), controlSignal(7 downto 0));
