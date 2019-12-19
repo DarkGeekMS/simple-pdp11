@@ -42,7 +42,7 @@ begin
 				ALU_MODE <= "0001";	    	
 	    	when OTHERS =>
 	    		--1111????
-	    		case IR_SUB(7 downto 4) is
+	    		case IR_SUB(3 downto 0) is
 					when "0000" =>
 						--INC
 						ALU_MODE <= "1110";
