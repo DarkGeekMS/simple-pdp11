@@ -14,7 +14,7 @@ end entity;
 
 architecture archRiDec of ri_decoder is
 begin
-	process(IR_SUB_RI,en)
+	process (IR_SUB_RI, en)
 	begin
 		if (en = '0') then
 			Ri <= "00000000";

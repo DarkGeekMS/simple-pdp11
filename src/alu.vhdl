@@ -15,7 +15,7 @@ entity alu is
     port (
         temp0 , B : in std_logic_vector(n-1 downto 0);
         mode : in std_logic_vector(3 downto 0);
-        alu_clk,en : in std_logic;
+        clk,en : in std_logic;
         flagIn:  in std_logic_vector(4 downto 0);
         F : out std_logic_vector(15 downto 0);
         flagOut : out std_logic_vector(4 downto 0)
@@ -34,9 +34,9 @@ begin
     adder1: entity work.nadder port map(B, secInput, carryIn, ALUOUT, carryOut);
     adder2: entity work.nadder port map(temp0,"0000000000000000", flagIn(0), temp0Bar, unusedSignal);
 
-    process(temp0, B, mode, en, flagIn,alu_clk)
+    process (temp0, B, mode, en, flagIn, clk)
     begin
-        if (en='1' and rising_edge(alu_clk)) then
+        if (en='1' and rising_edge(clk)) then
             case mode is
                 when "0000" =>
                     --ADD

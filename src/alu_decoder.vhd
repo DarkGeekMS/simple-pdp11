@@ -13,7 +13,7 @@ end entity;
 
 architecture archALUDEC of alu_decoder is
 begin
-	process(IR_SUB)
+	process (IR_SUB)
 	begin
 		case IR_SUB(7 downto 4) is
 			when "0010" =>

@@ -51,7 +51,7 @@ entity decoder is
     generic (n : integer := 16);
     
 	port (
-		decoder_clk : in std_logic;
+		clk : in std_logic;
 		IR: in std_logic_vector(n-1 downto 0);
 		MeuInst: in std_logic_vector(25 downto 0);
 		controlSignal : out std_logic_vector(37 downto 0)
@@ -77,9 +77,9 @@ begin
 	Rsrc_int_label: entity work.ri_decoder port map(Rsrc_in,IR(8 downto 6), controlSignal(7 downto 0));
 	Rdst_in_label : entity work.ri_decoder port map(Rdst_in,IR(2 downto 0), controlSignal(7 downto 0));
 
-	process(IR,MeuInst,decoder_clk)
+	process (IR,MeuInst, clk)
 	begin
-		if (rising_edge(decoder_clk)) then
+		if (rising_edge(clk)) then
 			--NAF 25:20 -- 6 bits
 			--Group 1 
 			case MeuInst(21 downto 19) is

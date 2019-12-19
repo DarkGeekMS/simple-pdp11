@@ -31,15 +31,15 @@ entity starter is
 	port (
 		IR: in std_logic_vector(n-1 downto 0);
 		MeuAR_ADD : out std_logic_vector(5 downto 0);
-		starter_clk : in std_logic
+		clk : in std_logic
 	);
 end entity;
 
 architecture archStarter of starter is
 begin
-	process(IR,starter_clk)
+	process (IR, clk)
 	begin
-		if (rising_edge(starter_clk)) then
+		if (rising_edge(clk)) then
 			case IR(15 downto 12) is
 				when "0000" =>
 					--BRANCH A
