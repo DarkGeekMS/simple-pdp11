@@ -15,7 +15,7 @@ entity alu is
         temp0 , B : in std_logic_vector(n-1 downto 0);
         mode : in std_logic_vector(3 downto 0);
         clk,en: in std_logic;
-        flagIn: n std_logic_vector(4 downto 0);
+        flagIn: in std_logic_vector(4 downto 0);
         IR_Check: in std_logic;
         F : out std_logic_vector(15 downto 0);
         flagOut : out std_logic_vector(4 downto 0)
@@ -23,16 +23,8 @@ entity alu is
 end entity;
 
 architecture archALU of alu is
-    signal secInput_Signal: std_logic_vector(n-1 downto 0);
-    signal ALUOUT_SIGNAL: std_logic_vector(n-1 downto 0);
-    signal carryIn: std_logic;
-    signal carryOut: std_logic;
-    signal temp0Bar: std_logic_vector(n-1 downto 0);
-    signal unusedSignal: std_logic;
 begin
-    --adder1: entity work.nadder port map(B, secInput_Signal, carryIn, ALUOUT_SIGNAL, carryOut);
-    --adder2: entity work.nadder port map(temp0,"0000000000000000", flagIn(0), temp0Bar, unusedSignal);
-
+    
     process (temp0, B, mode, en, flagIn, clk)
         variable ALUOUT: std_logic_vector(n DOWNTO 0);
         variable carryInput: std_logic_vector(n-1 DOWNTO 0);
@@ -74,18 +66,12 @@ begin
                         --NOTE: A - B - C == A - (B+C) == A + (B+C)` + 1
                         --SO, temp0Bar = (B+C), whether C = 0 or 1
 
-                        --secInput := not temp0Bar;
-                        --secInput_Signal <= not temp0Bar;
-                        --carryIn <= '1';
-                        --temp_flag_out(0)<=carryOut;
-                        --ALUOUT := ALUOUT_SIGNAL;
                         if (IR_Check = '1' and flagIn(0) = '1') then
                             carryInput := "0000000000000001"; 
                         else
                             carryInput := (OTHERS => '0');
                         end if;
 
-                        --temp0Bar := not std_logic_vector (resize(signed(B),17) + resize(signed(carryInput),17));
                         ALUOUT := std_logic_vector (resize(signed(B),17) - resize(signed(temp0),17) - resize(signed(carryInput),17) );
                         
                         if(ALUOUT(16) = '1') then
@@ -161,10 +147,6 @@ begin
                     when "1101" =>
                         --DEC
                         --F = B - 1 == (B + 1), not 001 but 111
-                        --secInput := "1111111111111111";
-                        --carryIn <= '0';
-                        --ALUOUT := ALUOUT_SIGNAL;
-                        --temp_flag_out(0)<=carryOut;
                         carryInput := "0000000000000001";
                         ALUOUT := std_logic_vector (resize(signed(B),17) - resize(signed(carryInput),17) );
 
@@ -182,10 +164,6 @@ begin
                     when "1110" =>
                         --INC
                         --F = B + 1 == B + 0 and carry = 1
-                        --secInput := "0000000000000000";
-                        --carryIn <= '1';
-                        --ALUOUT := ALUOUT_SIGNAL;
-                        --temp_flag_out(0)<=carryOut;
                         carryInput := "0000000000000001";
                         ALUOUT := std_logic_vector (resize(signed(B),17) + resize(signed(carryInput),17) );
                         if (B="1111111111111111") then
