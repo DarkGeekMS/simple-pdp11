@@ -49,8 +49,18 @@ begin
         if run("fetch") then
             address <= (others => '0');
             wait for CLK_PERD;
-            check_equal(NAF, to_vec("000001", 6), "check next address field");
-            check_equal(out_inst, cs("000000"), "check output instructions");
+            check_equal(NAF, to_vec("000001", 6), "check first next address field");
+            check_equal(out_inst, cs("000000"), "check first output instructions");
+
+            address <= NAF;
+            wait for CLK_PERD;
+            check_equal(NAF, to_vec("000010", 6), "check second next address field");
+            check_equal(out_inst, cs("000001"), "check second output instructions");
+
+            address <= NAF;
+            wait for CLK_PERD;
+            check_equal(NAF, to_vec("000011", 6), "check last and third next address field");
+            check_equal(out_inst, cs("000010"), "check last and third output instructions");
         end if;
 
         test_runner_cleanup(runner);
