@@ -172,7 +172,7 @@ begin
             end if;
 
             --Check on Negative flag
-            if (ALUOUT(n-1)='0') then
+            if (ALUOUT(n-1)='1') then
                 flagOut(2) <= '1';
             else
                 flagOut(2) <= '0';
