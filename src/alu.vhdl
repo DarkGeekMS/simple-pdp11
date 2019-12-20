@@ -23,18 +23,20 @@ entity alu is
 end entity;
 
 architecture archALU of alu is
-    signal secInput: std_logic_vector(n-1 downto 0);
-    signal outputAdder: std_logic_vector(n-1 downto 0);
-    signal ALUOUT: std_logic_vector(n-1 downto 0);
+    signal secInput_Signal: std_logic_vector(n-1 downto 0);
+    signal ALUOUT_SIGNAL: std_logic_vector(n-1 downto 0);
     signal carryIn: std_logic;
     signal carryOut: std_logic;
     signal temp0Bar: std_logic_vector(n-1 downto 0);
     signal unusedSignal: std_logic;
 begin
-    adder1: entity work.nadder port map(B, secInput, carryIn, ALUOUT, carryOut);
+    adder1: entity work.nadder port map(B, secInput_Signal, carryIn, ALUOUT_SIGNAL, carryOut);
     adder2: entity work.nadder port map(temp0,"0000000000000000", flagIn(0), temp0Bar, unusedSignal);
 
     process (temp0, B, mode, en, flagIn, clk)
+    variable ALUOUT: std_logic_vector(n-1 DOWNTO 0);
+    variable secInput: std_logic_vector(n-1 DOWNTO 0);
+
     begin
         if (en='1' and rising_edge(clk)) then
             case mode is
@@ -42,13 +44,15 @@ begin
                     --ADD
                     --Won't check on the carry's state as it gets added any ways
                     secInput <= temp0;
+                    secInput_Signal <= temp0;
                     carryIn <= flagIn(0);
                     flagOut(0)<=carryOut;
+                    ALUOUT <= ALUOUT_SIGNAL;
                     --P + P = N
-                    if (B(n-1) = '0' and secInput(n-1) = '0' and outputAdder(n-1) = '1') then
+                    if (B(n-1) = '0' and secInput(n-1) = '0' and ALUOUT(n-1) = '1') then
                         flagOut(4) <= '1';
                     --N+N = P
-                    ELSIF (B(n-1) = '1' and secInput(n-1) = '1' and outputAdder(n-1) = '0') then 
+                    ELSIF (B(n-1) = '1' and secInput(n-1) = '1' and ALUOUT(n-1) = '0') then 
                         flagOut(4) <= '1';
                     else
                         flagOut(4) <= '0';
@@ -59,13 +63,15 @@ begin
                     --NOTE: A - B - C == A - (B+C) == A + (B+C)` + 1
                     --SO, temp0Bar = (B+C), whether C = 0 or 1
                     secInput <= not temp0Bar;
+                    secInput_Signal <= not temp0Bar;
                     carryIn <= '1';
                     flagOut(0)<=carryOut;
+                    ALUOUT <= ALUOUT_SIGNAL;
                     --P - N = N
-                    if (B(n-1) = '0' and secInput(n-1) = '1' and outputAdder(n-1) = '1') then
+                    if (B(n-1) = '0' and secInput(n-1) = '1' and ALUOUT(n-1) = '1') then
                         flagOut(4) <= '1';
                     --N-P = P
-                    ELSIF (B(n-1) = '1' and secInput(n-1) = '0' and outputAdder(n-1) = '0') then 
+                    ELSIF (B(n-1) = '1' and secInput(n-1) = '0' and ALUOUT(n-1) = '0') then 
                         flagOut(4) <= '1';
                     else
                         flagOut(4) <= '0';
@@ -130,7 +136,7 @@ begin
                     --F = B - 1 == (B + 1), not 001 but 111
                     secInput <= "1111111111111111";
                     carryIn <= '0';
-                    ALUOUT <= outputAdder;
+                    ALUOUT <= ALUOUT_SIGNAL;
                     flagOut(0)<=carryOut;
                     if (B="1000000000000000") then
                         flagOut(4) <= '1';
@@ -142,7 +148,7 @@ begin
                     --F = B + 1 == B + 0 and carry = 1
                     secInput <= "0000000000000000";
                     carryIn <= '1';
-                    ALUOUT <= outputAdder;
+                    ALUOUT <= ALUOUT_SIGNAL;
                     flagOut(0)<=carryOut;
                     if (B="0111111111111111") then
                         flagOut(4) <= '1';
