@@ -104,57 +104,57 @@ begin
                         end if;
                     when "0010" =>
                         --AND
-                        ALUOUT := temp0 and B;
+                        ALUOUT(15 downto 0) := temp0 and B;
                         temp_flag_out(0) := flagIn(0);
                         temp_flag_out(4) := '0';
                     when "0011" =>
                         --OR
-                        ALUOUT := temp0 or B;
+                        ALUOUT(15 downto 0) := temp0 or B;
                         temp_flag_out(0) := flagIn(0);
                         temp_flag_out(4) := '0';
                     when "0100" =>
                         --NOT
-                        ALUOUT := not B;
+                        ALUOUT(15 downto 0) := not B;
                         temp_flag_out(0) := flagIn(0);
                         temp_flag_out(4) := '0';
                     when "0101" =>
                         --XNOR
-                        ALUOUT := temp0 XNOR B;
+                        ALUOUT(15 downto 0) := temp0 XNOR B;
                         temp_flag_out(0) := flagIn(0);
                         temp_flag_out(4) := '0';
                     when "0110" =>
                         --LSR: Logical shift Right
-                        ALUOUT := '0' & B(n-1 downto 1);
+                        ALUOUT(15 downto 0) := '0' & B(n-1 downto 1);
                         temp_flag_out(0) := B(0);
                         temp_flag_out(4) := flagIn(0) XOR flagIn(2);
                     when "0111" =>
                         --ROR
-                        ALUOUT := B(0) & B(n-1 downto 1);
+                        ALUOUT(15 downto 0) := B(0) & B(n-1 downto 1);
                         temp_flag_out(0) := B(0);
                         temp_flag_out(4) := flagIn(0) XOR flagIn(2);
                     when "1000" =>
                         --RRC
-                        ALUOUT := flagIn(0) & B(n-1 downto 1);
+                        ALUOUT(15 downto 0) := flagIn(0) & B(n-1 downto 1);
                         temp_flag_out(0) := B(0);
                         temp_flag_out(4) := flagIn(0) XOR flagIn(2);
                     when "1001" =>
                         --ASR: Arithmetic shift right
-                        ALUOUT := B(n-1) & B(n-1 downto 1);
+                        ALUOUT(15 downto 0) := B(n-1) & B(n-1 downto 1);
                         temp_flag_out(0) := B(0);
                         temp_flag_out(4) := flagIn(0) XOR flagIn(2);
                     when "1010" =>
                         --LSL: Logical Shift Left
-                        ALUOUT :=  B(n-2 downto 0) & '0'; 
+                        ALUOUT(15 downto 0) :=  B(n-2 downto 0) & '0'; 
                         temp_flag_out(0) := B(n-1);
                         temp_flag_out(4) := flagIn(0) XOR flagIn(2);
                     when "1011" =>
                         --ROL
-                        ALUOUT :=  B(n-2 downto 0) & B(n-1);
+                        ALUOUT(15 downto 0) :=  B(n-2 downto 0) & B(n-1);
                         temp_flag_out(0) := B(n-1);
                         temp_flag_out(4) := flagIn(0) XOR flagIn(2);
                     when "1100" =>
                         --RLC
-                        ALUOUT :=  B(n-2 downto 0) & flagIn(0);
+                        ALUOUT(15 downto 0) :=  B(n-2 downto 0) & flagIn(0);
                         temp_flag_out(0) := B(n-1);
                         temp_flag_out(4) := flagIn(0) XOR flagIn(2);
                     when "1101" =>
@@ -200,7 +200,7 @@ begin
                         end if;
                     when OTHERS =>
                         --CLR
-                        ALUOUT := "0000000000000000";
+                        ALUOUT := "00000000000000000";
                         temp_flag_out(0) := '0'; --Carry
                         temp_flag_out(4) := '0'; --Overflow
                 end case;
@@ -210,14 +210,14 @@ begin
                 F <= ALUOUT(15 downto 0);
                 flagOut(0) <= temp_flag_out(0);
                 flagOut(4) <= temp_flag_out(4);
-                if (ALUOUT="0000000000000000") then
+                if (ALUOUT(15 downto 0)="0000000000000000") then
                     flagOut(1) <= '1';
                 else
                     flagOut(1) <= '0';
                 end if;
 
                 --Check on Negative flag
-                if (ALUOUT(n-1)='1') then
+                if (ALUOUT(15 downto 0)(n-1)='1') then
                     flagOut(2) <= '1';
                 else
                     flagOut(2) <= '0';
