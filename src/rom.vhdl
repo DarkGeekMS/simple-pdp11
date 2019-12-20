@@ -5,7 +5,7 @@ use std.textio.all;
 
 entity rom is
 	port (
-		clk, rd: in std_logic;
+		rd: in std_logic;
 		address: in std_logic_vector(5 downto 0);
 
 		data_out: out std_logic_vector(26-1 downto 0)
@@ -68,9 +68,9 @@ architecture rtl of rom is
 		"00000011100010000001000000"
 	);
 begin
-	process (clk, rd, address)
+	process (rd, address)
 	begin
-		if rising_edge(clk) and rd = '1' then  
+		if rd = '1' then  
 			data_out <= data(to_integer(unsigned(address)));
 		else 
 			data_out <= (others => 'Z');
