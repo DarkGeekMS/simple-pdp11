@@ -28,6 +28,7 @@ begin
     main: process
     begin
         test_runner_setup(runner, runner_cfg);
+        set_stop_level(failure);
 
         info("reset");
         wr <= '0';
