@@ -37,73 +37,76 @@ end entity;
 
 architecture archStarter of starter is
 begin
-	process (IR, clk)
-	begin
-		if (rising_edge(clk)) then
-			case IR(15 downto 12) is
-				when "0000" =>
-					--BRANCH A
-					MeuAR_ADD <= "101010";
-				when "1010" =>
-					--HLT
-					--What should I do?
-				when "1011" =>
-					--NOP
-					--What should I do?
-				when "1100" =>
-					--BRANCH B
-					MeuAR_ADD <= "101010";
-				when "1101" =>
-					--JSR
-					MeuAR_ADD <= "100000";
-				when "1110" =>
-					--four choises
-					if (IR(11)= '0' and IR(10) = '0') then
-						--IGNORE IR
-						MeuAR_ADD <= "000000";
-					ELSIF (IR(11)= '0' and IR(10) = '1') then
-						--RTS
-						MeuAR_ADD <= "100100";
-					ELSIF (IR(11)= '1' and IR(10) = '0') then
-						--itr
-						MeuAR_ADD <= "011101";
-					else
-						--iret
-						MeuAR_ADD <= "100100";
-					end if;
-				when "1111" =>
-					--ONE OPERAND
-					--Check on IR to know the type of Source 11 10 9
-					case IR(11 downto 9) is
-						when "000" => --Register direct
-							MeuAR_ADD <= "000011";
-						when "001" => --Auto-increment
-							MeuAR_ADD <= "000101";
-						when "010" => --Auto-decrement
-							MeuAR_ADD <= "000111";
-						when "011" => --Indexed
-							MeuAR_ADD <= "001001";
-						--when "100" => --Register indirect
-						when OTHERS =>
-							MeuAR_ADD <= "000100";
-					end case;
-				when OTHERS =>
-					--TWO OPERANDS
-					--Check on IR to know the type of Destination 5 4 3
-					case IR(5 downto 3) is
-						when "000" => --Register direct
-							MeuAR_ADD <= "010000";
-						when "001" => --Auto-increment
-							MeuAR_ADD <= "010010";
-						when "010" => --Auto-decrement
-							MeuAR_ADD <= "010100";
-						when "011" => --Indexed
-							MeuAR_ADD <= "010110";
-						--when "100" => --Register indirect
-						when OTHERS =>
-							MeuAR_ADD <= "010001";
-					end case;
-			end case;
-		end if;
-	end process;
 end architecture;
+
+
+
+-- function starter(IR: std_logic_vector(15 downto 0)) return std_logic_vector is
+-- 	--Variables Declarations
+-- 	MeuAR_ADD : std_logic_vector(37 downto 0);
+-- begin
+-- 	case IR(15 downto 12) is
+-- 		when "0000" =>
+-- 			--BRANCH A
+-- 			MeuAR_ADD := "101010";
+-- 		when "1010" =>
+-- 			--HLT
+-- 			MeuAR_ADD := "000000";
+-- 		when "1011" =>
+-- 			--NOP
+-- 			MeuAR_ADD := "000000";
+-- 		when "1100" =>
+-- 			--BRANCH B
+-- 			MeuAR_ADD := "101010";
+-- 		when "1101" =>
+-- 			--JSR
+-- 			MeuAR_ADD := "100000";
+-- 		when "1110" =>
+-- 			--four choises
+-- 			if (IR(11)= '0' and IR(10) = '0') then
+-- 				--IGNORE IR
+-- 				MeuAR_ADD := "000000";
+-- 			ELSIF (IR(11)= '0' and IR(10) = '1') then
+-- 				--RTS
+-- 				MeuAR_ADD := "100100";
+-- 			ELSIF (IR(11)= '1' and IR(10) = '0') then
+-- 				--itr
+-- 				MeuAR_ADD := "011101";
+-- 			else
+-- 				--iret
+-- 				MeuAR_ADD := "100100";
+-- 			end if;
+-- 		when "1111" =>
+-- 			--ONE OPERAND
+-- 			--Check on IR to know the type of Source 11 10 9
+-- 			case IR(11 downto 9) is
+-- 				when "000" => --Register direct
+-- 					MeuAR_ADD := "000011";
+-- 				when "001" => --Auto-increment
+-- 					MeuAR_ADD := "000101";
+-- 				when "010" => --Auto-decrement
+-- 					MeuAR_ADD := "000111";
+-- 				when "011" => --Indexed
+-- 					MeuAR_ADD := "001001";
+-- 				--when "100" => --Register indirect
+-- 				when OTHERS =>
+-- 					MeuAR_ADD := "000100";
+-- 			end case;
+-- 		when OTHERS =>
+-- 			--TWO OPERANDS
+-- 			--Check on IR to know the type of Destination 5 4 3
+-- 			case IR(5 downto 3) is
+-- 				when "000" => --Register direct
+-- 					MeuAR_ADD := "010000";
+-- 				when "001" => --Auto-increment
+-- 					MeuAR_ADD := "010010";
+-- 				when "010" => --Auto-decrement
+-- 					MeuAR_ADD := "010100";
+-- 				when "011" => --Indexed
+-- 					MeuAR_ADD := "010110";
+-- 				--when "100" => --Register indirect
+-- 				when OTHERS =>
+-- 					MeuAR_ADD := "010001";
+-- 			end case;
+-- 	end case;
+-- end function;

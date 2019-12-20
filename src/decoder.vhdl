@@ -46,44 +46,107 @@ use ieee.numeric_std.ALL;
 	--35 address out
 	--36 mdr out
 	--37 temp1 out
---
-entity decoder is
-    generic (n : integer := 16);
-    
-	port (
-		clk : in std_logic;
-		IR: in std_logic_vector(n-1 downto 0);
-		MeuInst: in std_logic_vector(25 downto 0);
-		controlSignal : out std_logic_vector(37 downto 0)
-	);
-end entity;
 
-architecture archDEC of decoder is
-	-- Signals for each control word
-	signal Rsrc_in: std_logic;
-	signal Rdst_in: std_logic;
+function ri_decoder(IR_SUB_RI: std_logic_vector(2 downto 0)) return std_logic_vector is
+    begin
+        case IR_SUB_RI is
+				when "000" =>
+					return "00000001";
+				when "001" =>
+					return "00000010";
+				when "010" =>
+					return "00000100";
+				when "011" =>
+					return "00001000";
+				when "100" =>
+					return "00010000";
+				when "101" =>
+					return "00100000";
+				when "110" =>
+					return "01000000";
+				when OTHERS =>
+					return "10000000";
+		end case;
+end function;
 
-	signal Rsrc_out: std_logic;
-	signal Rdst_out: std_logic;
+function alu_decoder(IR_SUB: std_logic_vector(7 downto 0)) return std_logic_vector is
+		variable ALU_MODE : std_logic_vector(3 downto 0);
+    begin
+        case IR_SUB(7 downto 4) is
+			when "0010" =>
+				--ADD
+				ALU_MODE := "0000";
+			when "0011" =>
+				--ADC
+				ALU_MODE := "0000";
+			when "0100" =>
+				--SUB
+				ALU_MODE := "0001";
+			when "0101" =>
+				--SBC
+				ALU_MODE := "0001";
+			when "0110" =>
+				--AND
+				ALU_MODE := "0010";
+			when "0111" =>
+				--OR
+				ALU_MODE := "0011";
+			when "1000" =>
+				--XNOR
+				ALU_MODE := "0101";
+			when "1001" =>
+				--CMP --> SUB
+				ALU_MODE := "0001";	    	
+	    	when OTHERS =>
+	    		--1111????
+	    		case IR_SUB(3 downto 0) is
+					when "0000" =>
+						--INC
+						ALU_MODE := "1110";
+					when "0001" =>
+						--DEC
+						ALU_MODE := "1101";
+					when "0010" =>
+						--CLR
+						ALU_MODE := "1111";
+					when "0011" =>
+						--INV (NOT)
+						ALU_MODE := "0100";
+					when "0100" =>
+						--LSR
+						ALU_MODE := "0110";
+					when "0101" =>
+						--ROR
+						ALU_MODE := "0111";
+					when "0110" =>
+						--RRC
+						ALU_MODE := "1000";
+					when "0111" =>
+						--ASR
+						ALU_MODE := "1001";
+					when "1000" =>
+						--LSL
+						ALU_MODE := "1010";
+					when "1001" =>
+						--ROL
+						ALU_MODE := "1011";
+					when OTHERS =>
+						--RLC
+						ALU_MODE := "1100";
+				end case;
+	    end case;
+	return ALU_MODE;
+end function;
 
-	-- This signal won't be outputed from decoder unless AL_OP is selected
-	signal ALU_MODE :std_logic_vector(3 downto 0);
 
-	signal EV : std_logic;
+
+
+function decoder(IR: std_logic_vector(15 downto 0), MeuInst: std_logic_vector(25 downto 0)) return std_logic_vector is
+	--Variables Declarations
+	controlSignal : std_logic_vector(37 downto 0);
 begin
-	aludDEC: entity work.alu_decoder port map(IR(15 downto 8),ALU_MODE);
-	
-	Rsrc_out_label: entity work.ri_decoder port map(Rsrc_out, IR(8 downto 6), controlSignal(19 downto 12));
-	Rdst_out_label: entity work.ri_decoder port map(Rdst_out, IR(2 downto 0), controlSignal(19 downto 12));
-	Rsrc_int_label: entity work.ri_decoder port map(Rsrc_in,  IR(8 downto 6), controlSignal(7 downto  0));
-	Rdst_in_label : entity work.ri_decoder port map(Rdst_in,  IR(2 downto 0), controlSignal(7 downto  0));
-
-	process (IR, MeuInst, clk)
-	begin
-		--if (rising_edge(clk)) then
-			--NAF 25:20 -- 6 bits
-			--Group 1 
-			case MeuInst(21 downto 19) is
+	--Group 1 
+			case MeuInst(19 downto 17) is
 				when "001" =>	
 					controlSignal(7) <= '1';
 				when "010" =>
@@ -91,35 +154,35 @@ begin
 				when "011" =>
 					controlSignal(36) <= '1';
 				when "100" =>
-					Rsrc_out <= '1';
+					controlSignal(19 downto 12) <= ri_decoder (IR(8 downto 6));
 				when "101" =>
-					Rdst_out <= '1';
+					controlSignal(19 downto 12) <= ri_decoder (IR(2 downto 0));
 				when "110" =>
 					controlSignal(37) <= '1';
 				when "111" =>
 					controlSignal(25) <= '1';
 				when OTHERS =>
-					Ev <= '0'; --Like no operation ^_^
+					null;
 			end case;
 
 			--Group 2
-			case MeuInst(18 downto 16) is
+			case MeuInst(16 downto 14) is
 				when "001" =>
 					controlSignal(7) <= '1';
 				when "010" =>
 					controlSignal(26) <= '1';
 				when "011" =>
-					Rsrc_in <= '1';
+					controlSignal(7 downto  0) <= ri_decoder (IR(8 downto 6));
 				when "100" =>
-					Rdst_in <= '1';
+					controlSignal(7 downto  0) <= ri_decoder (IR(2 downto 0));
 				when "101" =>
 					controlSignal(20) <= '1';
 				when OTHERS =>
-					Ev <= '0'; --Like no operation ^_^
+					null;
 			end case;
 
 			--Group 3
-			case MeuInst(15 downto 14) is
+			case MeuInst(13 downto 12) is
 				when "01" =>
 					controlSignal(11) <= '1';
 				when "10" =>
@@ -127,21 +190,11 @@ begin
 				when "11" =>
 					controlSignal(9) <= '1';
 				when OTHERS =>
-					Ev <= '0'; --Like no operation ^_^
+					null;
 			end case;
-
-			--Group 4
-			case MeuInst(13 downto 12) is
-				when "01" =>
-					controlSignal(10) <= '1';
-				when "10" =>
-					controlSignal(27) <= '1';
-				when OTHERS =>
-					Ev <= '0'; --Like no operation ^_^
-			end case;
-
+			
 			--Group 5
-			case MeuInst(11 downto 9) is
+			case MeuInst(9 downto 7) is
 				when "001" =>
 					--FORCE ALU to add
 					controlSignal(34 downto 31) <= "0000";
@@ -150,48 +203,21 @@ begin
 				when "011" =>
 					controlSignal(34 downto 31) <= "1101";
 				when "100" =>
-					controlSignal(34 downto 31) <= ALU_MODE;
+					controlSignal(34 downto 31) <= alu_decoder(IR(15 downto 8));
 				when OTHERS =>
-					Ev <= '1';
+					null;
 			end case;
+			controlSignal(10) <= not MeuInst(11) and MeuInst(10);
+			controlSignal(27) <= MeuInst(11) and not MeuInst(10);
+			
+			controlSignal(22) <=  MeuInst(6) nand MeuInst(5);
+			controlSignal(23) <= not MeuInst(6) and MeuInst(5);
+			controlSignal(28) <= MeuInst(4);
+			controlSignal(29) <= not MeuInst(4);
+			controlSignal(30) <= MeuInst(3);
+			controlSignal(35) <= MeuInst(2) and MeuInst(1) and not MeuInst(0);
+			controlSignal(21) <= MeuInst(2) and MeuInst(1) and not MeuInst(0);
+			
 
-			--Group 6
-			case MeuInst(8 downto 7) is
-				when "00" =>
-					controlSignal(22) <= '1';
-				when "01" =>
-					controlSignal(23) <= '1';
-				when OTHERS =>
-					Ev <= '0'; --Like no operation ^_^
-			end case;
-
-			--Group 7
-			case MeuInst(6 downto 5) is
-				when "00" =>
-					controlSignal(28) <= '1';
-				when "01" =>
-					controlSignal(29) <= '1';
-				when OTHERS =>
-					Ev <= '0'; --Like no operation ^_^
-			end case;
-
-			--Group 8
-			case MeuInst(4 downto 3) is
-				when "01" =>
-					controlSignal(30) <= '1';
-				when OTHERS =>
-					Ev <= '0'; --Like no operation ^_^
-			end case;
-
-			--Group 9
-			case MeuInst(2 downto 0) is
-				when "110" =>
-					controlSignal(35) <= '1';
-				when "111" =>
-					controlSignal(21) <= '1';
-				when OTHERS =>
-					Ev <= '0'; --Like no operation ^_^
-			end case;
-		--end if;
-	end process;
-end architecture;
+			return controlSignal;
+end function;
