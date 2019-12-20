@@ -80,7 +80,7 @@ begin
 
 	process (IR, MeuInst, clk)
 	begin
-		if (rising_edge(clk)) then
+		--if (rising_edge(clk)) then
 			--NAF 25:20 -- 6 bits
 			--Group 1 
 			case MeuInst(21 downto 19) is
@@ -192,6 +192,6 @@ begin
 				when OTHERS =>
 					Ev <= '0'; --Like no operation ^_^
 			end case;
-		end if;
+		--end if;
 	end process;
 end architecture;
