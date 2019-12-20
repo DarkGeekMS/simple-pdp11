@@ -6,7 +6,7 @@ use work.common.CONTROL_STORE;
 
 entity rom is
 	port (
-		clk, rd: in std_logic;
+		rd: in std_logic;
 		address: in std_logic_vector(5 downto 0);
 
 		data_out: out std_logic_vector(26-1 downto 0)
@@ -15,10 +15,10 @@ end entity;
 
 architecture rtl of rom is
 begin
-	process (clk, rd, address)
+	process (rd, address)
 	begin
-		if rising_edge(clk) and rd = '1' then  
-			data_out <= CONTROL_STORE(to_integer(unsigned(address)));
+		if rd = '1' then  
+			data_out <= data(to_integer(unsigned(address)));
 		else 
 			data_out <= (others => 'Z');
 		end if;
