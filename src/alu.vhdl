@@ -34,20 +34,19 @@ begin
     adder2: entity work.nadder port map(temp0,"0000000000000000", flagIn(0), temp0Bar, unusedSignal);
 
     process (temp0, B, mode, en, flagIn, clk)
-    variable ALUOUT: std_logic_vector(n-1 DOWNTO 0);
-    variable secInput: std_logic_vector(n-1 DOWNTO 0);
-
+        variable ALUOUT: std_logic_vector(n-1 DOWNTO 0);
+        variable secInput: std_logic_vector(n-1 DOWNTO 0);
     begin
         if (en='1' and rising_edge(clk)) then
             case mode is
                 when "0000" =>
                     --ADD
                     --Won't check on the carry's state as it gets added any ways
-                    secInput <= temp0;
+                    secInput := temp0;
                     secInput_Signal <= temp0;
                     carryIn <= flagIn(0);
                     flagOut(0)<=carryOut;
-                    ALUOUT <= ALUOUT_SIGNAL;
+                    ALUOUT := ALUOUT_SIGNAL;
                     --P + P = N
                     if (B(n-1) = '0' and secInput(n-1) = '0' and ALUOUT(n-1) = '1') then
                         flagOut(4) <= '1';
@@ -62,11 +61,11 @@ begin
                     --NOTE: A - B == A + (B)` + 1 
                     --NOTE: A - B - C == A - (B+C) == A + (B+C)` + 1
                     --SO, temp0Bar = (B+C), whether C = 0 or 1
-                    secInput <= not temp0Bar;
+                    secInput := not temp0Bar;
                     secInput_Signal <= not temp0Bar;
                     carryIn <= '1';
                     flagOut(0)<=carryOut;
-                    ALUOUT <= ALUOUT_SIGNAL;
+                    ALUOUT := ALUOUT_SIGNAL;
                     --P - N = N
                     if (B(n-1) = '0' and secInput(n-1) = '1' and ALUOUT(n-1) = '1') then
                         flagOut(4) <= '1';
@@ -78,65 +77,65 @@ begin
                     end if;
                 when "0010" =>
                     --AND
-                    ALUOUT <= temp0 and B;
+                    ALUOUT := temp0 and B;
                     flagOut(0) <= flagIn(0);
                     flagOut(4) <= '0';
                 when "0011" =>
                     --OR
-                    ALUOUT <= temp0 or B;
+                    ALUOUT := temp0 or B;
                     flagOut(0) <= flagIn(0);
                     flagOut(4) <= '0';
                 when "0100" =>
                     --NOT
-                    ALUOUT <= not B;
+                    ALUOUT := not B;
                     flagOut(0) <= flagIn(0);
                     flagOut(4) <= '0';
                 when "0101" =>
                     --XNOR
-                    ALUOUT <= temp0 XNOR B;
+                    ALUOUT := temp0 XNOR B;
                     flagOut(0) <= flagIn(0);
                     flagOut(4) <= '0';
                 when "0110" =>
                     --LSR: Logical shift Right
-                    ALUOUT <= '0' & B(n-1 downto 1);
+                    ALUOUT := '0' & B(n-1 downto 1);
                     flagOut(0) <= B(0);
                     flagOut(4) <= flagIn(0) XOR flagIn(2);
                 when "0111" =>
                     --ROR
-                    ALUOUT <= B(0) & B(n-1 downto 1);
+                    ALUOUT := B(0) & B(n-1 downto 1);
                     flagOut(0) <= B(0);
                     flagOut(4) <= flagIn(0) XOR flagIn(2);
                 when "1000" =>
                     --RRC
-                    ALUOUT <= flagIn(0) & B(n-1 downto 1);
+                    ALUOUT := flagIn(0) & B(n-1 downto 1);
                     flagOut(0) <= B(0);
                     flagOut(4) <= flagIn(0) XOR flagIn(2);
                 when "1001" =>
                     --ASR: Arithmetic shift right
-                    ALUOUT <= B(n-1) & B(n-1 downto 1);
+                    ALUOUT := B(n-1) & B(n-1 downto 1);
                     flagOut(0) <= B(0);
                     flagOut(4) <= flagIn(0) XOR flagIn(2);
                 when "1010" =>
                     --LSL: Logical Shift Left
-                    ALUOUT <=  B(n-2 downto 0) & '0'; 
+                    ALUOUT :=  B(n-2 downto 0) & '0'; 
                     flagOut(0) <= B(n-1);
                     flagOut(4) <= flagIn(0) XOR flagIn(2);
                 when "1011" =>
                     --ROL
-                    ALUOUT <=  B(n-2 downto 0) & B(n-1);
+                    ALUOUT :=  B(n-2 downto 0) & B(n-1);
                     flagOut(0) <= B(n-1);
                     flagOut(4) <= flagIn(0) XOR flagIn(2);
                 when "1100" =>
                     --RLC
-                    ALUOUT <=  B(n-2 downto 0) & flagIn(0);
+                    ALUOUT :=  B(n-2 downto 0) & flagIn(0);
                     flagOut(0) <= B(n-1);
                     flagOut(4) <= flagIn(0) XOR flagIn(2);
                 when "1101" =>
                     --DEC
                     --F = B - 1 == (B + 1), not 001 but 111
-                    secInput <= "1111111111111111";
+                    secInput := "1111111111111111";
                     carryIn <= '0';
-                    ALUOUT <= ALUOUT_SIGNAL;
+                    ALUOUT := ALUOUT_SIGNAL;
                     flagOut(0)<=carryOut;
                     if (B="1000000000000000") then
                         flagOut(4) <= '1';
@@ -146,9 +145,9 @@ begin
                 when "1110" =>
                     --INC
                     --F = B + 1 == B + 0 and carry = 1
-                    secInput <= "0000000000000000";
+                    secInput := "0000000000000000";
                     carryIn <= '1';
-                    ALUOUT <= ALUOUT_SIGNAL;
+                    ALUOUT := ALUOUT_SIGNAL;
                     flagOut(0)<=carryOut;
                     if (B="0111111111111111") then
                         flagOut(4) <= '1';
@@ -157,7 +156,7 @@ begin
                     end if;
                 when OTHERS =>
                     --CLR
-                    ALUOUT <= "0000000000000000";
+                    ALUOUT := "0000000000000000";
                     flagOut(0) <= '0'; --Carry
                     flagOut(2) <= '0'; --Negative
                     flagOut(4) <= '0'; --Overflow
