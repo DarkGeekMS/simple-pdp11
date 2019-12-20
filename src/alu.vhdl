@@ -14,8 +14,9 @@ entity alu is
     port (
         temp0 , B : in std_logic_vector(n-1 downto 0);
         mode : in std_logic_vector(3 downto 0);
-        clk,en : in std_logic;
-        flagIn:  in std_logic_vector(4 downto 0);
+        clk,en: in std_logic;
+        flagIn: n std_logic_vector(4 downto 0);
+        IR_Check: in std_logic;
         F : out std_logic_vector(15 downto 0);
         flagOut : out std_logic_vector(4 downto 0)
     );
@@ -45,7 +46,7 @@ begin
                     when "0000" =>
                         --ADD
                         --Won't check on the carry's state as it gets added any ways
-                        if (flagIn(0) = '1') then
+                        if (IR_Check = '1' and flagIn(0) = '1') then
                             carryInput := "0000000000000001";
                         else
                             carryInput := (OTHERS => '0');
@@ -78,7 +79,7 @@ begin
                         --carryIn <= '1';
                         --temp_flag_out(0)<=carryOut;
                         --ALUOUT := ALUOUT_SIGNAL;
-                        if (flagIn(0) = '1') then
+                        if (IR_Check = '1' and flagIn(0) = '1') then
                             carryInput := "0000000000000001"; 
                         else
                             carryInput := (OTHERS => '0');
