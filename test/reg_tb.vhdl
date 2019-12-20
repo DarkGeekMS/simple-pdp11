@@ -26,6 +26,7 @@ begin
     main: process
     begin
         test_runner_setup(runner, runner_cfg);
+        set_stop_level(failure);
 
         if run("basic") then
             enable_in <= '1';

@@ -1,6 +1,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
+use work.common.CONTROL_STORE;
 
 entity iterator is    
 	port (
@@ -14,15 +15,16 @@ entity iterator is
 end entity;
 
 architecture arch_iterator OF iterator is
-    signal out1: std_logic_vector(26-1 downto 0);
+    --signal out1: std_logic_vector(26-1 downto 0);
     signal StarterOut: std_logic_vector(5 downto 0);
 begin
-    U1: entity work.rom port map ('1', address, out1);
+    --U1: entity work.rom port map ('1', address, out1);
     U2: entity work.starter generic map (16) port map (IR, StarterOut , clk);
-    out_inst <= out1;
-    process (ir)
-    --variable NAF: std_logic_vector(5 DOWNTO 0);
+    --NAF <= CONTROL_STORE(to_integer(unsigned(address)));
+    process (ir, address)
+    variable out1: std_logic_vector(25 DOWNTO 0);
     begin
+        out1 := CONTROL_STORE(to_integer(unsigned(address)));
         -- check PLAout = 0 return NAF
         if out1(3) = '0'  then
             --out_inst := out1;
@@ -175,4 +177,5 @@ begin
         --out_inst <= out1;
         --naf_out <= NAF;
     end process;
+    out_inst <= CONTROL_STORE(to_integer(unsigned(address)));
 end architecture;
