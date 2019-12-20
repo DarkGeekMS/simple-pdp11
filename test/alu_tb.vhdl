@@ -531,6 +531,91 @@ begin
             check_equal(flagOut(PARITY_FLAG), parity('0' & to_vec('1', 15)), "check parity flag");
         end if;
 
+        if run("rrc") then
+            IR_SUB <= "1111" & "0110";
+            B <= to_vec('1', 15) & '0';
+            temp0 <= to_vec('-', 16);
+            flagIn(CARRY_FLAG) <= '1';
+            flagIn(NEG_FLAG) <= '0';
+
+            wait for CLK_PERD;
+
+            check_equal(F, '1' & to_vec('1', 15), "check output");
+            check_equal(flagOut(CARRY_FLAG),  '0', "check carry flag");
+            check_equal(flagOut(ZERO_FLAG),   '0', "check zero flag");
+            check_equal(flagOut(NEG_FLAG),    '1', "check neg flag");
+            check_equal(flagOut(OVERFL_FLAG), '1', "check overflow flag");
+            check_equal(flagOut(PARITY_FLAG), parity('1' & to_vec('1', 15)), "check parity flag");
+        end if;
+
+        if run("asr") then
+            IR_SUB <= "1111" & "0111";
+            B <= '0' & to_vec('1', 15);
+            temp0 <= to_vec('-', 16);
+            flagIn(CARRY_FLAG) <= '1';
+            flagIn(NEG_FLAG) <= '0';
+
+            wait for CLK_PERD;
+
+            check_equal(F, '0' & '0' & to_vec('1', 14), "check output");
+            check_equal(flagOut(CARRY_FLAG),  '1', "check carry flag");
+            check_equal(flagOut(ZERO_FLAG),   '0', "check zero flag");
+            check_equal(flagOut(NEG_FLAG),    '0', "check neg flag");
+            check_equal(flagOut(OVERFL_FLAG), '1', "check overflow flag");
+            check_equal(flagOut(PARITY_FLAG), parity('0' & '0' & to_vec('1', 14)), "check parity flag");
+        end if;
+
+        if run("lsl") then
+            IR_SUB <= "1111" & "1000";
+            B <= to_vec('1', 16);
+            temp0 <= to_vec('-', 16);
+            flagIn(CARRY_FLAG) <= '0';
+            flagIn(NEG_FLAG) <= '0';
+
+            wait for CLK_PERD;
+
+            check_equal(F, to_vec('1', 15) & '0', "check output");
+            check_equal(flagOut(CARRY_FLAG),  '1', "check carry flag");
+            check_equal(flagOut(ZERO_FLAG),   '0', "check zero flag");
+            check_equal(flagOut(NEG_FLAG),    '1', "check neg flag");
+            check_equal(flagOut(OVERFL_FLAG), '0', "check overflow flag");
+            check_equal(flagOut(PARITY_FLAG), parity(to_vec('1', 15) & '0'), "check parity flag");
+        end if;
+
+        if run("rol") then
+            IR_SUB <= "1111" & "1001";
+            B <= '1' & '0' & to_vec('1', 14);
+            temp0 <= to_vec('-', 16);
+            flagIn(CARRY_FLAG) <= '0';
+            flagIn(NEG_FLAG) <= '1';
+
+            wait for CLK_PERD;
+
+            check_equal(F, '0' & to_vec('1', 14) & '1', "check output");
+            check_equal(flagOut(CARRY_FLAG),  '1', "check carry flag");
+            check_equal(flagOut(ZERO_FLAG),   '0', "check zero flag");
+            check_equal(flagOut(NEG_FLAG),    '0', "check neg flag");
+            check_equal(flagOut(OVERFL_FLAG), '1', "check overflow flag");
+            check_equal(flagOut(PARITY_FLAG), parity('0' & to_vec('1', 14) & '1'), "check parity flag");
+        end if;
+
+        if run("rl") then
+            IR_SUB <= "1111" & "1010";
+            B <= '0' & '0' & to_vec('1', 14);
+            temp0 <= to_vec('-', 16);
+            flagIn(CARRY_FLAG) <= '1';
+            flagIn(NEG_FLAG) <= '1';
+
+            wait for CLK_PERD;
+
+            check_equal(F, '0' & to_vec('1', 14) & '1', "check output");
+            check_equal(flagOut(CARRY_FLAG),  '0', "check carry flag");
+            check_equal(flagOut(ZERO_FLAG),   '0', "check zero flag");
+            check_equal(flagOut(NEG_FLAG),    '0', "check neg flag");
+            check_equal(flagOut(OVERFL_FLAG), '0', "check overflow flag");
+            check_equal(flagOut(PARITY_FLAG), parity('0' & to_vec('1', 14) & '1'), "check parity flag");
+        end if;
+
         test_runner_cleanup(runner);
         wait;
     end process;
