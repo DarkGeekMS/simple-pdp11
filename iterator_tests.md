@@ -199,7 +199,6 @@ addresses fields:
 addresses fields:
 000010
 101010
-000000
 
 ## HLT
 ## 1010 000000000000
