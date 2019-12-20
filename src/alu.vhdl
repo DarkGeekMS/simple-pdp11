@@ -40,7 +40,7 @@ begin
         variable temp0Bar: std_logic_vector(n-1 DOWNTO 0);
     begin
         if (en='1') then
-            if (clk = '1') then
+            if (clk = '0') then
                 case mode is
                     when "0000" =>
                         --ADD
