@@ -59,25 +59,26 @@ entity decoder is
 end entity;
 
 architecture archDEC of decoder is
-	--Added Signals, for each control word
-	signal Rsrc_out: std_logic;
-	signal Rdst_out: std_logic;
-
+	-- Signals for each control word
 	signal Rsrc_in: std_logic;
 	signal Rdst_in: std_logic;
 
-	--That signal wont be outed from decoder unless AL_OP is selected
+	signal Rsrc_out: std_logic;
+	signal Rdst_out: std_logic;
+
+	-- This signal won't be outputed from decoder unless AL_OP is selected
 	signal ALU_MODE :std_logic_vector(3 downto 0);
 
 	signal EV : std_logic;
 begin
 	aludDEC: entity work.alu_decoder port map(IR(15 downto 8),ALU_MODE);
-	Rsrc_out_label: entity work.ri_decoder port map(Rsrc_out,IR(8 downto 6), controlSignal(19 downto 12));
-	Rdst_out_label: entity work.ri_decoder port map(Rdst_out,IR(2 downto 0), controlSignal(19 downto 12));
-	Rsrc_int_label: entity work.ri_decoder port map(Rsrc_in,IR(8 downto 6), controlSignal(7 downto 0));
-	Rdst_in_label : entity work.ri_decoder port map(Rdst_in,IR(2 downto 0), controlSignal(7 downto 0));
+	
+	Rsrc_out_label: entity work.ri_decoder port map(Rsrc_out, IR(8 downto 6), controlSignal(19 downto 12));
+	Rdst_out_label: entity work.ri_decoder port map(Rdst_out, IR(2 downto 0), controlSignal(19 downto 12));
+	Rsrc_int_label: entity work.ri_decoder port map(Rsrc_in,  IR(8 downto 6), controlSignal(7 downto  0));
+	Rdst_in_label : entity work.ri_decoder port map(Rdst_in,  IR(2 downto 0), controlSignal(7 downto  0));
 
-	process (IR,MeuInst, clk)
+	process (IR, MeuInst, clk)
 	begin
 		if (rising_edge(clk)) then
 			--NAF 25:20 -- 6 bits
