@@ -5,11 +5,11 @@ use ieee.numeric_std.all;
 package common is
     -- indices of flags in FLAGS register
     -- [IFR = Index in Flags Register]
-    constant IFR_CARRY: integer := 0;
-    constant IFR_ZERO: integer := 1;
-    constant IFR_NEG: integer := 2;
-    constant IFR_PARITY: integer := 3;
-    constant IFR_OVERFLOW: integer := 4;
+    constant IFR_CARRY     : integer := 0;
+    constant IFR_ZERO      : integer := 1;
+    constant IFR_NEG       : integer := 2;
+    constant IFR_PARITY    : integer := 3;
+    constant IFR_OVERFLOW  : integer := 4;
 
     -- indices of control signals
     -- [ICS = Index in Control Signal]
