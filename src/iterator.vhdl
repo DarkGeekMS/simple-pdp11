@@ -2,28 +2,22 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity iterator is
-	generic (
-		PATH      : string := "rom.txt";  -- path to rom file relative to project dir
-		WORD_WIDTH: natural := 26;        -- number of bits in word
-		ROM_SIZE  : natural := 64         -- ROM size
-    );
-    
+entity iterator is    
 	port (
         clk      : in std_logic;
         ir       : in std_logic_vector(15 downto 0);             -- IR register data
         flag_regs: in std_logic_vector(4 downto 0);
         address  : in std_logic_vector(5 downto 0);              -- address to be fetched from control store
-        out_inst : out std_logic_vector(WORD_WIDTH-1 downto 0);  -- output micro instruction
+        out_inst : out std_logic_vector(26-1 downto 0);  -- output micro instruction
         NAF      : out std_logic_vector(5 downto 0)              --next address field
     );
 end entity;
 
 architecture arch_iterator OF iterator is
-    signal out1: std_logic_vector(WORD_WIDTH-1 downto 0);
+    signal out1: std_logic_vector(26-1 downto 0);
     signal StarterOut: std_logic_vector(5 downto 0);
 begin
-    U1: entity work.rom generic map (PATH, WORD_WIDTH, ROM_SIZE) port map (clk, '1', '0', address, out1);
+    U1: entity work.rom port map (clk, '1', address, out1);
     U2: entity work.starter generic map (16) port map (IR, StarterOut , clk);
 
     process (ir, address)

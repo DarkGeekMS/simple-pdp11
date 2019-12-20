@@ -4,58 +4,76 @@ use ieee.numeric_std.all;
 use std.textio.all;
 
 entity rom is
-	generic (
-		PATH: string := "rom.txt";  -- path to rom file relative to project dir
-		WORD_WIDTH: natural := 8;  -- number of bits in word
-		ROM_SIZE: natural := 4*1024 -- ROM size
-	);
-
 	port (
-		clk, rd, reset: in std_logic;
+		clk, rd: in std_logic;
 		address: in std_logic_vector(5 downto 0);
 
-		data_out: out std_logic_vector(WORD_WIDTH-1 downto 0)
+		data_out: out std_logic_vector(26-1 downto 0)
 	);
 end entity;
 
 architecture rtl of rom is
-	type DataType is array(0 to ROM_SIZE) of std_logic_vector(WORD_WIDTH-1 downto 0);
-	signal data : DataType := (others => (others => '0'));
+	type DataType is array(0 to 51-1) of std_logic_vector(26-1 downto 0);
+	signal data : DataType := (
+		"00000100100001000100100000",
+		"00001011100100000000000000",
+		"00001101101000000000001000",
+		"01000010000011000000001001",
+		"00111010000001000000101011",
+		"00011010000001000100100000",
+		"00111011101100000000001011",
+		"00100010000000000110000000",
+		"00111011101101000000101011",
+		"00101000100001000100100000",
+		"00101111100100000000000000",
+		"00110001100000010000000000",
+		"00110110000000000010000000",
+		"00111011100001000000101011",
+		"00111101100001000000100000",
+		"01000001100011000000001001",
+		"10111010100000010000001101",
+		"01101110100001000000101010",
+		"01001110100001000100100000",
+		"01101111110000000000001010",
+		"01010110100000000110000000",
+		"01101111110001000000101010",
+		"01011100100001000100100000",
+		"01100011100100000000000000",
+		"01100101100000010000000000",
+		"01101010100000000010000000",
+		"01101111100001000000100010",
+		"01110001100001000000100000",
+		"10111001100000010000001101",
+		"01111010000000000110000000",
+		"01111111101101000000000000",
+		"10000000000010000001001111",
+		"10000110000000000110000000",
+		"10001011101101000000000000",
+		"10111000100010000001001101",
+		"00000000000100000000001110",
+		"10010110000001000100100000",
+		"10011011101100000000000000",
+		"10111001100100000000001101",
+		"10100010000001000100100000",
+		"10100111101100000000000000",
+		"00000001110100000000000000",
+		"10101100000000000000001100",
+		"10110000100000010000000000",
+		"10110100000000000010001110",
+		"00000011100100000000000000",
+		"00000011000010000001000000",
+		"00000011010000000000000000",
+		"11000111000000001000001010",
+		"00000011110000000000000000",
+		"00000011100010000001000000"
+	);
 begin
-	process (clk, rd, address, reset)
+	process (clk, rd, address)
 	begin
-		if reset = '0' and rising_edge(clk) and rd = '1' then  
+		if rising_edge(clk) and rd = '1' then  
 			data_out <= data(to_integer(unsigned(address)));
 		else 
 			data_out <= (others => 'Z');
-		end if;
-	end process;
-
-	process (reset)
-		file input_file: text;
-
-		variable tmp_in_line: line;
-		variable tmp_word : std_logic_vector(WORD_WIDTH-1 downto 0);
-		variable i: integer := 0;
-	begin
-		if reset = '1' then 
-			file_open(input_file, "../" & PATH,  read_mode);
-
-			while i < ROM_SIZE and not endfile(input_file) loop
-				readline(input_file, tmp_in_line);
-				read(tmp_in_line, tmp_word);
-
-				data(i) <= tmp_word;
-				i := i + 1;
-			end loop;
-
-			assert i = ROM_SIZE 
-				report "ROM is not fully loaded from " & PATH & ", loaded " 
-					& integer'image(i) & " words out of " 
-					& integer'image(ROM_SIZE) & " words" 
-					severity warning;
-
-			file_close(input_file);
 		end if;
 	end process;
 end architecture;
