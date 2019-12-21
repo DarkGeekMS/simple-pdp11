@@ -16,11 +16,14 @@ end entity;
 architecture rtl of ram is
 	type DataType is array(0 to RAM_SIZE) of std_logic_vector(15 downto 0);
 	signal data: DataType;
+
+	signal last_data: std_logic_vector(15 downto 0); -- for debugging
 begin
 	process (clk, data_in, wr, address)
 	begin	
-		if rising_edge(clk) and wr = '1' then  
+		if clk = '1' and wr = '1' then  
 			data(to_integer(unsigned(address))) <= data_in;
+			last_data <= data_in;
 		end if;
 	end process;
 
