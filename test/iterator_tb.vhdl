@@ -23,7 +23,7 @@ architecture tb of iterator_tb is
 
     signal out_inst : std_logic_vector(26-1 downto 0);   -- out
     signal NAF      : std_logic_vector(5 downto 0);      -- out
-
+    signal hltop    : std_logic;                         -- out
     function cs(adr: std_logic_vector(5 downto 0)) return std_logic_vector is
     begin
         return CONTROL_STORE(to_integer(unsigned(adr)));
@@ -35,7 +35,7 @@ begin
 
     iterator: entity work.iterator port map (
         ir => ir, flag_regs => flag_regs, clk => clk,
-        address => address, out_inst => out_inst, NAF => NAF
+        address => address, out_inst => out_inst, NAF => NAF , hltop => hltop
     );
 
     main: process
@@ -120,7 +120,7 @@ begin
 
             test_iterator((
                 "000010",
-                "000101",
+                "001001",
                 "001010",
                 "001011",
                 "001100",
@@ -329,7 +329,7 @@ begin
             ir <= "1010" & "000000000000";
             address <= "000010";
             wait for CLK_PERD;
-            check(0=1); --TODO: check HLT signal is enabled
+            check_equal(hltop, '1'); --TODO: check HLT signal is enabled
         end if;
 
         if run("nop") then
@@ -344,19 +344,16 @@ begin
 
             test_iterator((
                 "000010",
-                "011101",
-                "011110",
-                "011111",
                 "100000",
                 "100001",
                 "100010",
-                "100011"
-
+                "100011",
+                "000000"
             ));
         end if;
 
         if run("rts") then
-            ir <= "111001" & "000000000000";
+            ir <= "111001" & "0000000000";
 
             test_iterator((
                 "000010",

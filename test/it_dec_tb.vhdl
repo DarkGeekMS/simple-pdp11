@@ -7,7 +7,7 @@ context vunit_lib.vunit_context;
 
 entity it_dec_tb is
     generic (runner_cfg: string);
-end entity; 
+end entity;
 
 architecture tb of it_dec_tb is
     constant CLK_FREQ: integer := 100e6; -- 100 MHz
@@ -28,21 +28,18 @@ begin
     begin
         test_runner_setup(runner, runner_cfg);
 
-        address <= ("010000");
-        ir <= ("0001000000000001");
+        address <= ("000110");
+        ir <= ("0010001000000001");
         flags <= (others => '0');
-        
+
         if run("dummy_test") then
-            address <= ("010000");
-            ir <= ("0001000000000001");
+            address <= ("000110");
+            ir <= ("0010001000000001");
             flags <= (others => '0');
-            
+
             wait for CLK_PERD;
             wait for CLK_PERD;
 
-            
-            --check_equal(c_signal, "00000100100001000100100000");
-            --check_equal(naf, "000001");
         end if;
 
         test_runner_cleanup(runner);
