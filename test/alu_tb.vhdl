@@ -617,7 +617,8 @@ begin
             check_equal(flagOut(IFR_OVERFLOW), '0', "check overflow flag");
             check_equal(flagOut(IFR_PARITY), parity('0' & to_vec('1', 14) & '1'), "check parity flag");
         end if;
-
+        
+        wait for CLK_PERD/2;
         test_runner_cleanup(runner);
         wait;
     end process;

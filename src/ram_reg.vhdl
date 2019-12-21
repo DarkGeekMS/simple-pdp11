@@ -17,7 +17,7 @@ end entity;
 architecture rtl of ram_reg is
     signal data: std_logic_vector(WORD_WIDTH-1 downto 0);
 begin
-    process (enable_in_ram, enable_in, clk) 
+    process (enable_in_ram, enable_in, clk, bidir_bus) 
     begin
         if enable_in = '1' and rising_edge(clk) then
             data <= bidir_bus;
@@ -28,7 +28,7 @@ begin
         end if;
     end process;
 
-    process (enable_out_ram, enable_out, clk) 
+    process (enable_out_ram, enable_out, clk, data) 
     begin
         if enable_out = '1' then
             if rising_edge(clk) then
@@ -39,7 +39,7 @@ begin
         end if;
         
         if enable_out_ram = '1' then
-            if rising_edge(clk) then
+            if clk = '1' then
                 inout_ram <= data;
             end if;
         else 
