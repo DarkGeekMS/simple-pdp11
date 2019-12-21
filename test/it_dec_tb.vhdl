@@ -17,24 +17,25 @@ architecture tb of it_dec_tb is
     signal ir: std_logic_vector(15 downto 0);
     signal flags: std_logic_vector(4 downto 0);
     signal address: std_logic_vector(5 downto 0);
+    signal hlt : std_logic;
     signal naf: std_logic_vector(5 downto 0);
     signal c_signal: std_logic_vector(37 downto 0);
 begin
     clk <= not clk after CLK_PERD / 2;
 
-    id: entity work.it_dec port map (clk, ir, flags, address, c_signal, naf);
+    id: entity work.it_dec port map (clk, ir, flags, address, hlt, c_signal, naf);
 
     main: process
     begin
         test_runner_setup(runner, runner_cfg);
 
-        address <= ("000110");
-        ir <= ("0010001000000001");
+        address <= ("100011");
+        ir <= ("1101100000000000");
         flags <= (others => '0');
 
         if run("dummy_test") then
-            address <= ("000110");
-            ir <= ("0010001000000001");
+            address <= ("100011");
+            ir <= ("1101100000000000");
             flags <= (others => '0');
 
             wait for CLK_PERD;

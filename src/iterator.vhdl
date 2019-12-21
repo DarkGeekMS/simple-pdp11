@@ -202,9 +202,7 @@ begin
                     when OTHERS =>                        -- general case
                         NAF <= "110000";
                 end case ;
-            elsif out1(2) = '1' and out1(1) = '1' and out1(0) = '1' then
-                NAF <= out1(25 downto 20);
-            elsif out1(2) = '1' and out1(1) = '1' and out1(0) = '0' then
+            elsif out1(2) = '1' and out1(1) = '1'  then
                 NAF <= out1(25 downto 20);
             end if;
 
