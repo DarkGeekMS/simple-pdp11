@@ -136,19 +136,19 @@ package body decoders is
 		--Group 1 
 		case MeuInst(19 downto 17) is
 			when "001" =>	
-				controlSignal(7) <= '1';
+				controlSignal(7) := '1';
 			when "010" =>
-				controlSignal(24) <= '1';
+				controlSignal(24) := '1';
 			when "011" =>
-				controlSignal(36) <= '1';
+				controlSignal(36) := '1';
 			when "100" =>
-				controlSignal(19 downto 12) <= ri_decoder (IR(8 downto 6));
+				controlSignal(19 downto 12) := ri_decoder (IR(8 downto 6));
 			when "101" =>
-				controlSignal(19 downto 12) <= ri_decoder (IR(2 downto 0));
+				controlSignal(19 downto 12) := ri_decoder (IR(2 downto 0));
 			when "110" =>
-				controlSignal(37) <= '1';
+				controlSignal(37) := '1';
 			when "111" =>
-				controlSignal(25) <= '1';
+				controlSignal(25) := '1';
 			when OTHERS =>
 				null;
 		end case;
@@ -156,15 +156,15 @@ package body decoders is
 		--Group 2
 		case MeuInst(16 downto 14) is
 			when "001" =>
-				controlSignal(7) <= '1';
+				controlSignal(7) := '1';
 			when "010" =>
-				controlSignal(26) <= '1';
+				controlSignal(26) := '1';
 			when "011" =>
-				controlSignal(7 downto  0) <= ri_decoder (IR(8 downto 6));
+				controlSignal(7 downto  0) := ri_decoder (IR(8 downto 6));
 			when "100" =>
-				controlSignal(7 downto  0) <= ri_decoder (IR(2 downto 0));
+				controlSignal(7 downto  0) := ri_decoder (IR(2 downto 0));
 			when "101" =>
-				controlSignal(20) <= '1';
+				controlSignal(20) := '1';
 			when OTHERS =>
 				null;
 		end case;
@@ -172,11 +172,11 @@ package body decoders is
 		--Group 3
 		case MeuInst(13 downto 12) is
 			when "01" =>
-				controlSignal(11) <= '1';
+				controlSignal(11) := '1';
 			when "10" =>
-				controlSignal(8) <= '1';
+				controlSignal(8) := '1';
 			when "11" =>
-				controlSignal(9) <= '1';
+				controlSignal(9) := '1';
 			when OTHERS =>
 				null;
 		end case;
@@ -185,27 +185,27 @@ package body decoders is
 		case MeuInst(9 downto 7) is
 			when "001" =>
 				--FORCE ALU to add
-				controlSignal(34 downto 31) <= "0000";
+				controlSignal(34 downto 31) := "0000";
 			when "010" =>
-				controlSignal(34 downto 31) <= "1110";
+				controlSignal(34 downto 31) := "1110";
 			when "011" =>
-				controlSignal(34 downto 31) <= "1101";
+				controlSignal(34 downto 31) := "1101";
 			when "100" =>
-				controlSignal(34 downto 31) <= ir_to_alu_mode(IR(15 downto 8));
+				controlSignal(34 downto 31) := ir_to_alu_mode(IR(15 downto 8));
 			when OTHERS =>
 				null;
 		end case;
 	
-		controlSignal(10) <= not MeuInst(11) and MeuInst(10);
-		controlSignal(27) <= MeuInst(11) and not MeuInst(10);
+		controlSignal(10) := not MeuInst(11) and MeuInst(10);
+		controlSignal(27) := MeuInst(11) and not MeuInst(10);
 		
-		controlSignal(22) <=  MeuInst(6) nand MeuInst(5);
-		controlSignal(23) <= not MeuInst(6) and MeuInst(5);
-		controlSignal(28) <= MeuInst(4);
-		controlSignal(29) <= not MeuInst(4);
-		controlSignal(30) <= MeuInst(3);
-		controlSignal(35) <= MeuInst(2) and MeuInst(1) and not MeuInst(0);
-		controlSignal(21) <= MeuInst(2) and MeuInst(1) and not MeuInst(0);
+		controlSignal(22) :=  MeuInst(6) nand MeuInst(5);
+		controlSignal(23) := not MeuInst(6) and MeuInst(5);
+		controlSignal(28) := MeuInst(4);
+		controlSignal(29) := not MeuInst(4);
+		controlSignal(30) := MeuInst(3);
+		controlSignal(35) := MeuInst(2) and MeuInst(1) and not MeuInst(0);
+		controlSignal(21) := MeuInst(2) and MeuInst(1) and not MeuInst(0);
 		
 		return controlSignal;
 	end function;

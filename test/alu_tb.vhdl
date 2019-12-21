@@ -2,6 +2,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 use work.common.all;
+use work.decoders.all;
 
 library vunit_lib;
 context vunit_lib.vunit_context;
@@ -24,10 +25,8 @@ architecture tb of alu_tb is
     signal F: std_logic_vector(15 downto 0); --out
     signal flagOut: std_logic_vector(4 downto 0); --out
 
-    -- alu_decoder
     signal IR_SUB: std_logic_vector(7 downto 0); --in
     alias IR_Check : std_logic is IR_SUB(4);
-    signal ALU_MODE: std_logic_vector(3 downto 0);
 
     function parity(n: integer) return std_logic is
         variable v: std_logic_vector(15 downto 0);
@@ -86,12 +85,8 @@ begin
     clk <= not clk after CLK_PERD / 2;
 
     alu: entity work.alu port map (
-        temp0 => temp0, B => B, mode => ALU_MODE, IR_CHECK => IR_CHECK,
+        temp0 => temp0, B => B, mode => ir_to_alu_mode(IR_SUB), IR_CHECK => IR_CHECK,
         clk => clk, en => en, flagIn => flagIn, F => F, flagOut => flagOut
-    );
-
-    alu_decoder: entity work.alu_decoder port map (
-        IR_SUB => IR_SUB, ALU_MODE => ALU_MODE
     );
 
     main: process
