@@ -24,14 +24,13 @@ architecture tb of flags_reg_tb is
     signal data_out: std_logic_vector(WORD_WIDTH-1 downto 0);
 
     -- flags additional ports
-    signal from_alu: std_logic_vector(WORD_WIDTH-1 downto 0);
+    signal from_alu: std_logic_vector(5-1 downto 0);
     signal enable_from_alu: std_logic;
-    signal always_out: std_logic_vector(WORD_WIDTH-1 downto 0);
+    signal always_out: std_logic_vector(5-1 downto 0);
 begin
     clk <= not clk after CLK_PERD / 2;
 
-    flags_reg: entity work.flags_reg 
-        generic map (WORD_WIDTH => WORD_WIDTH) port map (
+    flags_reg: entity work.flags_reg port map (
         data_in => data_in,
         enable_in => enable_in,
         enable_out => enable_out,
@@ -54,26 +53,26 @@ begin
 
         if run("always_out") then
             enable_in <= '1';
-            data_in <= x"0F0F";
+            data_in(5-1 downto 0) <= "01011";
             wait for CLK_PERD;
             enable_in <= '0';
 
             enable_out <= '1';
             wait for CLK_PERD;
-            check_equal(always_out, to_vec(x"0F0F"));
+            check_equal(always_out, to_vec("01011", 5));
 
             enable_out <= '0';
             wait for CLK_PERD;
-            check_equal(always_out, to_vec(x"0F0F"));
+            check_equal(always_out, to_vec("01011", 5));
 
             enable_out <= '0';
             wait for CLK_PERD;
-            check_equal(always_out, to_vec(x"0F0F"));
+            check_equal(always_out, to_vec("01011", 5));
         end if;
 
         if run("from_alu") then
             enable_in <= '1';
-            data_in <= x"0F0F";
+            data_in(5-1 downto 0) <= "01011";
             wait for CLK_PERD;
             enable_in <= '0';
 
@@ -81,12 +80,12 @@ begin
             enable_from_alu <= '1';
             wait for CLK_PERD;
             enable_from_alu <= '0';
-            check_equal(always_out, to_vec('1'));
+            check_equal(always_out, to_vec('1', 5));
 
             enable_out <= '1';
             wait for CLK_PERD;
             enable_out <= '0';
-            check_equal(data_out, to_vec('1'));
+            check_equal(data_out, to_vec('0', 16-5) & to_vec('1', 5));
         end if;
 
         wait for CLK_PERD/2;
