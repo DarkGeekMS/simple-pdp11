@@ -46,6 +46,7 @@ begin
             --check_equal(naf, "000001");
         end if;
 
+        wait for CLK_PERD/2;
         test_runner_cleanup(runner);
         wait;
     end process;

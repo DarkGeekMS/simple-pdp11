@@ -32,6 +32,13 @@ begin
         test_runner_setup(runner, runner_cfg);
         set_stop_level(failure);
 
+        enable_out <= '0';
+        enable_in <= '0';
+        bidir_bus <= (others => 'Z');
+        enable_out_ram <= '0';
+        enable_in_ram <= '0';
+        inout_ram <= (others => 'Z');
+
         if run("enableout_enablein_set") then
             enable_in <= '1';
             bidir_bus <= x"00000000";
@@ -53,7 +60,7 @@ begin
             check_equal(bidir_bus, to_vec(x"FF00FF00", 32));
         end if;
 
-        if run("enableout_enablein_unset") then
+        if run("enableout_enablein_unset") then    
             enable_in <= '1';
             bidir_bus <= x"00000000";
             wait until rising_edge(clk);
@@ -85,9 +92,9 @@ begin
 
         if run("enableout_unset") then
             enable_out <= '0';
-            wait until rising_edge(clk);
+            bidir_bus <= (others => 'Z');
 
-            wait for 0.25*CLK_PERD;
+            wait until rising_edge(clk);
             check_equal(bidir_bus, to_vec('Z', 32));
         end if;
 
@@ -149,7 +156,8 @@ begin
             wait for 0.25*CLK_PERD;
             check_equal(inout_ram, to_vec('Z', 32));
         end if;
-
+        
+        wait for CLK_PERD/2;
         test_runner_cleanup(runner);
         wait;
     end process;
