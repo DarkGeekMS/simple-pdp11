@@ -34,13 +34,13 @@ begin
                     when "1111" =>             -- oneOp
                         if (ir( 5 downto 3) = "000") then
                             NAF <= "010000";
-                        elsif (ir( 5 downto 3) = "001") then
+                        elsif (ir( 4 downto 3) = "01") then
                             NAF <= "010010";
-                        elsif (ir( 5 downto 3) = "010") then
+                        elsif (ir( 4 downto 3) = "10") then
                             NAF <= "010100";
-                        elsif (ir( 5 downto 3) = "011") then
+                        elsif (ir( 4 downto 3) = "11") then
                             NAF <= "010110";
-                        else
+                        elsif (ir( 5 downto 3) = "100") then
                             NAF <= "010001";
                         end if;
 
