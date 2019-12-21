@@ -158,12 +158,6 @@ begin
                             else
                                 NAF <= "000000";
                             end if;
-                        elsif IR(15 downto 12) = "1100" then                         -- BHS
-                            if flag_regs(0) = '1' or flag_regs(1) = '1'  then
-                                NAF <= out1(25 downto 20);
-                            else
-                                NAF <= "000000";
-                            end if;
                         end if;
 
                     when "11" =>
@@ -174,7 +168,14 @@ begin
                             else
                                 NAF <= "000000";
                             end if;
-
+                        elsif IR(15 downto 12) = "1100" then                         -- BHS
+                                if flag_regs(0) = '1' or flag_regs(1) = '1'  then
+                                    NAF <= out1(25 downto 20);
+                                else
+                                    NAF <= "000000";
+                                end if;
+                        else
+                            NAF <= "000000";
                         end if;
 
                     when OTHERS =>
@@ -208,6 +209,11 @@ begin
 
         end if;
         hltop <= hlt;
+        if hlt = '1' then
+            out_inst <= "ZZZZZZZZZZZZZZZZZZZZZZZZZZ";
+        else
+            out_inst <= CONTROL_STORE(to_integer(unsigned(address)));
+        end if;
     end process;
-    out_inst <= CONTROL_STORE(to_integer(unsigned(address)));
+
 end architecture;

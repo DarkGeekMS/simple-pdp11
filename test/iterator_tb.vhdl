@@ -325,11 +325,169 @@ begin
             ));
         end if;
 
+        if run("br") then
+            ir <= "000000" & "0000000010";
+
+            test_iterator((
+                "000010",
+                "101010",
+                "101011",
+                "101100",
+                "101101"
+            ));
+        end if;
+
+
+        if run("bne_2_true") then
+            ir <= "000010" & "0000000010";
+            flag_regs <= "00000";
+
+            test_iterator((
+                "000010",
+                "101010",
+                "101011",
+                "101100",
+                "101101"
+            ));
+        end if;
+
+        if run("bne_2_false") then
+            ir <= "000010" & "0000000010";
+            flag_regs <= "00010";
+
+            test_iterator((
+                "000010",
+                "101010"
+            ));
+        end if;
+
+
+        if run("blo_2_false") then
+            ir <= "000011" & "0000000010";
+            flag_regs <= "00001";
+
+            test_iterator((
+                "000010",
+                "101010"
+            ));
+        end if;
+
+        if run("blo_2_true") then
+            ir <= "000011" & "0000000010";
+            flag_regs <= "00000";
+
+            test_iterator((
+                "000010",
+                "101010",
+                "101011",
+                "101100",
+                "101101"
+            ));
+        end if;
+
+
+        if run("bls_2_false") then
+            ir <= "110000" & "0000000010";
+            flag_regs <= "00001";
+
+            test_iterator((
+                "000010",
+                "101010"
+            ));
+        end if;
+
+        if run("bls_2_true1") then
+            ir <= "110000" & "0000000010";
+            flag_regs <= "00000";
+
+            test_iterator((
+                "000010",
+                "101010",
+                "101011",
+                "101100",
+                "101101"
+            ));
+        end if;
+
+        if run("bls_2_true2") then
+            ir <= "110000" & "0000000010";
+            flag_regs <= "00011";
+
+            test_iterator((
+                "000010",
+                "101010",
+                "101011",
+                "101100",
+                "101101"
+            ));
+        end if;
+
+
+        if run("bhi_2_false") then
+            ir <= "110001" & "0000000010";
+            flag_regs <= "00000";
+
+            test_iterator((
+                "000010",
+                "101010"
+            ));
+        end if;
+
+        if run("bhi_2_true") then
+            ir <= "110001" & "0000000010";
+            flag_regs <= "00001";
+
+            test_iterator((
+                "000010",
+                "101010",
+                "101011",
+                "101100",
+                "101101"
+            ));
+        end if;
+
+        if run("bhs_2_false") then
+            ir <= "110011" & "0000000010";
+            flag_regs <= "00000";
+
+            test_iterator((
+                "000010",
+                "101010"
+            ));
+        end if;
+
+        if run("bhs_2_true1") then
+            ir <= "110011" & "0000000010";
+            flag_regs <= "00001";
+
+            test_iterator((
+                "000010",
+                "101010",
+                "101011",
+                "101100",
+                "101101"
+            ));
+        end if;
+
+        if run("bhs_2_true2") then
+            ir <= "110011" & "0000000010";
+            flag_regs <= "00010";
+
+            test_iterator((
+                "000010",
+                "101010",
+                "101011",
+                "101100",
+                "101101"
+            ));
+        end if;
+
         if run("hlt") then
             ir <= "1010" & "000000000000";
             address <= "000010";
             wait for CLK_PERD;
             check_equal(hltop, '1'); --TODO: check HLT signal is enabled
+            check_equal(out_inst, to_vec("ZZZZZZZZZZZZZZZZZZZZZZZZZZ",26));
         end if;
 
         if run("nop") then
@@ -389,7 +547,7 @@ begin
                 "101001"
             ));
         end if;
-        
+
         wait for CLK_PERD/2;
         test_runner_cleanup(runner);
         wait;
