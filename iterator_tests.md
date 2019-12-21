@@ -214,9 +214,6 @@ addresses fields:
 ## 1101 100000000000
 addresses fields:
 000010
-011101
-011110
-011111
 100000
 100001
 100010
@@ -244,6 +241,7 @@ addresses fields:
 ## IRET
 ## 111011 0000000000
 addresses fields:
+000010
 100100
 100101
 100110
