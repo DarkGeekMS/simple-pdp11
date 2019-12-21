@@ -329,7 +329,7 @@ begin
             ir <= "1010" & "000000000000";
             address <= "000010";
             wait for CLK_PERD;
-            check_equal(hltop, '1'); --TODO: check HLT signal is enabled
+            check_equal(hltop, '1');
         end if;
 
         if run("nop") then
