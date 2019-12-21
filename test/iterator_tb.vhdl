@@ -330,6 +330,7 @@ begin
             address <= "000010";
             wait for CLK_PERD;
             check_equal(hltop, '1');
+            check_equal(out_inst, to_vec('Z', 26));
         end if;
 
         if run("nop") then
