@@ -21,7 +21,7 @@ entity flags_reg is
 end entity; 
 
 architecture rtl of flags_reg is
-    signal data: std_logic_vector(WORD_WIDTH-1 downto 0);
+    signal data: std_logic_vector(WORD_WIDTH-1 downto 0) := (others => '0');
 begin
     process (enable_in, clk, enable_from_alu, from_alu) 
     begin
