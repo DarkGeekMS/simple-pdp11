@@ -28,19 +28,18 @@ begin
     begin
         test_runner_setup(runner, runner_cfg);
 
-        address <= ("110010");
-        ir <= ("0000000001000011");
+        address <= ("010000");
+        ir <= ("0001000000000001");
         flags <= (others => '0');
         
         if run("dummy_test") then
-            address <= ("110010");
-            ir <= ("0000000001000011");
+            address <= ("010000");
+            ir <= ("0001000000000001");
             flags <= (others => '0');
             
             wait for CLK_PERD;
             wait for CLK_PERD;
-            wait for CLK_PERD;
-            wait for CLK_PERD;
+
             
             --check_equal(c_signal, "00000100100001000100100000");
             --check_equal(naf, "000001");

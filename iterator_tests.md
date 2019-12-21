@@ -208,10 +208,10 @@ addresses fields:
 ## NOP
 ## 1011 000000000000
 addresses fields:
-000000
+000010
 
 ## JSR    100
-## 110100 1100100
+## 1101 100000000000
 addresses fields:
 000010
 011101
@@ -225,6 +225,7 @@ addresses fields:
 ## RTS
 ## 111001 0000000000
 addresses fields:
+000010
 100100
 100101
 100110

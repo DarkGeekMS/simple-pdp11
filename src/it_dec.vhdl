@@ -17,5 +17,5 @@ architecture it_dec_arch of it_dec is
     signal cw: std_logic_vector(25 downto 0);
 begin
 	it: entity work.iterator port map(clk, IR, FLAGS, address, cw, NAF);
-    dec: entity work.decoder port map(clk, IR, cw, controlSignal);	
+    --dec: entity work.decoder port map(clk, IR, cw, controlSignal);	
 end architecture;
