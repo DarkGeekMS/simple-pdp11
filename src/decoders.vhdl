@@ -133,40 +133,41 @@ package body decoders is
 	function decompress_control_signals(IR: std_logic_vector(15 downto 0); MeuInst: std_logic_vector(25 downto 0)) return std_logic_vector is
 		variable controlSignal : std_logic_vector(37 downto 0) := (others => '0');
 	begin
-		--Group 1 
+
 		case MeuInst(19 downto 17) is
-			when "001" =>	
-				controlSignal(7) := '1';
+			when "001" =>
+				controlSignal(19) := '1';                     --pc out
 			when "011" =>
-				controlSignal(36) := '1';
+				controlSignal(36) := '1';                     -- MDR out
+
 			when "100" =>
-				controlSignal(19 downto 12) := ri_decoder (IR(8 downto 6));
+				controlSignal(19 downto 12) := ri_decoder (IR(8 downto 6));  --Rsrc out
 			when "101" =>
-				controlSignal(19 downto 12) := ri_decoder (IR(2 downto 0));
+				controlSignal(19 downto 12) := ri_decoder (IR(2 downto 0));  -- Rdest out
 			when "110" =>
-				controlSignal(37) := '1';
+				controlSignal(37) := '1';                  -- Temp1 out
 			when "111" =>
-				controlSignal(25) := '1';
+				controlSignal(25) := '1';                 -- Alu out
 			when OTHERS =>
 				null;
 		end case;
-	
+
 		--Group 2
 		case MeuInst(16 downto 14) is
 			when "001" =>
-				controlSignal(7) := '1';
+				controlSignal(7) := '1';    --pc in
 			when "010" =>
-				controlSignal(26) := '1';
-			when "011" =>
+				controlSignal(26) := '1';    -- ir in
+			when "011" =>                    -- src in
 				controlSignal(7 downto  0) := ri_decoder (IR(8 downto 6));
-			when "100" =>
+			when "100" =>                   --dest in
 				controlSignal(7 downto  0) := ri_decoder (IR(2 downto 0));
-			when "101" =>
+			when "101" =>                   -- flag in
 				controlSignal(20) := '1';
 			when OTHERS =>
 				null;
 		end case;
-	
+
 		--Group 3
 		case MeuInst(13 downto 12) is
 			when "01" =>
@@ -178,41 +179,40 @@ package body decoders is
 			when OTHERS =>
 				null;
 		end case;
-		
+
 		--Group 5
 		case MeuInst(9 downto 7) is
 			when "001" =>
 				--FORCE ALU to add
 				controlSignal(34 downto 31) := "0000";
-				controlSignal(24) := '1';
+				controlSignal(24) := '0';
 			when "010" =>
 				controlSignal(34 downto 31) := "1110";
-				controlSignal(24) := '1';
+				controlSignal(24) := '0';
 			when "011" =>
 				controlSignal(34 downto 31) := "1101";
-				controlSignal(24) := '1';
+				controlSignal(24) := '0';
 			when "100" =>
 				controlSignal(34 downto 31) := ir_to_alu_mode(IR(15 downto 8));
-				controlSignal(24) := '1';
+				controlSignal(24) := '0';
 			when OTHERS =>
 				null;
 		end case;
-	
-		controlSignal(10) := not MeuInst(11) and MeuInst(10);
-		controlSignal(27) := MeuInst(11) and not MeuInst(10);
-		
-		controlSignal(22) :=  MeuInst(6) nand MeuInst(5);
-		controlSignal(23) := not MeuInst(6) and MeuInst(5);
-		controlSignal(28) := MeuInst(4);
-		controlSignal(29) := not MeuInst(4);
+
+		controlSignal(10) := (not MeuInst(11)) and MeuInst(10);
+		controlSignal(27) := MeuInst(11) and (not MeuInst(10));
+
+		controlSignal(22) :=  MeuInst(6) nor MeuInst(5);
+		controlSignal(23) := (not MeuInst(6)) and MeuInst(5);
+		controlSignal(28) := not MeuInst(4);
+		controlSignal(29) := MeuInst(4);
 		controlSignal(30) := MeuInst(3);
-		controlSignal(35) := MeuInst(2) and MeuInst(1) and not MeuInst(0);
-		controlSignal(21) := MeuInst(2) and MeuInst(1) and not MeuInst(0);
-		
-		report "decompress_control_signals(" & to_string(IR) & ", " & to_string(MeuInst) & ") returns " & to_string(controlSignal);
+		controlSignal(35) := MeuInst(2) and MeuInst(1) and (not MeuInst(0));
+		controlSignal(21) := MeuInst(2) and MeuInst(1) and MeuInst(0);
+
 		return controlSignal;
 	end function;
-	
+
 	function ri_decoder(IR_SUB_RI: std_logic_vector(2 downto 0)) return std_logic_vector is
 	begin
 		case IR_SUB_RI is
