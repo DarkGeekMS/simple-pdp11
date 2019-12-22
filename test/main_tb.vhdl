@@ -25,7 +25,7 @@ architecture tb of main_tb is
         -- registers
         signal mar_enable_in, mdr_enable_in, mdr_enable_out : std_logic;
         signal ir_enable_in, ir_reset : std_logic;
-        signal flags_enable_in, flags_enable_out, flags_clr_carry, flags_set_carry : std_logic;
+        signal flags_enable_in, flags_enable_out, flags_clr_carry, flags_set_carry, flags_enable_from_alu: std_logic;
         signal r_enable_in, r_enable_out : std_logic_vector(7 downto 0);
         signal tmp0_enable_in, tmp0_clr, tmp1_enable_in, tmp1_enable_out : std_logic;
 
@@ -88,7 +88,7 @@ begin
         clk => clk, data_out => bbus,
 
         from_alu => alu_to_flags,
-        enable_from_alu => alu_enable,
+        enable_from_alu => flags_enable_from_alu,
         always_out => flags_always_out,
         clr_carry => flags_clr_carry,
         set_carry => flags_set_carry
@@ -176,6 +176,7 @@ begin
             tmp0_clr <= '0';
             flags_set_carry  <= '0';
             flags_clr_carry  <= '0';
+            flags_enable_from_alu <= '0';
             ir_reset <= '0';
     
             -- ram
@@ -209,6 +210,7 @@ begin
 
             flags_enable_in      <= ctrl_sigs(ICS_FLAG_IN); 
             flags_enable_out     <= ctrl_sigs(ICS_FLAG_OUT); 
+            flags_enable_from_alu<= not ctrl_sigs(ICS_FLAGS_IGNORE_ALU);
 
             r_enable_in          <= ctrl_sigs(ICS_PC_IN) & ctrl_sigs(ICS_R6_IN downto ICS_R0_IN); 
             r_enable_out         <= ctrl_sigs(ICS_PC_OUT) & ctrl_sigs(ICS_R6_OUT downto ICS_R0_OUT); 
@@ -576,6 +578,12 @@ begin
             r_enable_out(1) <= '1';
             wait until falling_edge(clk);
             check_equal(bbus, to_vec(121+100+1));
+            reset_signals;
+
+            info("check carry");
+            flags_enable_out <= '1';
+            wait until falling_edge(clk);
+            check_equal(bbus(IFR_CARRY), '0');
             reset_signals;
         end if;
 
