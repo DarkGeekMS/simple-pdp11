@@ -31,6 +31,7 @@ begin
 	begin
 		if rising_edge(clk) and rd = '1' then  
 			data_out <= data(to_integer(unsigned(address)));
+			last_data <= data_in;
 		else 
 			data_out <= (others => 'Z');
 		end if;

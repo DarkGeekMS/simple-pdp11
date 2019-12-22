@@ -17,6 +17,7 @@ architecture tb of main_tb is
     constant RAM_SIZE: integer := 4*1024;-- 4k Words
 
     signal clk: std_logic := '0';
+    signal timeout: boolean:= false;
     
     signal bbus : std_logic_vector(15 downto 0);
     
@@ -54,8 +55,11 @@ architecture tb of main_tb is
 
     type RamDataType is array(natural range <>) of std_logic_vector(15 downto 0);
     signal ctrl_sigs : std_logic_vector(37 downto 0);
+
+    signal num_iteration : unsigned(15 downto 0) := (others => 'Z');
 begin
     clk <= not clk after CLK_PERD / 2;
+    timeout <= true after 0.5 ms;
 
     r : for i in 0 to 7 generate
         ri : entity work.reg generic map (WORD_WIDTH => 16) port map (
@@ -220,17 +224,11 @@ begin
             alu_mode             <= ctrl_sigs(ICS_ALU_3 downto ICS_ALU_0);
             alubuffer_enable_out <= ctrl_sigs(ICS_ALU_OUT);
 
-            if ctrl_sigs(ICS_SET_CARRY) = '1' then
-                flags_set_carry  <= '1';
-            else
-                flags_set_carry  <= '0';
-            end if;
+            -- ignore
+            flags_set_carry  <= '0';
 
-            if ctrl_sigs(ICS_CLR_CARRY) = '1' then
-                flags_clr_carry  <= '1';
-            else
-                flags_clr_carry  <= '0';
-            end if;
+            -- ignore
+            flags_clr_carry  <= '0';
 
             if ctrl_sigs(ICS_ADRS_OUT) = '1' then
                 if ir_data_out(15 downto 12) = "1101" then -- JSR
@@ -277,6 +275,7 @@ begin
             hookup_signals;
             wait until falling_edge(clk);
             itr_current_adr <= itr_next_adr; 
+            num_iteration <= num_iteration + to_unsigned(1, 16);
         end procedure;
     begin
         test_runner_setup(runner, runner_cfg);
@@ -407,11 +406,28 @@ begin
                 to_vec("1010" & "000000000000")       -- hlt
             ));
 
+            
             info("start fetching");
+            num_iteration <= to_unsigned(0, 16);
             one_iteration;
             one_iteration;
             one_iteration;
         end if;
+
+        -- if run("fullrun") then
+        --     reset_ir;
+        --     fill_ram((
+        --         to_vec("0001" & "000000" & "000001"), -- mov r0 r1
+        --         to_vec("1010" & "000000000000")       -- hlt
+        --     ));
+
+        --     info("start");
+        --     while not hlt = '1' loop
+        --         check(timeout = false, "timeouted!", failure);
+        --         one_iteration;
+        --     end loop;
+        --     info("ended");
+        -- end if;
 
         wait for CLK_PERD/2;
         test_runner_cleanup(runner);
