@@ -24,7 +24,7 @@ architecture tb of main_tb is
     --externals
         -- registers
         signal mar_enable_in, mdr_enable_in, mdr_enable_out : std_logic;
-        signal ir_enable_in : std_logic;
+        signal ir_enable_in, ir_reset : std_logic;
         signal flags_enable_in, flags_enable_out, flags_clr_carry, flags_set_carry : std_logic;
         signal r_enable_in, r_enable_out : std_logic_vector(7 downto 0);
         signal tmp0_enable_in, tmp0_clr, tmp1_enable_in, tmp1_enable_out : std_logic;
@@ -78,9 +78,9 @@ begin
         clk => clk, data_out => bbus, clr => '0'
     );
 
-    ir : entity work.reg generic map (WORD_WIDTH => 16) port map (
-        data_in => bbus, enable_in => ir_enable_in, enable_out => '1',
-        clk => clk, data_out => ir_data_out, clr => '0'
+    ir : entity work.ir_reg generic map (WORD_WIDTH => 16) port map (
+        data_in => bbus, enable_in => ir_enable_in,
+        clk => clk, data_out => ir_data_out, rst => ir_reset
     );
 
     flags : entity work.flags_reg port map (
@@ -176,6 +176,7 @@ begin
             tmp0_clr <= '0';
             flags_set_carry  <= '0';
             flags_clr_carry  <= '0';
+            ir_reset <= '0';
     
             -- ram
             rd <= '0';
@@ -245,8 +246,7 @@ begin
         procedure reset_ir is 
         begin
             info("reset ir");
-            bbus <= "110010" & to_vec(0, 10);
-            ir_enable_in <= '1';
+            ir_reset <= '1';
             wait until falling_edge(clk);
             reset_signals;
         end procedure;
@@ -405,7 +405,6 @@ begin
         end if;
 
         if run("iterator_fetches") then
-            reset_ir;
             fill_ram((
                 to_vec("0001" & "000000" & "000001"), -- mov r0 r1
                 to_vec("1010" & "000000000000")       -- hlt
@@ -422,7 +421,6 @@ begin
         end if;
 
         if run("mov_r0_r1") then
-            reset_ir;
             fill_ram((
                 to_vec("0001" & "000000" & "000001"), -- mov r0 r1
                 to_vec("1010" & "000000000000")       -- hlt
@@ -448,7 +446,6 @@ begin
         end if;
 
         -- if run("fullrun") then
-        --     reset_ir;
         --     fill_ram((
         --         to_vec("0001" & "000000" & "000001"), -- mov r0 r1
         --         to_vec("1010" & "000000000000")       -- hlt
