@@ -271,10 +271,15 @@ begin
 
         procedure one_iteration is
         begin
+            if num_iteration(0) = 'Z' then
+                num_iteration <= to_unsigned(0, 16);
+            end if;
+
             wait for 1 fs; 
             hookup_signals;
             wait until falling_edge(clk);
             itr_current_adr <= itr_next_adr; 
+
             num_iteration <= num_iteration + to_unsigned(1, 16);
         end procedure;
     begin
@@ -407,7 +412,6 @@ begin
             ));
 
             info("start fetching");
-            num_iteration <= to_unsigned(0, 16);
             one_iteration;
             one_iteration;
             one_iteration;
@@ -415,6 +419,32 @@ begin
             reset_signals;
             wait until falling_edge(clk);
             check_equal(ir_data_out, to_vec("0001" & "000000" & "000001"));
+        end if;
+
+        if run("mov_r0_r1") then
+            reset_ir;
+            fill_ram((
+                to_vec("0001" & "000000" & "000001"), -- mov r0 r1
+                to_vec("1010" & "000000000000")       -- hlt
+            ));
+
+            info("fill r0");
+            reset_signals;
+            r_enable_in(0) <= '1';
+            bbus <= to_vec(121);
+            wait until falling_edge(clk);
+            reset_signals;
+
+            info("start fetching");
+            for i in 1 to 3+4 loop
+                one_iteration;
+            end loop;
+
+            reset_signals;
+            r_enable_out(1) <= '1';
+            wait until falling_edge(clk);
+            check_equal(bbus, to_vec(121));
+            reset_signals;
         end if;
 
         -- if run("fullrun") then

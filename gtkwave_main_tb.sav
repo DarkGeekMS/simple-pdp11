@@ -1,19 +1,19 @@
 [*]
 [*] GTKWave Analyzer v3.3.93 (w)1999-2018 BSI
-[*] Sun Dec 22 21:04:14 2019
+[*] Sun Dec 22 21:18:50 2019
 [*]
-[dumpfile] "/home/mahmoud/study/arch/proj/out/test_output/pdp11.main_tb.iterator_fetches_56b5454706973bb38fe8b5d17e2e5bcd289ccac9/ghdl/wave.vcd"
-[dumpfile_mtime] "Sun Dec 22 21:01:38 2019"
-[dumpfile_size] 21176
+[dumpfile] "/home/mahmoud/study/arch/proj/out/test_output/pdp11.main_tb.mov_r0_r1_4c84f5e935f20d206c4071a58d9e04f453347bab/ghdl/wave.vcd"
+[dumpfile_mtime] "Sun Dec 22 21:16:02 2019"
+[dumpfile_size] 24522
 [savefile] "/home/mahmoud/study/arch/proj/gtkwave_main_tb.sav"
-[timestart] 0
+[timestart] 8200000
 [size] 1440 900
 [pos] -1 -1
-*-24.658949 77600000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-24.658949 75800000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] main_tb.
 [treeopen] main_tb.r(7).
 [sst_width] 223
-[signals_width] 349
+[signals_width] 340
 [sst_expanded] 1
 [sst_vpaned_height] 252
 @24
@@ -47,6 +47,7 @@ main_tb.ir_enable_in
 main_tb.hlt
 @22
 main_tb.itr_current_adr[5:0]
+@29
 main_tb.itr_next_adr[5:0]
 @c00028
 main_tb.itr_out_inst[25:0]
@@ -168,7 +169,7 @@ main_tb.tmp1_enable_in
 main_tb.tmp1_enable_out
 @200
 -IR
-@29
+@28
 main_tb.ir.data[15:0]
 @22
 main_tb.ir.data_in[15:0]
