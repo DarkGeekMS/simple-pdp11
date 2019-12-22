@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.93 (w)1999-2018 BSI
-[*] Sun Dec 22 20:41:25 2019
+[*] Sun Dec 22 21:04:14 2019
 [*]
 [dumpfile] "/home/mahmoud/study/arch/proj/out/test_output/pdp11.main_tb.iterator_fetches_56b5454706973bb38fe8b5d17e2e5bcd289ccac9/ghdl/wave.vcd"
-[dumpfile_mtime] "Sun Dec 22 20:36:29 2019"
-[dumpfile_size] 20681
+[dumpfile_mtime] "Sun Dec 22 21:01:38 2019"
+[dumpfile_size] 21176
 [savefile] "/home/mahmoud/study/arch/proj/gtkwave_main_tb.sav"
 [timestart] 0
 [size] 1440 900
 [pos] -1 -1
-*-24.658949 64500000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-24.658949 77600000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] main_tb.
 [treeopen] main_tb.r(7).
 [sst_width] 223
@@ -168,8 +168,9 @@ main_tb.tmp1_enable_in
 main_tb.tmp1_enable_out
 @200
 -IR
-@22
+@29
 main_tb.ir.data[15:0]
+@22
 main_tb.ir.data_in[15:0]
 main_tb.ir.data_out[15:0]
 @28
@@ -181,9 +182,11 @@ main_tb.ram.address[15:0]
 main_tb.ram.data_in[15:0]
 main_tb.ram.data_out[15:0]
 @28
-main_tb.ram.last_data[15:0]
 main_tb.ram.rd
 main_tb.ram.wr
+@22
+main_tb.ram.last_data_in[15:0]
+main_tb.ram.last_data_out[15:0]
 @200
 -MAR
 @22
@@ -234,7 +237,7 @@ main_tb.flags.data[4:0]
 (4)main_tb.flags.data[4:0]
 @1401200
 -group_end
-@23
+@22
 main_tb.flags.data_in[15:0]
 @28
 main_tb.flags.enable_in

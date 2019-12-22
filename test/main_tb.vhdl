@@ -406,12 +406,15 @@ begin
                 to_vec("1010" & "000000000000")       -- hlt
             ));
 
-            
             info("start fetching");
             num_iteration <= to_unsigned(0, 16);
             one_iteration;
             one_iteration;
             one_iteration;
+
+            reset_signals;
+            wait until falling_edge(clk);
+            check_equal(ir_data_out, to_vec("0001" & "000000" & "000001"));
         end if;
 
         -- if run("fullrun") then
