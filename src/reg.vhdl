@@ -16,9 +16,9 @@ end entity;
 architecture rtl of reg is
     signal data: std_logic_vector(WORD_WIDTH-1 downto 0) := (others => '0');
 begin
-    process (enable_in, clk) 
+    process (enable_in, clk, data_in) 
     begin
-        if enable_in = '1' and rising_edge(clk) then
+        if enable_in = '1' and clk = '1' then
             data <= data_in;
         end if;
     end process;
