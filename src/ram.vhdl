@@ -23,15 +23,15 @@ begin
 	begin	
 		if clk = '1' and wr = '1' then  
 			data(to_integer(unsigned(address))) <= data_in;
-			last_data <= data_in;
+			last_data <= data_in; -- debug
 		end if;
 	end process;
 
 	process (clk, data_in, rd, address)
 	begin
-		if rising_edge(clk) and rd = '1' then  
+		if clk = '1' and rd = '1' then  
 			data_out <= data(to_integer(unsigned(address)));
-			last_data <= data_in;
+			last_data <= data(to_integer(unsigned(address))); -- debug
 		else 
 			data_out <= (others => 'Z');
 		end if;
