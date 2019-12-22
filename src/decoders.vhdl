@@ -206,8 +206,8 @@ package body decoders is
 
 		controlSignal(22) := (not MeuInst(6)) and MeuInst(5);
 		controlSignal(23) := (not MeuInst(5)) and MeuInst(6);
-		controlSignal(28) := not MeuInst(4);
-		controlSignal(29) := MeuInst(4);
+		controlSignal(28) := MeuInst(4);
+		controlSignal(29) := not MeuInst(4);
 		controlSignal(35) := MeuInst(2) and MeuInst(1) and (not MeuInst(0));
 		controlSignal(21) := MeuInst(2) and MeuInst(1) and MeuInst(0);
 
