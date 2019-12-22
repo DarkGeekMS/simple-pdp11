@@ -408,15 +408,9 @@ begin
             ));
 
             info("start fetching");
-
-            check_equal(itr_current_adr, to_vec(0, 6));
             one_iteration;
-            
             one_iteration;
-            check_equal(itr_current_adr, to_vec(1, 6));
-            
             one_iteration;
-            check_equal(itr_current_adr, to_vec(2, 6));
         end if;
 
         wait for CLK_PERD/2;
