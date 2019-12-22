@@ -137,8 +137,8 @@ package body decoders is
 		case MeuInst(19 downto 17) is
 			when "001" =>	
 				controlSignal(7) := '1';
-			when "010" =>
-				controlSignal(24) := '1';
+			--when "010" =>
+			--	controlSignal(24) := '1';
 			when "011" =>
 				controlSignal(36) := '1';
 			when "100" =>
@@ -186,12 +186,16 @@ package body decoders is
 			when "001" =>
 				--FORCE ALU to add
 				controlSignal(34 downto 31) := "0000";
+				controlSignal(24) := '1';
 			when "010" =>
 				controlSignal(34 downto 31) := "1110";
+				controlSignal(24) := '1';
 			when "011" =>
 				controlSignal(34 downto 31) := "1101";
+				controlSignal(24) := '1';
 			when "100" =>
 				controlSignal(34 downto 31) := ir_to_alu_mode(IR(15 downto 8));
+				controlSignal(24) := '1';
 			when OTHERS =>
 				null;
 		end case;
