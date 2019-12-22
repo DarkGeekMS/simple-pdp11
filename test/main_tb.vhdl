@@ -413,11 +413,11 @@ begin
             ));
 
             info("start fetching");
-            one_iteration;
-            one_iteration;
-            one_iteration;
-
+            for i in 0 to 2 loop
+                one_iteration;
+            end loop;
             reset_signals;
+
             wait until falling_edge(clk);
             check_equal(ir_data_out, to_vec("0001" & "000000" & "000001"));
         end if;
@@ -439,8 +439,9 @@ begin
             for i in 1 to 3+4 loop
                 one_iteration;
             end loop;
-
             reset_signals;
+            
+            info("check r1");
             r_enable_out(1) <= '1';
             wait until falling_edge(clk);
             check_equal(bbus, to_vec(121));
@@ -480,11 +481,47 @@ begin
                 check(timeout = false, "timeouted!", failure);
                 one_iteration;
             end loop;
-
             reset_signals;
+            
+            info("check r1");
             r_enable_out(1) <= '1';
             wait until falling_edge(clk);
             check_equal(bbus, to_vec(121));
+            reset_signals;
+        end if;
+
+        if run("add_r0_plus_r1") then
+            fill_ram((
+                to_vec("0010" & "001000" & "000001"), -- add (r0)+ r1
+                to_vec("1010" & "000000000000")       -- hlt
+            ));
+
+            info("fill r0,r1");
+            reset_signals;
+            r_enable_in(0) <= '1';
+            r_enable_in(1) <= '1';
+            bbus <= to_vec(121);
+            wait until falling_edge(clk);
+            reset_signals;
+
+            info("start fetching");
+            while hlt = '0' loop
+                check(timeout = false, "timeouted!", failure);
+                one_iteration;
+            end loop;
+            reset_signals;
+            
+            info("check r0");
+            reset_signals;
+            r_enable_out(0) <= '1';
+            wait until falling_edge(clk);
+            check_equal(bbus, to_vec(122));
+            reset_signals;
+
+            info("check r1");
+            r_enable_out(1) <= '1';
+            wait until falling_edge(clk);
+            check_equal(bbus, to_vec(2*121));
             reset_signals;
         end if;
 
