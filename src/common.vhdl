@@ -41,7 +41,7 @@ package common is
 	constant ICS_ALU_OUT   : integer := 25;
 	constant ICS_IR_IN     : integer := 26;
 	constant ICS_CLR_TEMP0 : integer := 27;
-	constant ICS_SET_CARRY : integer := 28;
+	constant ICS_FLAGS_ENBL: integer := 28;   -- if 1 ignore alu flag output
 	constant ICS_CLR_CARRY : integer := 29;
 	constant ICS_ALU_ENBL  : integer := 30;
 	constant ICS_ALU_0     : integer := 31;
