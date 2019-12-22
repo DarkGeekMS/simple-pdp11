@@ -7,7 +7,7 @@ entity reg is
 
     port (
         data_in: in std_logic_vector(WORD_WIDTH-1 downto 0);
-        enable_in, enable_out, clk: in std_logic;
+        enable_in, enable_out, clk, clr: in std_logic;
 
         data_out: out std_logic_vector(WORD_WIDTH-1 downto 0)
     );
@@ -16,10 +16,14 @@ end entity;
 architecture rtl of reg is
     signal data: std_logic_vector(WORD_WIDTH-1 downto 0) := (others => '0');
 begin
-    process (enable_in, clk, data_in) 
+    process (enable_in, clk, data_in, clr) 
     begin
         if enable_in = '1' and clk = '1' then
             data <= data_in;
+        end if;
+
+        if clr = '1' and clk = '1' then
+            data <= (others => '0');
         end if;
     end process;
 

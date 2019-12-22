@@ -16,17 +16,19 @@ architecture tb of reg_tb is
     signal clk: std_logic := '0';
 
     signal bidir_bus: std_logic_vector(31 downto 0);
-    signal enable_in, enable_out: std_logic;
+    signal enable_in, enable_out, clr: std_logic;
 begin
     clk <= not clk after CLK_PERD / 2;
 
     reg : entity work.reg generic map (WORD_WIDTH => 32) port map (data_in => bidir_bus, data_out => bidir_bus, enable_in => enable_in, 
-        enable_out => enable_out, clk => clk);
+        enable_out => enable_out, clk => clk, clr => clr);
 
     main: process
     begin
         test_runner_setup(runner, runner_cfg);
         set_stop_level(failure);
+
+        clr <= '0';
 
         if run("basic") then
             enable_in <= '1';
@@ -102,6 +104,39 @@ begin
 
             wait for 0.25*CLK_PERD;
             check(bidir_bus = "ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ", "");
+        end if;
+
+        if run("clr") then
+            enable_in <= '1';
+            bidir_bus <= x"00000000";
+            wait until rising_edge(clk);
+            enable_in <= '0';
+
+            wait until clk = '0';
+
+            enable_in <= '1';
+            bidir_bus <= x"FF00FF00";
+            wait until rising_edge(clk);
+
+            enable_in <= '0';
+            enable_out <= '1';
+            bidir_bus <= (others => 'Z');
+            wait until rising_edge(clk);
+
+            wait for 0.25*CLK_PERD;
+            check(bidir_bus = x"FF00FF00", "");
+
+            bidir_bus <= x"FF00FF00";
+            clr <= '1';
+            wait until rising_edge(clk);
+
+            enable_in <= '0';
+            enable_out <= '1';
+            bidir_bus <= (others => 'Z');
+            wait until rising_edge(clk);
+
+            wait for 0.25*CLK_PERD;
+            check(bidir_bus = x"00000000", "");
         end if;
 
         wait for CLK_PERD/2;
