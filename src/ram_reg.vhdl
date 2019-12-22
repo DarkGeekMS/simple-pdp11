@@ -17,13 +17,13 @@ end entity;
 architecture rtl of ram_reg is
     signal data: std_logic_vector(WORD_WIDTH-1 downto 0) := (others => '0');
 begin
-    process (enable_in_ram, enable_in, clk, bidir_bus) 
+    process (enable_in_ram, enable_in, clk, bidir_bus, inout_ram) 
     begin
-        if enable_in = '1' and rising_edge(clk) then
+        if enable_in = '1' and clk = '1' then
             data <= bidir_bus;
         end if;
 
-        if enable_in_ram = '1' and rising_edge(clk) then
+        if enable_in_ram = '1' and clk = '1' then
             data <= inout_ram;
         end if;
     end process;

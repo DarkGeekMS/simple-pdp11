@@ -22,13 +22,13 @@ end entity;
 architecture rtl of flags_reg is
     signal data: std_logic_vector(5-1 downto 0) := (others => '0');
 begin
-    process (enable_in, clk, enable_from_alu, from_alu) 
+    process (enable_in, clk, enable_from_alu, from_alu, data_in) 
     begin
         if enable_from_alu = '1' then
             data <= from_alu;
         end if;
 
-        if enable_in = '1' and rising_edge(clk) then
+        if enable_in = '1' and clk = '1' then
             data <= data_in(5-1 downto 0);
         end if;
     end process;
