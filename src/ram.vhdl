@@ -17,13 +17,13 @@ architecture rtl of ram is
 	type DataType is array(0 to RAM_SIZE) of std_logic_vector(15 downto 0);
 	signal data: DataType;
 
-	signal last_data: std_logic_vector(15 downto 0); -- for debugging
+	signal last_data_in, last_data_out: std_logic_vector(15 downto 0); -- for debugging
 begin
 	process (clk, data_in, wr, address)
 	begin	
 		if clk = '1' and wr = '1' then  
 			data(to_integer(unsigned(address))) <= data_in;
-			last_data <= data_in; -- debug
+			last_data_in <= data_in;
 		end if;
 	end process;
 
@@ -31,7 +31,7 @@ begin
 	begin
 		if clk = '1' and rd = '1' then  
 			data_out <= data(to_integer(unsigned(address)));
-			last_data <= data(to_integer(unsigned(address))); -- debug
+			last_data_out <= data(to_integer(unsigned(address)));
 		else 
 			data_out <= (others => 'Z');
 		end if;
