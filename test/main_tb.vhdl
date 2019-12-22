@@ -53,6 +53,7 @@ architecture tb of main_tb is
     --
 
     type RamDataType is array(natural range <>) of std_logic_vector(15 downto 0);
+    signal ctrl_sigs : std_logic_vector(37 downto 0);
 begin
     clk <= not clk after CLK_PERD / 2;
 
@@ -145,6 +146,8 @@ begin
         NAF       => itr_next_adr 
     );
 
+    ctrl_sigs <= decompress_control_signals(ir_data_out, itr_out_inst);
+
     main: process
         procedure reset_bus is
         begin
@@ -186,10 +189,7 @@ begin
         end procedure;
 
         procedure hookup_signals is
-            variable ctrl_sigs : std_logic_vector(37 downto 0);
         begin
-            ctrl_sigs := decompress_control_signals(ir_data_out, itr_out_inst);
-
             check(not (ctrl_sigs(22) = '1' and ctrl_sigs(23) = '1'), "RD and WR cant be 1 at the same time", failure);
 
             info("hookup signals from iterator");
@@ -249,7 +249,7 @@ begin
             info("reset ir");
             bbus <= "110010" & to_vec(0, 10);
             ir_enable_in <= '1';
-            wait for CLK_PERD;
+            wait until falling_edge(clk);
             reset_signals;
         end procedure;
 
@@ -259,16 +259,24 @@ begin
             for i in ramdata'range loop
                 bbus <= to_vec(i);
                 mar_enable_in <= '1';
-                wait for CLK_PERD;
+                wait until falling_edge(clk);
                 reset_signals;
 
                 bbus <= ramdata(i);
                 mdr_enable_in <= '1';
                 wr <= '1';
-                wait for CLK_PERD;
+                wait until falling_edge(clk);
                 reset_signals;
             end loop;
             info("done filling ram");
+        end procedure;
+
+        procedure one_iteration is
+        begin
+            wait for 1 fs; 
+            hookup_signals;
+            wait until falling_edge(clk);
+            itr_current_adr <= itr_next_adr; 
         end procedure;
     begin
         test_runner_setup(runner, runner_cfg);
@@ -279,18 +287,18 @@ begin
         if run("ram") then
             mdr_enable_in <= '1';
             bbus <= (others => '1');
-            wait for CLK_PERD;
+            wait until falling_edge(clk);
             reset_signals;
 
             mar_enable_in <= '1';
             bbus <= to_vec(1);
             wr <= '1';
-            wait for CLK_PERD;
+            wait until falling_edge(clk);
             reset_signals;
 
             mdr_enable_out <= '1';
             rd <= '1';
-            wait for CLK_PERD;
+            wait until falling_edge(clk);
             check_equal(bbus, to_vec('1'));
             reset_signals;
         end if;
@@ -299,13 +307,13 @@ begin
             for i in 0 to 7 loop
                 r_enable_in(i) <= '1';
                 bbus <= to_vec(i);
-                wait for CLK_PERD;
+                wait until falling_edge(clk);
                 reset_signals;
             end loop;
 
             for i in 0 to 7 loop
                 r_enable_out(i) <= '1';
-                wait for CLK_PERD;
+                wait until falling_edge(clk);
                 check_equal(bbus, to_vec(i));
                 reset_signals;
             end loop;
@@ -314,27 +322,27 @@ begin
         if run("exch_reg") then
             r_enable_in(0) <= '1';
             bbus <= to_vec(512);
-            wait for CLK_PERD;
+            wait until falling_edge(clk);
             reset_signals;
 
             for i in 1 to 7 loop
                 r_enable_in(i) <= '1';
                 bbus <= to_vec(i);
-                wait for CLK_PERD;
+                wait until falling_edge(clk);
                 reset_signals;
             end loop;
 
             for i in 1 to 7 loop
                 r_enable_out(i-1) <= '1';
                 r_enable_in(i) <= '1';
-                wait for CLK_PERD;
+                wait until falling_edge(clk);
                 reset_signals;
             end loop;
             
             info("checking registers");
             for i in 0 to 7 loop
                 r_enable_out(i) <= '1';
-                wait for CLK_PERD;
+                wait until falling_edge(clk);
                 check_equal(bbus, to_vec(512));
                 reset_signals;
             end loop;
@@ -344,11 +352,11 @@ begin
             bbus <= to_vec(214);
             alu_mode <= "1110";
             alu_enable <= '1';
-            wait for CLK_PERD;
+            wait until falling_edge(clk);
             reset_signals;
 
             alubuffer_enable_out <= '1';
-            wait for CLK_PERD;
+            wait until falling_edge(clk);
             check_equal(bbus, to_vec(215));
             reset_signals;
         end if;
@@ -356,17 +364,17 @@ begin
         if run("alu_add") then
             bbus <= to_vec(50);
             tmp0_enable_in <= '1';
-            wait for CLK_PERD;
+            wait until falling_edge(clk);
             reset_signals;
 
             bbus <= to_vec(214);
             alu_mode <= "0000";
             alu_enable <= '1';
-            wait for CLK_PERD;
+            wait until falling_edge(clk);
             reset_signals;
 
             alubuffer_enable_out <= '1';
-            wait for CLK_PERD;
+            wait until falling_edge(clk);
             check_equal(bbus, to_vec(50+214));
             reset_signals;
         end if;
@@ -374,7 +382,7 @@ begin
         if run("alu_clears") then
             alu_mode <= "1111";
             alubuffer_enable_out <= '1';
-            wait for CLK_PERD;
+            wait until falling_edge(clk);
             check_equal(bbus, to_vec(0));
             reset_signals;
         end if;
@@ -383,11 +391,11 @@ begin
             bbus <= to_vec('1');
             alu_mode <= "1010";
             alu_enable <= '1';
-            wait for CLK_PERD;
+            wait until falling_edge(clk);
             reset_signals;
 
             alubuffer_enable_out <= '1';
-            wait for CLK_PERD;
+            wait until falling_edge(clk);
             check_equal(bbus, to_vec('1', 15) & '0');
             reset_signals;
         end if;
@@ -400,22 +408,9 @@ begin
             ));
 
             info("start fetching");
-
-            wait for 1 fs; 
-            hookup_signals;
-            wait until falling_edge(clk);
-            check_equal(itr_next_adr, to_vec(1, 6));
-            itr_current_adr <= itr_next_adr; 
-
-            wait for 1 fs; 
-            hookup_signals;
-            wait until falling_edge(clk);
-            check_equal(itr_next_adr, to_vec(2, 6));
-            itr_current_adr <= itr_next_adr;
-
-            wait for 1 fs; 
-            hookup_signals;
-            wait until falling_edge(clk);
+            one_iteration;
+            one_iteration;
+            one_iteration;
         end if;
 
         wait for CLK_PERD/2;
