@@ -48,7 +48,7 @@ package common is
 	constant ICS_ALU_1     : integer := 32;
 	constant ICS_ALU_2     : integer := 33;
 	constant ICS_ALU_3     : integer := 34;
-	constant ICS_ADRS_OUT  : integer := 35; -- ignore
+	constant ICS_ADRS_OUT  : integer := 35;
 	constant ICS_MDR_OUT   : integer := 36;
     constant ICS_TEMP1_OUT : integer := 37;
     
