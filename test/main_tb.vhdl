@@ -142,12 +142,101 @@ begin
     controlsignals <= decompress_control_signals(ir_data_out, itr_out_inst);
 
     main: process
+        procedure reset is
+        begin
+            info("reset");
+            mar_enable_in <= '0';
+            mar_enable_out <= '0';
+            mdr_enable_in <= '0';
+            mdr_enable_out  <= '0';
+            ir_enable_in  <= '0';
+            pc_enable_in <= '0';
+            pc_enable_out  <= '0';
+            flags_enable_in <= '0';
+            flags_enable_out  <= '0';
+            r_enable_in <= (others => '0');
+            r_enable_out <= (others => '0') ;
+            tmp_enable_in <= (others => '0');
+            tmp_enable_out <= (others => '0') ;
+    
+            -- ram
+            rd <= '0';
+            wr  <= '0';
+    
+            -- alu
+            alu_enable  <= '0';
+    
+            -- iterator
+            itr_current_adr <= (others => '0');
+
+            bbus <= (others => 'Z');
+        end procedure;
     begin
         test_runner_setup(runner, runner_cfg);
         set_stop_level(failure);
 
-        if run("test_case_name") then
+        if run("ram") then
+            mdr_enable_in <= '1';
+            bbus <= (others => '1');
+            wait for CLK_PERD;
+            reset;
+
+            mar_enable_in <= '1';
+            bbus <= to_vec(1);
+            wr <= '1';
+            wait for CLK_PERD;
+            reset;
+
+            mdr_enable_out <= '1';
+            rd <= '1';
+            wait for CLK_PERD;
+            check_equal(bbus, to_vec('1'));
+            reset;
+        end if;
+
+        if run("fill_reg") then
+            for i in 0 to 7 loop
+                r_enable_in(i) <= '1';
+                bbus <= to_vec(i);
+                wait for CLK_PERD;
+                reset;
+            end loop;
+
+            for i in 0 to 7 loop
+                r_enable_out(i) <= '1';
+                wait for CLK_PERD;
+                check_equal(bbus, to_vec(i));
+                reset;
+            end loop;
+        end if;
+
+        if run("exch_reg") then
+            r_enable_in(0) <= '1';
+            bbus <= to_vec(512);
+            wait for CLK_PERD;
+            reset;
+
+            for i in 1 to 7 loop
+                r_enable_in(i) <= '1';
+                bbus <= to_vec(i);
+                wait for CLK_PERD;
+                reset;
+            end loop;
+
+            for i in 1 to 7 loop
+                r_enable_out(i-1) <= '1';
+                r_enable_in(i) <= '1';
+                wait for CLK_PERD;
+                reset;
+            end loop;
             
+            info("checking registers");
+            for i in 0 to 7 loop
+                r_enable_out(i) <= '1';
+                wait for CLK_PERD;
+                check_equal(bbus, to_vec(512));
+                reset;
+            end loop;
         end if;
 
         wait for CLK_PERD/2;
