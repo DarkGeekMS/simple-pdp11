@@ -33,12 +33,14 @@ architecture tb of main_tb is
 
         -- alu
         signal alu_enable : std_logic;
+        signal alubuffer_enable_out : std_logic;
 
         -- iterator
         signal hlt : std_logic;
         signal controlsignals : std_logic_vector(37 downto 0);
         signal itr_current_adr : std_logic_vector(5 downto 0);
         signal itr_next_adr : std_logic_vector(5 downto 0);
+        signal alu_out : std_logic_vector(15 downto 0);
     --
 
     -- internals
@@ -96,8 +98,13 @@ begin
         en => alu_enable,
         flagIn => flags_always_out,
         IR_Check => ir_data_out(12),
-        F => bbus,
+        F => alu_out,
         flagOut => alu_to_flags
+    );
+
+    alu_buffer : entity work.reg generic map (WORD_WIDTH => 16) port map (
+        data_in => alu_out, enable_in => alu_enable, enable_out => alubuffer_enable_out,
+        clk => clk, data_out => bbus
     );
 
     mar : entity work.ram_reg generic map (WORD_WIDTH => 16) port map (
@@ -175,6 +182,8 @@ begin
         test_runner_setup(runner, runner_cfg);
         set_stop_level(failure);
 
+        reset;
+
         if run("ram") then
             mdr_enable_in <= '1';
             bbus <= (others => '1');
@@ -237,6 +246,23 @@ begin
                 check_equal(bbus, to_vec(512));
                 reset;
             end loop;
+        end if;
+
+        if run("alu_inc") then
+            bbus <= "1111" & "0000" & "00000000";
+            ir_enable_in <= '1';
+            wait for CLK_PERD;
+            reset;
+
+            bbus <= to_vec(214);
+            alu_enable <= '1';
+            wait for CLK_PERD;
+            reset;
+
+            alubuffer_enable_out <= '1';
+            wait for CLK_PERD;
+            check_equal(bbus, to_vec(215));
+            reset;
         end if;
 
         wait for CLK_PERD/2;
