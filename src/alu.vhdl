@@ -33,7 +33,7 @@ begin
         variable temp0Bar: std_logic_vector(n-1 DOWNTO 0);
     begin
         if (en='1') then
-            if (clk = '0') then
+            if clk = '1' then
                 case mode is
                     when "0000" =>
                         --ADD
@@ -183,28 +183,28 @@ begin
                         temp_flag_out(0) := '0'; --Carry
                         temp_flag_out(4) := '0'; --Overflow
                 end case;
-            else 
-                --Show new output on F
-                --Check on the zero flag
-                F <= ALUOUT(15 downto 0);
-                flagOut(0) <= temp_flag_out(0);
-                flagOut(4) <= temp_flag_out(4);
-                if (ALUOUT(15 downto 0)="0000000000000000") then
-                    flagOut(1) <= '1';
-                else
-                    flagOut(1) <= '0';
-                end if;
-
-                --Check on Negative flag
-                if (ALUOUT(15 downto 0)(n-1)='1') then
-                    flagOut(2) <= '1';
-                else
-                    flagOut(2) <= '0';
-                end if;
-
-                --Parity Flag
-                flagOut(3) <= ALUOUT(0) xor (ALUOUT(1) xor (ALUOUT(2) xor (ALUOUT(3) xor (ALUOUT(4) xor (ALUOUT(5) xor (ALUOUT(6) xor (ALUOUT(7) xor (ALUOUT(8) xor (ALUOUT(9) xor (ALUOUT(10) xor (ALUOUT(11) xor (ALUOUT(12) xor (ALUOUT(13) xor ( ALUOUT(14)  xor ALUOUT(15) ) )   ))))))))))) );
+            end if; 
+            
+            --Show new output on F
+            --Check on the zero flag
+            F <= ALUOUT(15 downto 0);
+            flagOut(0) <= temp_flag_out(0);
+            flagOut(4) <= temp_flag_out(4);
+            if (ALUOUT(15 downto 0)="0000000000000000") then
+                flagOut(1) <= '1';
+            else
+                flagOut(1) <= '0';
             end if;
+
+            --Check on Negative flag
+            if (ALUOUT(15 downto 0)(n-1)='1') then
+                flagOut(2) <= '1';
+            else
+                flagOut(2) <= '0';
+            end if;
+
+            --Parity Flag
+            flagOut(3) <= ALUOUT(0) xor (ALUOUT(1) xor (ALUOUT(2) xor (ALUOUT(3) xor (ALUOUT(4) xor (ALUOUT(5) xor (ALUOUT(6) xor (ALUOUT(7) xor (ALUOUT(8) xor (ALUOUT(9) xor (ALUOUT(10) xor (ALUOUT(11) xor (ALUOUT(12) xor (ALUOUT(13) xor ( ALUOUT(14)  xor ALUOUT(15) ) )   ))))))))))) );
         else
             F <= "ZZZZZZZZZZZZZZZZ";
             flagOut <= "ZZZZZ";
