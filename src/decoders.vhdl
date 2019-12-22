@@ -38,7 +38,7 @@ package decoders is
 		--21 flag out
 		--22 rd
 		--23 wr
-		--24 ir out
+		--24 alu enable
 		--25 alu out
 		--26 ir in
 		--27 clr temp0
@@ -137,8 +137,6 @@ package body decoders is
 		case MeuInst(19 downto 17) is
 			when "001" =>	
 				controlSignal(7) := '1';
-			--when "010" =>
-			--	controlSignal(24) := '1';
 			when "011" =>
 				controlSignal(36) := '1';
 			when "100" =>
