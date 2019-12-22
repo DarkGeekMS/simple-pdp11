@@ -195,6 +195,8 @@ begin
 
         procedure hookup_signals is
         begin
+            if hlt = '1' then return; end if;
+
             check(not (ctrl_sigs(22) = '1' and ctrl_sigs(23) = '1'), "RD and WR cant be 1 at the same time", failure);
 
             info("hookup signals from iterator");
@@ -442,6 +444,21 @@ begin
             r_enable_out(1) <= '1';
             wait until falling_edge(clk);
             check_equal(bbus, to_vec(121));
+            reset_signals;
+        end if;
+
+        if run("hlt") then
+            fill_ram((
+                to_vec("1010" & "000000000000"),       -- hlt
+                to_vec(0)
+            ));
+
+            info("start fetching");
+            for i in 1 to 3 loop
+                one_iteration;
+            end loop;
+
+            check_equal(hlt, '1');
             reset_signals;
         end if;
 
