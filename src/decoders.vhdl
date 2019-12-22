@@ -2,11 +2,14 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.ALL;
 
+
+
+
 package decoders is
 	function ir_to_alu_mode(IR_SUB: std_logic_vector(7 downto 0)) return std_logic_vector;
 
 	--
-		-- Given IR and compressed micro-instructions from control signals, 
+		-- Given IR and compressed micro-instructions from control signals,
 			--return their corresponding control signals
 		--IR: the IR register from 15 to 0 inclusive
 		--MeuInst: the whole 26 bits of the micro-instruction
@@ -24,7 +27,7 @@ package decoders is
 		--9 temp1 in
 		--10 temp0 in
 		--11 MAR in
-	
+
 		--12 r0 out
 		--13 r1 out
 		--14 r2 out
@@ -33,7 +36,7 @@ package decoders is
 		--17 r5 out
 		--18 r6 out
 		--19 pc out
-	
+
 		--20 flag in
 		--21 flag out
 		--22 rd
@@ -53,7 +56,7 @@ package decoders is
 		--36 mdr out
 		--37 temp1 out
 	--
-	function decompress_control_signals(IR: std_logic_vector(15 downto 0); 
+	function decompress_control_signals(IR: std_logic_vector(15 downto 0);
 		MeuInst: std_logic_vector(25 downto 0)) return std_logic_vector;
 
 	-- helper function for `decompress_control_signals`
@@ -129,7 +132,7 @@ package body decoders is
 		end case;
 		return ALU_MODE;
 	end function;
-	
+
 	function decompress_control_signals(IR: std_logic_vector(15 downto 0); MeuInst: std_logic_vector(25 downto 0)) return std_logic_vector is
 		variable controlSignal : std_logic_vector(37 downto 0) := (others => '0');
 	begin
@@ -139,7 +142,6 @@ package body decoders is
 				controlSignal(19) := '1';                     --pc out
 			when "011" =>
 				controlSignal(36) := '1';                     -- MDR out
-
 			when "100" =>
 				controlSignal(19 downto 12) := ri_decoder (IR(8 downto 6));  --Rsrc out
 			when "101" =>
@@ -185,16 +187,16 @@ package body decoders is
 			when "001" =>
 				--FORCE ALU to add
 				controlSignal(34 downto 31) := "0000";
-				controlSignal(24) := '0';
+				controlSignal(30) := '1';
 			when "010" =>
 				controlSignal(34 downto 31) := "1110";
-				controlSignal(24) := '0';
+				controlSignal(30) := '1';
 			when "011" =>
 				controlSignal(34 downto 31) := "1101";
-				controlSignal(24) := '0';
+				controlSignal(30) := '1';
 			when "100" =>
 				controlSignal(34 downto 31) := ir_to_alu_mode(IR(15 downto 8));
-				controlSignal(24) := '0';
+				controlSignal(30) := '1';
 			when OTHERS =>
 				null;
 		end case;
@@ -202,11 +204,10 @@ package body decoders is
 		controlSignal(10) := (not MeuInst(11)) and MeuInst(10);
 		controlSignal(27) := MeuInst(11) and (not MeuInst(10));
 
-		controlSignal(22) :=  MeuInst(6) nor MeuInst(5);
-		controlSignal(23) := (not MeuInst(6)) and MeuInst(5);
+		controlSignal(22) := (not MeuInst(6)) and MeuInst(5);
+		controlSignal(23) := (not MeuInst(5)) and MeuInst(6);
 		controlSignal(28) := not MeuInst(4);
 		controlSignal(29) := MeuInst(4);
-		controlSignal(30) := MeuInst(3);
 		controlSignal(35) := MeuInst(2) and MeuInst(1) and (not MeuInst(0));
 		controlSignal(21) := MeuInst(2) and MeuInst(1) and MeuInst(0);
 
