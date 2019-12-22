@@ -37,18 +37,18 @@ package common is
 	constant ICS_FLAG_OUT  : integer := 21;
 	constant ICS_RD        : integer := 22;
 	constant ICS_WR        : integer := 23;
-	constant ICS_IR_OUT    : integer := 24;
+	constant ICS_ALU_ENBL  : integer := 24;
 	constant ICS_ALU_OUT   : integer := 25;
 	constant ICS_IR_IN     : integer := 26;
 	constant ICS_CLR_TEMP0 : integer := 27;
 	constant ICS_SET_CARRY : integer := 28;
 	constant ICS_CLR_CARRY : integer := 29;
-	constant ICS_PLA_OUT   : integer := 30;
+	constant ICS_PLA_OUT   : integer := 30; -- ignore
 	constant ICS_ALU_0     : integer := 31;
 	constant ICS_ALU_1     : integer := 32;
 	constant ICS_ALU_2     : integer := 33;
 	constant ICS_ALU_3     : integer := 34;
-	constant ICS_ADRS_OUT  : integer := 35;
+	constant ICS_ADRS_OUT  : integer := 35; -- ignore
 	constant ICS_MDR_OUT   : integer := 36;
     constant ICS_TEMP1_OUT : integer := 37;
     
