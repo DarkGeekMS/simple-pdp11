@@ -14,6 +14,8 @@ entity flags_reg is
         -- flags additional ports
         from_alu: in std_logic_vector(5-1 downto 0);
         enable_from_alu: in std_logic;
+        clr_carry: in std_logic;
+        set_carry: in std_logic;
 
         always_out: out std_logic_vector(5-1 downto 0)
     );
@@ -22,8 +24,16 @@ end entity;
 architecture rtl of flags_reg is
     signal data: std_logic_vector(5-1 downto 0) := (others => '0');
 begin
-    process (enable_in, clk, enable_from_alu, from_alu, data_in) 
+    process (enable_in, clk, enable_from_alu, from_alu, data_in, clr_carry, set_carry) 
     begin
+        if clr_carry = '1' then
+            data(IFR_CARRY) <= '0';
+        end if;
+
+        if set_carry = '1' then
+            data(IFR_CARRY) <= '1';
+        end if;
+
         if enable_from_alu = '1' then
             data <= from_alu;
         end if;

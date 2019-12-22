@@ -27,6 +27,7 @@ architecture tb of flags_reg_tb is
     signal from_alu: std_logic_vector(5-1 downto 0);
     signal enable_from_alu: std_logic;
     signal always_out: std_logic_vector(5-1 downto 0);
+    signal clr_carry, set_carry: std_logic;
 begin
     clk <= not clk after CLK_PERD / 2;
 
@@ -38,7 +39,9 @@ begin
         data_out => data_out,
         from_alu => from_alu,
         enable_from_alu => enable_from_alu,
-        always_out => always_out
+        always_out => always_out,
+        clr_carry => clr_carry,
+        set_carry => set_carry
     );
 
     main: process
@@ -86,6 +89,18 @@ begin
             wait for CLK_PERD;
             enable_out <= '0';
             check_equal(data_out, to_vec('0', 16-5) & to_vec('1', 5));
+        end if;
+
+        if run("carry") then
+            set_carry <= '1';
+            wait for CLK_PERD;
+            check_equal(always_out(0), '1');
+            set_carry <= '0';
+
+            clr_carry <= '1';
+            wait for CLK_PERD;
+            check_equal(always_out(0), '0');
+            clr_carry <= '0';
         end if;
 
         wait for CLK_PERD/2;
