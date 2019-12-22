@@ -131,7 +131,7 @@ package body decoders is
 	end function;
 	
 	function decompress_control_signals(IR: std_logic_vector(15 downto 0); MeuInst: std_logic_vector(25 downto 0)) return std_logic_vector is
-		variable controlSignal : std_logic_vector(37 downto 0);
+		variable controlSignal : std_logic_vector(37 downto 0) := (others => '0');
 	begin
 		--Group 1 
 		case MeuInst(19 downto 17) is
@@ -209,6 +209,7 @@ package body decoders is
 		controlSignal(35) := MeuInst(2) and MeuInst(1) and not MeuInst(0);
 		controlSignal(21) := MeuInst(2) and MeuInst(1) and not MeuInst(0);
 		
+		report "decompress_control_signals(" & to_string(IR) & ", " & to_string(MeuInst) & ") returns " & to_string(controlSignal);
 		return controlSignal;
 	end function;
 	
