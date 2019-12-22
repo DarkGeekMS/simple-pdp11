@@ -67,7 +67,7 @@ begin
     );
 
     tmp0 : entity work.reg generic map (WORD_WIDTH => 16) port map (
-        data_in => bbus, enable_in => tmp_enable_in(0), enable_out => tmp_enable_out(0),
+        data_in => bbus, enable_in => tmp_enable_in(0), enable_out => '1',
         clk => clk, data_out => tmp0_to_alu
     );
 
@@ -262,6 +262,57 @@ begin
             alubuffer_enable_out <= '1';
             wait for CLK_PERD;
             check_equal(bbus, to_vec(215));
+            reset;
+        end if;
+
+        if run("alu_add") then
+            bbus <= "0010" & "0000" & "00000000";
+            ir_enable_in <= '1';
+            wait for CLK_PERD;
+            reset;
+
+            bbus <= to_vec(50);
+            tmp_enable_in(0) <= '1';
+            wait for CLK_PERD;
+            reset;
+
+            bbus <= to_vec(214);
+            alu_enable <= '1';
+            wait for CLK_PERD;
+            reset;
+
+            alubuffer_enable_out <= '1';
+            wait for CLK_PERD;
+            check_equal(bbus, to_vec(50+214));
+            reset;
+        end if;
+
+        if run("alu_clears") then
+            bbus <= "1111" & "0010" & "00000000";
+            ir_enable_in <= '1';
+            wait for CLK_PERD;
+            reset;
+
+            alubuffer_enable_out <= '1';
+            wait for CLK_PERD;
+            check_equal(bbus, to_vec(0));
+            reset;
+        end if;
+
+        if run("alu_lsl") then
+            bbus <= "1111" & "1000" & "00000000";
+            ir_enable_in <= '1';
+            wait for CLK_PERD;
+            reset;
+
+            bbus <= to_vec('1');
+            alu_enable <= '1';
+            wait for CLK_PERD;
+            reset;
+
+            alubuffer_enable_out <= '1';
+            wait for CLK_PERD;
+            check_equal(bbus, to_vec('1', 15) & '0');
             reset;
         end if;
 
