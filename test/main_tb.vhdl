@@ -492,15 +492,22 @@ begin
 
         if run("add_r0_plus_r1") then
             fill_ram((
-                to_vec("0010" & "001000" & "000001"), -- add (r0)+ r1
-                to_vec("1010" & "000000000000")       -- hlt
+                to_vec("0010" & "001000" & "000001"),  -- add (r0)+ r1
+                to_vec("1010" & "000000000000"),       -- hlt
+                to_vec(100)                            -- data
             ));
 
-            info("fill r0,r1");
+            info("fill r1");
             reset_signals;
-            r_enable_in(0) <= '1';
             r_enable_in(1) <= '1';
             bbus <= to_vec(121);
+            wait until falling_edge(clk);
+            reset_signals;
+
+            info("fill r0");
+            reset_signals;
+            r_enable_in(0) <= '1';
+            bbus <= to_vec(2);
             wait until falling_edge(clk);
             reset_signals;
 
@@ -515,13 +522,13 @@ begin
             reset_signals;
             r_enable_out(0) <= '1';
             wait until falling_edge(clk);
-            check_equal(bbus, to_vec(122));
+            check_equal(bbus, to_vec(3));
             reset_signals;
 
             info("check r1");
             r_enable_out(1) <= '1';
             wait until falling_edge(clk);
-            check_equal(bbus, to_vec(2*121));
+            check_equal(bbus, to_vec(221));
             reset_signals;
         end if;
 
