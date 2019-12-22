@@ -408,8 +408,8 @@ begin
 
         if run("iterator_fetches") then
             fill_ram((
-                to_vec("0001" & "000000" & "000001"), -- mov r0 r1
-                to_vec("1010" & "000000000000")       -- hlt
+                to_vec("0001" & "000000" & "000001"), -- MOV R0 R1
+                to_vec("1010" & "000000000000")       -- HLT
             ));
 
             info("start fetching");
@@ -424,8 +424,8 @@ begin
 
         if run("mov_r0_r1") then
             fill_ram((
-                to_vec("0001" & "000000" & "000001"), -- mov r0 r1
-                to_vec("1010" & "000000000000")       -- hlt
+                to_vec("0001" & "000000" & "000001"), -- MOV R0 R1
+                to_vec("1010" & "000000000000")       -- HLT
             ));
 
             info("fill r0");
@@ -450,7 +450,7 @@ begin
 
         if run("hlt") then
             fill_ram((
-                to_vec("1010" & "000000000000"),       -- hlt
+                to_vec("1010" & "000000000000"),       -- HLT
                 to_vec(0)
             ));
 
@@ -465,8 +465,8 @@ begin
 
         if run("mov_r0_r1_halts") then
             fill_ram((
-                to_vec("0001" & "000000" & "000001"), -- mov r0 r1
-                to_vec("1010" & "000000000000")       -- hlt
+                to_vec("0001" & "000000" & "000001"), -- MOV R0 R1
+                to_vec("1010" & "000000000000")       -- HLT
             ));
 
             info("fill r0");
@@ -492,8 +492,8 @@ begin
 
         if run("add_r0_plus_r1") then
             fill_ram((
-                to_vec("0010" & "001000" & "000001"),  -- add (r0)+ r1
-                to_vec("1010" & "000000000000"),       -- hlt
+                to_vec("0010" & "001000" & "000001"),  -- ADD (R0)+ R1
+                to_vec("1010" & "000000000000"),       -- HLT
                 to_vec(100)                            -- data
             ));
 
@@ -529,6 +529,53 @@ begin
             r_enable_out(1) <= '1';
             wait until falling_edge(clk);
             check_equal(bbus, to_vec(221));
+            reset_signals;
+        end if;
+
+        if run("adc_minus_r0_r1") then
+            fill_ram((
+                to_vec( "0011" & "010000" & "000001"), -- ADC -(R0) R1
+                to_vec("1010" & "000000000000"),       -- HLT
+                to_vec(100)                            -- data
+            ));
+
+            info("fill r1");
+            reset_signals;
+            r_enable_in(1) <= '1';
+            bbus <= to_vec(121);
+            wait until falling_edge(clk);
+            reset_signals;
+
+            info("fill r0");
+            reset_signals;
+            r_enable_in(0) <= '1';
+            bbus <= to_vec(3);
+            wait until falling_edge(clk);
+            reset_signals;
+
+            info("set carry");
+            flags_set_carry <= '1';
+            wait until falling_edge(clk);
+            reset_signals;
+
+            info("start fetching");
+            while hlt = '0' loop
+                check(timeout = false, "timeouted!", failure);
+                one_iteration;
+            end loop;
+            reset_signals;
+            
+            info("check r0");
+            reset_signals;
+            r_enable_out(0) <= '1';
+            wait until falling_edge(clk);
+            check_equal(bbus, to_vec(2));
+            reset_signals;
+
+            info("check r1");
+            r_enable_out(1) <= '1';
+            wait until falling_edge(clk);
+            check_equal(bbus, to_vec(121+100+1));
             reset_signals;
         end if;
 
