@@ -237,9 +237,9 @@ begin
 
             if ctrl_sigs(ICS_ADRS_OUT) = '1' then
                 if ir_data_out(15 downto 12) = "1101" then -- JSR
-                    bbus <= to_vec(0, 4) & ir_data_out(12 downto 0);
+                    bbus <= to_vec(0, 4) & ir_data_out(11 downto 0);
                 else -- BR
-                    bbus <= to_vec(0, 6) & ir_data_out(10 downto 0);
+                    bbus <= to_vec(0, 6) & ir_data_out(9 downto 0);
                 end if;
             end if;
             
@@ -1246,6 +1246,40 @@ begin
             mdr_enable_out <= '1';
             wait until falling_edge(clk);
             check_equal(bbus, to_vec(122));
+            reset_signals;
+        end if;
+
+        -- TODO: inc_xr0
+        -- TODO: inc_atr0plus
+        -- TODO: inc_atminusr0
+        -- TODO: inc_atxr0
+        
+        if run("jsr") then
+            fill_ram((
+                to_vec("1101" & to_vec(2, 12)),        -- JSR 2
+                to_vec("1010" & "000000000000"),      -- HLT
+                to_vec("0001" & "000000" & "000001"), -- MOV R0 R1
+                to_vec("1010" & "000000000000")       -- HLT
+            ));
+
+            info("fill r0");
+            reset_signals;
+            r_enable_in(0) <= '1';
+            bbus <= to_vec(1267);
+            wait until falling_edge(clk);
+            reset_signals;
+
+            info("start fetching");
+            while hlt = '0' loop
+                check(not timeouted, "timeouted!", failure);
+                one_iteration;
+            end loop;
+            reset_signals;
+
+            info("check r1");
+            r_enable_out(1) <= '1';
+            wait until falling_edge(clk);
+            check_equal(bbus, to_vec(1267));
             reset_signals;
         end if;
 
