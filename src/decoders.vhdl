@@ -143,9 +143,15 @@ package body decoders is
 			when "011" =>
 				controlSignal(36) := '1';                     -- MDR out
 			when "100" =>
-				controlSignal(19 downto 12) := ri_decoder (IR(8 downto 6));  --Rsrc out
+				if ir (15 downto 12) = "1111" then
+					controlSignal(19 downto 12) := ri_decoder (IR(2 downto 0));
+				else
+					controlSignal(19 downto 12) := ri_decoder (IR(8 downto 6));  --Rsrc out
+				end if;
 			when "101" =>
-				controlSignal(19 downto 12) := ri_decoder (IR(2 downto 0));  -- Rdest out
+				if ir (15 downto 12) /= "1111" then
+					controlSignal(19 downto 12) := ri_decoder (IR(2 downto 0));  -- Rdest out
+				end if;
 			when "110" =>
 				controlSignal(37) := '1';                  -- Temp1 out
 			when "111" =>
@@ -161,7 +167,11 @@ package body decoders is
 			when "010" =>
 				controlSignal(26) := '1';    -- ir in
 			when "011" =>                    -- src in
-				controlSignal(7 downto  0) := ri_decoder (IR(8 downto 6));
+				if ir(15 downto 12) = "1111" then
+					controlSignal(7 downto  0) := ri_decoder (IR(2 downto 0));
+				else
+					controlSignal(7 downto  0) := ri_decoder (IR(8 downto 6));
+				end if;
 			when "100" =>                   --dest in
 				controlSignal(7 downto  0) := ri_decoder (IR(2 downto 0));
 			when "101" =>                   -- flag in

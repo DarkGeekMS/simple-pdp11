@@ -40,15 +40,15 @@ begin
                 case (ir (15 downto 12)) is
                     when "1111" =>             -- oneOp
                         if (ir( 5 downto 3) = "000") then
-                            NAF <= "010000";
+                            NAF <= "000011";
                         elsif (ir( 4 downto 3) = "01") then
-                            NAF <= "010010";
+                            NAF <= "000101";
                         elsif (ir( 4 downto 3) = "10") then
-                            NAF <= "010100";
+                            NAF <= "000111";
                         elsif (ir( 4 downto 3) = "11") then
-                            NAF <= "010110";
+                            NAF <= "001001";
                         elsif (ir( 5 downto 3) = "100") then
-                            NAF <= "010001";
+                            NAF <= "000100";
                         end if;
 
                     when "0000" =>             -- branching
@@ -60,7 +60,7 @@ begin
                     when "1101" =>                  --JSR
                         NAF <= "100000";
                     when "1010" =>                  -- HLT
-                        NAF <= "000000"; --what should i do here ?
+                        NAF <= "000000";
                         hlt := '1';
                         -- add hlt = 1 here
                     when "1110" =>                -- specials
@@ -86,7 +86,9 @@ begin
                 end case;
 
             -- check if ORdest  ( Bit ORing )
-            elsif out1(2) = '0' and out1(1) = '0' and out1(0) = '1' then
+            elsif out1(2) = '0' and out1(1) = '0' and out1(0) = '1' and ir(15 downto 12 ) = "1111" then
+                NAF <= "110000";
+            elsif out1(2) = '0' and out1(1) = '0' and out1(0) = '1' and ir(15 downto 12 )  /= "1111" then
                 case( ir (4 downto 3) ) is
                     when "00" =>
                         if IR(5)= '0'  then
@@ -106,10 +108,18 @@ begin
 
             elsif out1(2) = '0' and out1(1) = '1' and out1(0) = '0'  then                                         -- indirect reg
                 if address = "110000" then
-                    if IR(5 downto 3) = "000"  then
-                        NAF <= "110001";
+                    if ir(15 downto 12) = "1111" then
+                        if ir(5 downto 3) = "000" then
+                            NAF <= "110001";
+                        else
+                            NAF <= "110010";
+                        end if;
                     else
-                        NAF <= "110010";
+                        if IR(5 downto 3) = "000"   then
+                            NAF <= "110001";
+                        else
+                            NAF <= "110010";
+                        end if;
                     end if;
                 else
                     if IR(5)= '0'  then
