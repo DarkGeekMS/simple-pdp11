@@ -327,10 +327,12 @@ begin
             r_clr <= (others => '1');
 
             num_iteration <= to_unsigned(0, 16);
+        elsif int = '1' then
+            report "only software interrupt supported!" severity warning;
         elsif falling_edge(clk) then
             itr_current_adr <= itr_next_adr; 
             hookup_signals;
-            
+
             num_iteration <= num_iteration + to_unsigned(1, 16);
         end if;
     end process;
