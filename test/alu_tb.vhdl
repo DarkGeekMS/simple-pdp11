@@ -217,8 +217,8 @@ begin
 
         if run("sub_carry0") then
             IR_SUB(7 downto 4) <= "0100";
-            B <= to_vec(31, 16);
-            temp0 <= to_vec(5, 16);
+            temp0 <= to_vec(31, 16);
+            B <= to_vec(5, 16);
             flagIn(IFR_CARRY) <= '0';
 
             wait for CLK_PERD;
@@ -233,8 +233,8 @@ begin
 
         if run("sub_carry1") then
             IR_SUB(7 downto 4) <= "0100";
-            B <= to_vec(31, 16);
-            temp0 <= to_vec(5, 16);
+            temp0 <= to_vec(31, 16);
+            B <= to_vec(5, 16);
             flagIn(IFR_CARRY) <= '1';
 
             wait for CLK_PERD;
@@ -249,8 +249,8 @@ begin
 
         if run("sub_carry0_outNegative") then
             IR_SUB(7 downto 4) <= "0100";
-            B <= to_vec(5, 16);
-            temp0 <= to_vec(31, 16);
+            temp0 <= to_vec(5, 16);
+            B <= to_vec(31, 16);
             flagIn(IFR_CARRY) <= '0';
 
             wait for CLK_PERD;
@@ -265,8 +265,8 @@ begin
 
         if run("subc_carry0") then
             IR_SUB(7 downto 4) <= "0100";
-            B <= to_vec(31, 16);
-            temp0 <= to_vec(5, 16);
+            temp0 <= to_vec(31, 16);
+            B <= to_vec(5, 16);
             flagIn(IFR_CARRY) <= '0';
 
             wait for CLK_PERD;
@@ -281,8 +281,8 @@ begin
 
         if run("subc_carry1") then
             IR_SUB(7 downto 4) <= "0101";
-            B <= to_vec(31, 16);
-            temp0 <= to_vec(5, 16);
+            temp0 <= to_vec(31, 16);
+            B <= to_vec(5, 16);
             flagIn(IFR_CARRY) <= '1';
 
             wait for CLK_PERD;
@@ -339,8 +339,8 @@ begin
 
         if run("cmp_bigger") then
             IR_SUB(7 downto 4) <= "1001";
-            B <= to_vec(200, 16);
-            temp0 <= to_vec(30, 16);
+            temp0 <= to_vec(200, 16);
+            B <= to_vec(30, 16);
 
             wait for CLK_PERD;
 
@@ -353,8 +353,8 @@ begin
 
         if run("cmp_smaller") then
             IR_SUB(7 downto 4) <= "1001";
-            B <= to_vec(20, 16);
-            temp0 <= to_vec(30, 16);
+            temp0 <= to_vec(20, 16);
+            B <= to_vec(30, 16);
 
             wait for CLK_PERD;
 
@@ -367,8 +367,8 @@ begin
 
         if run("cmp_equal") then
             IR_SUB(7 downto 4) <= "1001";
-            B <= to_vec(200, 16);
             temp0 <= to_vec(200, 16);
+            B <= to_vec(200, 16);
 
             wait for CLK_PERD;
 
