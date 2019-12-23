@@ -782,6 +782,54 @@ begin
             reset_signals;
         end if;
 
+        if run("add_r3_r5_plus") then
+            fill_ram((
+                to_vec("0010" & "000011" & "001101"),  -- ADD R3 (R5)+
+                to_vec("1010" & "000000000000"),       -- HLT
+                to_vec(100)                            -- data
+            ));
+
+            info("fill r3");
+            reset_signals;
+            r_enable_in(3) <= '1';
+            bbus <= to_vec(121);
+            wait until falling_edge(clk);
+            reset_signals;
+
+            info("fill r5");
+            reset_signals;
+            r_enable_in(5) <= '1';
+            bbus <= to_vec(2);
+            wait until falling_edge(clk);
+            reset_signals;
+
+            info("start fetching");
+            while hlt = '0' loop
+                check(timeout = false, "timeouted!", failure);
+                one_iteration;
+            end loop;
+            reset_signals;
+            
+            info("check r5");
+            reset_signals;
+            r_enable_out(5) <= '1';
+            wait until falling_edge(clk);
+            check_equal(bbus, to_vec(3));
+            reset_signals;
+
+            info("check data");
+            mar_enable_in <= '1';
+            bbus <= to_vec(2);
+            rd <= '1';
+            wait until falling_edge(clk);
+            reset_signals;
+
+            mdr_enable_out <= '1';
+            wait until falling_edge(clk);
+            check_equal(bbus, to_vec(221));
+            reset_signals;
+        end if;
+
         -- if run("fullrun") then
         --     fill_ram((
         --         to_vec("0001" & "000000" & "000001"), -- mov r0 r1
