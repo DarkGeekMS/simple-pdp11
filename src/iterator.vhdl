@@ -131,10 +131,18 @@ begin
             -- check if OR src indirect ( Bit ORing )
 
             elsif out1(2) = '0' and out1(1) = '1' and out1(0) = '1'  then
-                if (ir(11) = '0')   then    -- direct
-                    NAF <= "001111";
+                if ir(15 downto 12) = "1111" then
+                    if (ir(5) = '0')   then    -- direct
+                        NAF <= "001111";
+                    else
+                        NAF <= "001110";
+                    end if;
                 else
-                    NAF <= "001110";
+                    if (ir(11) = '0')   then    -- direct
+                        NAF <= "001111";
+                    else
+                        NAF <= "001110";
+                    end if;
                 end if;
             -- Check if OR result ( Bit ORing of branching)
             elsif out1(2) = '1' and out1(1) = '0' and out1(0) = '0' then
