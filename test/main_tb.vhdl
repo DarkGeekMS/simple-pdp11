@@ -700,6 +700,48 @@ begin
             reset_signals;
         end if;
 
+        if run("xnor_at_minus_r0_r1") then
+            fill_ram((
+                to_vec("1000" & "110000" & "000001"), -- XNOR @-(R0) R1
+                to_vec("1010" & "000000000000"),      -- HLT
+                to_vec(3),
+                to_vec(x"0F0F")
+            ));
+
+            info("fill r0");
+            reset_signals;
+            r_enable_in(0) <= '1';
+            bbus <= to_vec(3);
+            wait until falling_edge(clk);
+            reset_signals;
+
+            info("fill r1");
+            reset_signals;
+            r_enable_in(1) <= '1';
+            bbus <= x"F0FF";
+            wait until falling_edge(clk);
+            reset_signals;
+
+            info("start fetching");
+            while hlt = '0' loop
+                check(timeout = false, "timeouted!", failure);
+                one_iteration;
+            end loop;
+            reset_signals;
+
+            info("check r0");
+            r_enable_out(0) <= '1';
+            wait until falling_edge(clk);
+            check_equal(bbus, to_vec(2));
+            reset_signals;
+            
+            info("check r1");
+            r_enable_out(1) <= '1';
+            wait until falling_edge(clk);
+            check_equal(bbus, to_vec(x"0F0F") xnor to_vec(x"F0FF"));
+            reset_signals;
+        end if;
+
         -- if run("fullrun") then
         --     fill_ram((
         --         to_vec("0001" & "000000" & "000001"), -- mov r0 r1
