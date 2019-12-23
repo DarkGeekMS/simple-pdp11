@@ -145,6 +145,8 @@ package body decoders is
 			when "100" =>
 				if ir (15 downto 12) = "1111" then
 					controlSignal(19 downto 12) := ri_decoder (IR(2 downto 0));
+				elsif ir(15 downto 12) = "1101" or ir(15 downto 12) = "1110" then
+					controlSignal(19 downto 12) := "01000000";
 				else
 					controlSignal(19 downto 12) := ri_decoder (IR(8 downto 6));  --Rsrc out
 				end if;
@@ -169,6 +171,8 @@ package body decoders is
 			when "011" =>                    -- src in
 				if ir(15 downto 12) = "1111" then
 					controlSignal(7 downto  0) := ri_decoder (IR(2 downto 0));
+				elsif ir(15 downto 12) = "1101" or ir(15 downto 12) = "1110" then
+					controlSignal(19 downto 12) := "01000000";
 				else
 					controlSignal(7 downto  0) := ri_decoder (IR(8 downto 6));
 				end if;
