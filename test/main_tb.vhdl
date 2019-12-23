@@ -775,7 +775,7 @@ begin
             info("check flags");
             flags_enable_out <= '1';
             wait until falling_edge(clk);
-            check_equal(bbus(IFR_CARRY), '0', "carry");
+            check_equal(bbus(IFR_CARRY), '1', "carry");
             check_equal(bbus(IFR_ZERO), '0', "zero");
             check_equal(bbus(IFR_NEG), '1', "negative");
             check_equal(bbus(IFR_OVERFLOW), '0', "overflow");
@@ -1101,7 +1101,7 @@ begin
             info("check flags");
             flags_enable_out <= '1';
             wait until falling_edge(clk);
-            check_equal(bbus(IFR_CARRY), '1', "carry");
+            check_equal(bbus(IFR_CARRY), '0', "carry");
             check_equal(bbus(IFR_ZERO), '0', "zero");
             check_equal(bbus(IFR_NEG), '0', "negative");
             check_equal(bbus(IFR_OVERFLOW), '0', "overflow");
