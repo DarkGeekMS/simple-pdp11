@@ -121,8 +121,8 @@ begin
 
         if run("add_carry0") then
             IR_SUB(7 downto 4) <= "0010";
-            B <= to_vec(5, 16);
-            temp0 <= to_vec(10, 16);
+            temp0 <= to_vec(5, 16);
+            B <= to_vec(10, 16);
             flagIn(IFR_CARRY) <= '0';
 
             wait for CLK_PERD;
@@ -137,8 +137,8 @@ begin
 
         if run("add_carry0_out0") then
             IR_SUB(7 downto 4) <= "0010";
-            B <= to_vec(0, 16);
             temp0 <= to_vec(0, 16);
+            B <= to_vec(0, 16);
             flagIn(IFR_CARRY) <= '0';
 
             wait for CLK_PERD;
@@ -153,8 +153,8 @@ begin
 
         if run("add_carry1") then
             IR_SUB(7 downto 4) <= "0010";
-            B <= to_vec(5, 16);
-            temp0 <= to_vec(10, 16);
+            temp0 <= to_vec(5, 16);
+            B <= to_vec(10, 16);
             flagIn(IFR_CARRY) <= '1';
 
             wait for CLK_PERD;
@@ -169,8 +169,8 @@ begin
 
         if run("add_overflows") then
             IR_SUB(7 downto 4) <= "0010";
-            B <= '0' & to_vec('1', 15);
             temp0 <= '0' & to_vec('1', 15);
+            B <= '0' & to_vec('1', 15);
             flagIn(IFR_CARRY) <= '0';
 
             wait for CLK_PERD;
@@ -185,8 +185,8 @@ begin
 
         if run("adc_carry0") then
             IR_SUB(7 downto 4) <= "0011";
-            B <= to_vec(5, 16);
-            temp0 <= to_vec(10, 16);
+            temp0 <= to_vec(5, 16);
+            B <= to_vec(10, 16);
             flagIn(IFR_CARRY) <= '0';
 
             wait for CLK_PERD;
@@ -201,8 +201,8 @@ begin
 
         if run("adc_carry1") then
             IR_SUB(7 downto 4) <= "0011";
-            B <= to_vec(5, 16);
-            temp0 <= to_vec(10, 16);
+            temp0 <= to_vec(5, 16);
+            B <= to_vec(10, 16);
             flagIn(IFR_CARRY) <= '1';
 
             wait for CLK_PERD;
@@ -217,8 +217,8 @@ begin
 
         if run("sub_carry0") then
             IR_SUB(7 downto 4) <= "0100";
-            B <= to_vec(31, 16);
-            temp0 <= to_vec(5, 16);
+            temp0 <= to_vec(31, 16);
+            B <= to_vec(5, 16);
             flagIn(IFR_CARRY) <= '0';
 
             wait for CLK_PERD;
@@ -233,8 +233,8 @@ begin
 
         if run("sub_carry1") then
             IR_SUB(7 downto 4) <= "0100";
-            B <= to_vec(31, 16);
-            temp0 <= to_vec(5, 16);
+            temp0 <= to_vec(31, 16);
+            B <= to_vec(5, 16);
             flagIn(IFR_CARRY) <= '1';
 
             wait for CLK_PERD;
@@ -249,8 +249,8 @@ begin
 
         if run("sub_carry0_outNegative") then
             IR_SUB(7 downto 4) <= "0100";
-            B <= to_vec(5, 16);
-            temp0 <= to_vec(31, 16);
+            temp0 <= to_vec(5, 16);
+            B <= to_vec(31, 16);
             flagIn(IFR_CARRY) <= '0';
 
             wait for CLK_PERD;
@@ -265,8 +265,8 @@ begin
 
         if run("subc_carry0") then
             IR_SUB(7 downto 4) <= "0100";
-            B <= to_vec(31, 16);
-            temp0 <= to_vec(5, 16);
+            temp0 <= to_vec(31, 16);
+            B <= to_vec(5, 16);
             flagIn(IFR_CARRY) <= '0';
 
             wait for CLK_PERD;
@@ -281,8 +281,8 @@ begin
 
         if run("subc_carry1") then
             IR_SUB(7 downto 4) <= "0101";
-            B <= to_vec(31, 16);
-            temp0 <= to_vec(5, 16);
+            temp0 <= to_vec(31, 16);
+            B <= to_vec(5, 16);
             flagIn(IFR_CARRY) <= '1';
 
             wait for CLK_PERD;
@@ -297,8 +297,8 @@ begin
 
         if run("and") then
             IR_SUB(7 downto 4) <= "0110";
-            B <= x"0F0F";
-            temp0 <= x"00FF";
+            temp0 <= x"0F0F";
+            B <= x"00FF";
 
             wait for CLK_PERD;
 
@@ -311,8 +311,8 @@ begin
 
         if run("or") then
             IR_SUB(7 downto 4) <= "0111";
-            B <= x"0F0F";
-            temp0 <= x"00FF";
+            temp0 <= x"0F0F";
+            B <= x"00FF";
 
             wait for CLK_PERD;
 
@@ -325,8 +325,8 @@ begin
 
         if run("xnor") then
             IR_SUB(7 downto 4) <= "1000";
-            B <= x"0F0F";
-            temp0 <= x"00FF";
+            temp0 <= x"0F0F";
+            B <= x"00FF";
 
             wait for CLK_PERD;
 
@@ -339,8 +339,8 @@ begin
 
         if run("cmp_bigger") then
             IR_SUB(7 downto 4) <= "1001";
-            B <= to_vec(200, 16);
-            temp0 <= to_vec(30, 16);
+            temp0 <= to_vec(200, 16);
+            B <= to_vec(30, 16);
 
             wait for CLK_PERD;
 
@@ -353,8 +353,8 @@ begin
 
         if run("cmp_smaller") then
             IR_SUB(7 downto 4) <= "1001";
-            B <= to_vec(20, 16);
-            temp0 <= to_vec(30, 16);
+            temp0 <= to_vec(20, 16);
+            B <= to_vec(30, 16);
 
             wait for CLK_PERD;
 
@@ -367,8 +367,8 @@ begin
 
         if run("cmp_equal") then
             IR_SUB(7 downto 4) <= "1001";
-            B <= to_vec(200, 16);
             temp0 <= to_vec(200, 16);
+            B <= to_vec(200, 16);
 
             wait for CLK_PERD;
 
@@ -381,8 +381,8 @@ begin
 
         if run("inc_carry0") then
             IR_SUB <= "1111" & "0000";
-            B <= to_vec(10, 16);
-            temp0 <= to_vec('-', 16);
+            temp0 <= to_vec(10, 16);
+            B <= to_vec('-', 16);
             flagIn(IFR_CARRY) <= '0';
 
             wait for CLK_PERD;
@@ -396,8 +396,8 @@ begin
 
         if run("inc_carry1") then
             IR_SUB <= "1111" & "0000";
-            B <= to_vec(10, 16);
-            temp0 <= to_vec('-', 16);
+            temp0 <= to_vec(10, 16);
+            B <= to_vec('-', 16);
             flagIn(IFR_CARRY) <= '1';
 
             wait for CLK_PERD;
@@ -411,8 +411,8 @@ begin
 
         if run("inc_carry1_outcarry") then
             IR_SUB <= "1111" & "0000";
-            B <= to_vec(x"FFFF", 16);
-            temp0 <= to_vec('-', 16);
+            temp0 <= to_vec(x"FFFF", 16);
+            B <= to_vec('-', 16);
             flagIn(IFR_CARRY) <= '1';
 
             wait for CLK_PERD;
@@ -426,8 +426,8 @@ begin
 
         if run("dec_carry0") then
             IR_SUB <= "1111" & "0001";
-            B <= to_vec(10, 16);
-            temp0 <= to_vec('-', 16);
+            temp0 <= to_vec(10, 16);
+            B <= to_vec('-', 16);
             flagIn(IFR_CARRY) <= '0';
 
             wait for CLK_PERD;
@@ -441,8 +441,8 @@ begin
 
         if run("dec_carry1") then
             IR_SUB <= "1111" & "0001";
-            B <= to_vec(10, 16);
-            temp0 <= to_vec('-', 16);
+            temp0 <= to_vec(10, 16);
+            B <= to_vec('-', 16);
             flagIn(IFR_CARRY) <= '1';
 
             wait for CLK_PERD;
@@ -456,8 +456,8 @@ begin
 
         if run("dec_negative") then
             IR_SUB <= "1111" & "0001";
-            B <= to_vec(0, 16);
-            temp0 <= to_vec('-', 16);
+            temp0 <= to_vec(0, 16);
+            B <= to_vec('-', 16);
 
             wait for CLK_PERD;
 
@@ -469,8 +469,8 @@ begin
 
         if run("clr") then
             IR_SUB <= "1111" & "0010";
-            B <= to_vec('-', 16);
             temp0 <= to_vec('-', 16);
+            B <= to_vec('-', 16);
 
             wait for CLK_PERD;
 
@@ -483,8 +483,8 @@ begin
         
         if run("inv") then
             IR_SUB <= "1111" & "0011";
-            B <= to_vec('1', 16);
-            temp0 <= to_vec('-', 16);
+            temp0 <= to_vec('1', 16);
+            B <= to_vec('-', 16);
 
             wait for CLK_PERD;
 
@@ -496,8 +496,8 @@ begin
 
         if run("lsr") then
             IR_SUB <= "1111" & "0100";
-            B <= to_vec('1', 16);
-            temp0 <= to_vec('-', 16);
+            temp0 <= to_vec('1', 16);
+            B <= to_vec('-', 16);
             flagIn(IFR_CARRY) <= '0';
             flagIn(IFR_NEG) <= '1';
 
@@ -513,8 +513,8 @@ begin
 
         if run("ror") then
             IR_SUB <= "1111" & "0101";
-            B <= to_vec('1', 15) & '0';
-            temp0 <= to_vec('-', 16);
+            temp0 <= to_vec('1', 15) & '0';
+            B <= to_vec('-', 16);
             flagIn(IFR_CARRY) <= '1';
             flagIn(IFR_NEG) <= '1';
 
@@ -530,8 +530,8 @@ begin
 
         if run("rrc") then
             IR_SUB <= "1111" & "0110";
-            B <= to_vec('1', 15) & '0';
-            temp0 <= to_vec('-', 16);
+            temp0 <= to_vec('1', 15) & '0';
+            B <= to_vec('-', 16);
             flagIn(IFR_CARRY) <= '1';
             flagIn(IFR_NEG) <= '0';
 
@@ -547,8 +547,8 @@ begin
 
         if run("asr") then
             IR_SUB <= "1111" & "0111";
-            B <= '0' & to_vec('1', 15);
-            temp0 <= to_vec('-', 16);
+            temp0 <= '0' & to_vec('1', 15);
+            B <= to_vec('-', 16);
             flagIn(IFR_CARRY) <= '1';
             flagIn(IFR_NEG) <= '0';
 
@@ -564,8 +564,8 @@ begin
 
         if run("lsl") then
             IR_SUB <= "1111" & "1000";
-            B <= to_vec('1', 16);
-            temp0 <= to_vec('-', 16);
+            temp0 <= to_vec('1', 16);
+            B <= to_vec('-', 16);
             flagIn(IFR_CARRY) <= '0';
             flagIn(IFR_NEG) <= '0';
 
@@ -581,8 +581,8 @@ begin
 
         if run("rol") then
             IR_SUB <= "1111" & "1001";
-            B <= '1' & '0' & to_vec('1', 14);
-            temp0 <= to_vec('-', 16);
+            temp0 <= '1' & '0' & to_vec('1', 14);
+            B <= to_vec('-', 16);
             flagIn(IFR_CARRY) <= '0';
             flagIn(IFR_NEG) <= '1';
 
@@ -598,8 +598,8 @@ begin
 
         if run("rl") then
             IR_SUB <= "1111" & "1010";
-            B <= '0' & '0' & to_vec('1', 14);
-            temp0 <= to_vec('-', 16);
+            temp0 <= '0' & '0' & to_vec('1', 14);
+            B <= to_vec('-', 16);
             flagIn(IFR_CARRY) <= '1';
             flagIn(IFR_NEG) <= '1';
 
