@@ -23,6 +23,11 @@ begin
     begin
         out1 := CONTROL_STORE(to_integer(unsigned(address)));
         hlt := '0';
+        if address = "010001" then
+            NAF <= "011100";
+        elsif address = "000100" then
+            NAF <= "001111";
+        else
         -- check PLAout = 0 return NAF
         if out1(3) = '0'  then
             NAF <= out1(25 downto 20);
@@ -213,6 +218,7 @@ begin
             out_inst <= "ZZZZZZZZZZZZZZZZZZZZZZZZZZ";
         else
             out_inst <= CONTROL_STORE(to_integer(unsigned(address)));
+        end if;
         end if;
     end process;
 
