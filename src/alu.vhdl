@@ -44,7 +44,7 @@ begin
                     end if;
 
                     ALUOUT := std_logic_vector (resize(signed(B),17) + resize(signed(temp0),17) + resize(signed(carryInput),17) );
-                    if(ALUOUT(16) = '1') then
+                    if(ALUOUT(n) = '1') then
                         temp_flag_out(0) :='1';
                     else
                         temp_flag_out(0) :='0';
@@ -76,7 +76,7 @@ begin
                     ALUOUT := std_logic_vector (resize(signed(temp0),17) - resize(signed(B),17) - resize(signed(carryInput),17) );
                     
                     --Overflow flag check
-                    if(ALUOUT(16) = '1') then
+                    if(ALUOUT(n) = '1') then
                         temp_flag_out(0) :='1';
                     else
                         temp_flag_out(0) :='0';
@@ -103,57 +103,57 @@ begin
 
                 when "0010" =>
                     --AND
-                    ALUOUT(15 downto 0) := temp0 and B;
+                    ALUOUT(n-1 downto 0) := temp0 and B;
                     temp_flag_out(0) := flagIn(0);
                     temp_flag_out(4) := '0';
                 when "0011" =>
                     --OR
-                    ALUOUT(15 downto 0) := temp0 or B;
+                    ALUOUT(n-1 downto 0) := temp0 or B;
                     temp_flag_out(0) := flagIn(0);
                     temp_flag_out(4) := '0';
                 when "0100" =>
                     --NOT
-                    ALUOUT(15 downto 0) := not B;
+                    ALUOUT(n-1 downto 0) := not B;
                     temp_flag_out(0) := flagIn(0);
                     temp_flag_out(4) := '0';
                 when "0101" =>
                     --XNOR
-                    ALUOUT(15 downto 0) := temp0 XNOR B;
+                    ALUOUT(n-1 downto 0) := temp0 XNOR B;
                     temp_flag_out(0) := flagIn(0);
                     temp_flag_out(4) := '0';
                 when "0110" =>
                     --LSR: Logical shift Right
-                    ALUOUT(15 downto 0) := '0' & B(n-1 downto 1);
+                    ALUOUT(n-1 downto 0) := '0' & B(n-1 downto 1);
                     temp_flag_out(0) := B(0);
                     temp_flag_out(4) := flagIn(0) XOR flagIn(2);
                 when "0111" =>
                     --ROR
-                    ALUOUT(15 downto 0) := B(0) & B(n-1 downto 1);
+                    ALUOUT(n-1 downto 0) := B(0) & B(n-1 downto 1);
                     temp_flag_out(0) := B(0);
                     temp_flag_out(4) := flagIn(0) XOR flagIn(2);
                 when "1000" =>
                     --RRC
-                    ALUOUT(15 downto 0) := flagIn(0) & B(n-1 downto 1);
+                    ALUOUT(n-1 downto 0) := flagIn(0) & B(n-1 downto 1);
                     temp_flag_out(0) := B(0);
                     temp_flag_out(4) := flagIn(0) XOR flagIn(2);
                 when "1001" =>
                     --ASR: Arithmetic shift right
-                    ALUOUT(15 downto 0) := B(n-1) & B(n-1 downto 1);
+                    ALUOUT(n-1 downto 0) := B(n-1) & B(n-1 downto 1);
                     temp_flag_out(0) := B(0);
                     temp_flag_out(4) := flagIn(0) XOR flagIn(2);
                 when "1010" =>
                     --LSL: Logical Shift Left
-                    ALUOUT(15 downto 0) :=  B(n-2 downto 0) & '0'; 
+                    ALUOUT(n-1 downto 0) :=  B(n-2 downto 0) & '0'; 
                     temp_flag_out(0) := B(n-1);
                     temp_flag_out(4) := flagIn(0) XOR flagIn(2);
                 when "1011" =>
                     --ROL
-                    ALUOUT(15 downto 0) :=  B(n-2 downto 0) & B(n-1);
+                    ALUOUT(n-1 downto 0) :=  B(n-2 downto 0) & B(n-1);
                     temp_flag_out(0) := B(n-1);
                     temp_flag_out(4) := flagIn(0) XOR flagIn(2);
                 when "1100" =>
                     --RLC
-                    ALUOUT(15 downto 0) :=  B(n-2 downto 0) & flagIn(0);
+                    ALUOUT(n-1 downto 0) :=  B(n-2 downto 0) & flagIn(0);
                     temp_flag_out(0) := B(n-1);
                     temp_flag_out(4) := flagIn(0) XOR flagIn(2);
                 when "1101" =>
