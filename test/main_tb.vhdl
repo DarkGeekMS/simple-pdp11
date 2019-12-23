@@ -59,7 +59,7 @@ architecture tb of main_tb is
     signal num_iteration : unsigned(15 downto 0) := (others => 'Z');
 begin
     clk <= not clk after CLK_PERD / 2;
-    timeouted <= true after 500 ns;
+    timeouted <= true after 1500 ns;
 
     r : for i in 0 to 7 generate
         ri : entity work.reg generic map (WORD_WIDTH => 16) port map (
@@ -2228,6 +2228,20 @@ begin
             wait until falling_edge(clk);
             check_equal(bbus, to_vec(-90));
             reset_signals;
+        end if;
+
+        if run("playground") then
+            fill_ram((
+                to_vec("0001000000000001"), -- MOV R0 R1
+                to_vec("1010000000000000")  -- HLT
+            ));
+
+            info("start");
+            while hlt = '0' loop
+                check(not timeouted, "timeouted!", failure);
+                one_iteration;
+            end loop;
+            info("end");
         end if;
 
         wait for CLK_PERD/2;
