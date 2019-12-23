@@ -17,6 +17,7 @@ entity main is
         clk: in std_logic;
         rst: in std_logic;
         int: in std_logic;
+        int_address: in std_logic_vector(9 downto 0);
         bbus: inout std_logic_vector(15 downto 0);
         hlt: out std_logic
     );
@@ -64,6 +65,8 @@ architecture tb of main is
 
     signal tmp1_clr : std_logic;
     signal r_clr : std_logic_vector(7 downto 0);
+
+    signal ir_data_to_itr : std_logic_vector(15 downto 0);
 begin
     r : for i in 0 to 7 generate
         ri : entity work.reg generic map (WORD_WIDTH => 16) port map (
@@ -146,7 +149,7 @@ begin
 
     iterator : entity work.iterator port map (
         clk       => clk,       
-        ir        => ir_data_out,        
+        ir        => ir_data_to_itr,        
         flag_regs => flags_always_out, 
         address   => itr_current_adr,   
         hltop     => hlt_iterator,     
@@ -156,9 +159,9 @@ begin
 
     hlt <= hlt_iterator;
 
-    ctrl_sigs <= decompress_control_signals(ir_data_out, itr_out_inst);
+    ctrl_sigs <= decompress_control_signals(ir_data_to_itr, itr_out_inst);
 
-    main: process (clk, rst, int, bbus)
+    main: process (clk, rst, int, bbus, int_address)
         procedure reset_bus is
         begin
             info("reset bus");
@@ -246,10 +249,10 @@ begin
             flags_clr_carry  <= '0';
 
             if ctrl_sigs(ICS_ADRS_OUT) = '1' then
-                if ir_data_out(15 downto 12) = "1101" then -- JSR
-                    bbus <= to_vec(0, 4) & ir_data_out(11 downto 0);
+                if ir_data_to_itr(15 downto 12) = "1101" then -- JSR
+                    bbus <= to_vec(0, 4) & ir_data_to_itr(11 downto 0);
                 else -- BR
-                    bbus <= to_vec(0, 6) & ir_data_out(9 downto 0);
+                    bbus <= to_vec(0, 6) & ir_data_to_itr(9 downto 0);
                 end if;
             end if;
             
@@ -327,9 +330,14 @@ begin
             r_clr <= (others => '1');
 
             num_iteration <= to_unsigned(0, 16);
-        elsif int = '1' then
-            report "only software interrupt supported!" severity warning;
+        elsif int = '1' and falling_edge(clk) then
+            ir_data_to_itr <= "111010" & int_address;
+            itr_current_adr <= "000010";
+            hookup_signals;
+
+            num_iteration <= num_iteration + to_unsigned(1, 16);
         elsif falling_edge(clk) then
+            ir_data_to_itr <= ir_data_out;
             itr_current_adr <= itr_next_adr; 
             hookup_signals;
 
