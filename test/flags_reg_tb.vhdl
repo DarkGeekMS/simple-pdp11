@@ -81,12 +81,12 @@ begin
 
             from_alu <= (others => '1');
             enable_from_alu <= '1';
-            wait for CLK_PERD;
+            wait for 2*CLK_PERD;
             enable_from_alu <= '0';
             check_equal(always_out, to_vec('1', 5));
 
             enable_out <= '1';
-            wait for CLK_PERD;
+            wait for 2*CLK_PERD;
             enable_out <= '0';
             check_equal(data_out, to_vec('0', 16-5) & to_vec('1', 5));
         end if;
