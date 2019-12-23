@@ -536,7 +536,7 @@ begin
 
         if run("adc_minus_r0_r1") then
             fill_ram((
-                to_vec( "0011" & "010000" & "000001"), -- ADC -(R0) R1
+                to_vec("0011" & "010000" & "000001"), -- ADC -(R0) R1
                 to_vec("1010" & "000000000000"),       -- HLT
                 to_vec(100)                            -- data
             ));
@@ -830,19 +830,64 @@ begin
             reset_signals;
         end if;
 
-        -- if run("fullrun") then
-        --     fill_ram((
-        --         to_vec("0001" & "000000" & "000001"), -- mov r0 r1
-        --         to_vec("1010" & "000000000000")       -- hlt
-        --     ));
+        if run("adc_r3__minus_r5") then
+            fill_ram((
+                to_vec("0011" & "000011" & "010101"),  -- ADC R3 -(R5)
+                to_vec("1010" & "000000000000"),       -- HLT
+                to_vec(100)                            -- data
+            ));
 
-        --     info("start");
-        --     while not hlt = '1' loop
-        --         check(timeout = false, "timeouted!", failure);
-        --         one_iteration;
-        --     end loop;
-        --     info("ended");
-        -- end if;
+            info("fill r3");
+            reset_signals;
+            r_enable_in(3) <= '1';
+            bbus <= to_vec(121);
+            wait until falling_edge(clk);
+            reset_signals;
+
+            info("fill r5");
+            reset_signals;
+            r_enable_in(5) <= '1';
+            bbus <= to_vec(3);
+            wait until falling_edge(clk);
+            reset_signals;
+
+            info("set carry");
+            flags_set_carry <= '1';
+            wait until falling_edge(clk);
+            reset_signals;
+
+            info("start fetching");
+            while hlt = '0' loop
+                check(timeout = false, "timeouted!", failure);
+                one_iteration;
+            end loop;
+            reset_signals;
+            
+            info("check r5");
+            reset_signals;
+            r_enable_out(5) <= '1';
+            wait until falling_edge(clk);
+            check_equal(bbus, to_vec(2));
+            reset_signals;
+
+            info("check data");
+            mar_enable_in <= '1';
+            bbus <= to_vec(2);
+            rd <= '1';
+            wait until falling_edge(clk);
+            reset_signals;
+
+            mdr_enable_out <= '1';
+            wait until falling_edge(clk);
+            check_equal(bbus, to_vec(121+100+1));
+            reset_signals;
+
+            info("check carry");
+            flags_enable_out <= '1';
+            wait until falling_edge(clk);
+            check_equal(bbus(IFR_CARRY), '0');
+            reset_signals;
+        end if;
 
         wait for CLK_PERD/2;
         test_runner_cleanup(runner);
