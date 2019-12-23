@@ -748,7 +748,7 @@ begin
                 to_vec(50),
                 to_vec("1010" & "000000000000"),      -- HLT
                 to_vec(4),
-                to_vec(1000)
+                to_vec(1000)                          -- data
             ));
 
             info("fill r0");
@@ -1065,6 +1065,46 @@ begin
             mdr_enable_out <= '1';
             wait until falling_edge(clk);
             check_equal(bbus, to_vec(x"0F0F") xnor to_vec(x"F0FF"));
+            reset_signals;
+        end if;
+
+        if run("cmp_r3_atxr5") then
+            fill_ram((
+                to_vec("1001" & "000011" & "111101"), -- CMP R3 @X(R5)
+                to_vec(50),
+                to_vec("1010" & "000000000000"),      -- HLT
+                to_vec(4),
+                to_vec(1000)                          -- data
+            ));
+
+            info("fill r5");
+            reset_signals;
+            r_enable_in(5) <= '1';
+            bbus <= to_vec(-47);
+            wait until falling_edge(clk);
+            reset_signals;
+
+            info("fill r3");
+            reset_signals;
+            r_enable_in(3) <= '1';
+            bbus <= to_vec(329);
+            wait until falling_edge(clk);
+            reset_signals;
+
+            info("start fetching");
+            while hlt = '0' loop
+                check(timeout = false, "timeouted!", failure);
+                one_iteration;
+            end loop;
+            reset_signals;
+            
+            info("check flags");
+            flags_enable_out <= '1';
+            wait until falling_edge(clk);
+            check_equal(bbus(IFR_CARRY), '1', "carry");
+            check_equal(bbus(IFR_ZERO), '0', "zero");
+            check_equal(bbus(IFR_NEG), '0', "negative");
+            check_equal(bbus(IFR_OVERFLOW), '0', "overflow");
             reset_signals;
         end if;
 
