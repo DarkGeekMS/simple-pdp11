@@ -1822,6 +1822,139 @@ begin
             reset_signals;
         end if;
 
+        if run("bhs_true1") then
+            fill_ram((
+                to_vec("110011" & to_vec(1, 10)),     -- BHS 1
+                to_vec("1010" & "000000000000"),      -- HLT
+                to_vec("0001" & "000000" & "000001"), -- MOV R0 R1
+                to_vec("1010" & "000000000000")       -- HLT
+            ));
+
+            info("fill flags");
+            reset_signals;
+            flags_enable_in <= '1';
+            bbus <= (IFR_CARRY => '1', others => '0');
+            wait until falling_edge(clk);
+            reset_signals;
+
+            info("fill r0");
+            reset_signals;
+            r_enable_in(0) <= '1';
+            bbus <= to_vec(1267);
+            wait until falling_edge(clk);
+            reset_signals;
+
+            info("start fetching");
+            while hlt = '0' loop
+                check(not timeouted, "timeouted!", failure);
+                one_iteration;
+            end loop;
+            reset_signals;
+
+            info("check r0");
+            r_enable_out(0) <= '1';
+            wait until falling_edge(clk);
+            check_equal(bbus, to_vec(1267));
+            reset_signals;
+
+            info("check r1");
+            r_enable_out(1) <= '1';
+            wait until falling_edge(clk);
+            check_equal(bbus, to_vec(1267));
+            reset_signals;
+        end if;
+
+        if run("bhs_true2") then
+            fill_ram((
+                to_vec("110011" & to_vec(1, 10)),     -- BHS 1
+                to_vec("1010" & "000000000000"),      -- HLT
+                to_vec("0001" & "000000" & "000001"), -- MOV R0 R1
+                to_vec("1010" & "000000000000")       -- HLT
+            ));
+
+            info("fill flags");
+            reset_signals;
+            flags_enable_in <= '1';
+            bbus <= (IFR_ZERO => '1', others => '0');
+            wait until falling_edge(clk);
+            reset_signals;
+
+            info("fill r0");
+            reset_signals;
+            r_enable_in(0) <= '1';
+            bbus <= to_vec(1267);
+            wait until falling_edge(clk);
+            reset_signals;
+
+            info("start fetching");
+            while hlt = '0' loop
+                check(not timeouted, "timeouted!", failure);
+                one_iteration;
+            end loop;
+            reset_signals;
+
+            info("check r0");
+            r_enable_out(0) <= '1';
+            wait until falling_edge(clk);
+            check_equal(bbus, to_vec(1267));
+            reset_signals;
+
+            info("check r1");
+            r_enable_out(1) <= '1';
+            wait until falling_edge(clk);
+            check_equal(bbus, to_vec(1267));
+            reset_signals;
+        end if;
+
+        if run("bhs_false") then
+            fill_ram((
+                to_vec("110011" & to_vec(1, 10)),     -- BHS 1
+                to_vec("1010" & "000000000000"),      -- HLT
+                to_vec("0001" & "000000" & "000001"), -- MOV R0 R1
+                to_vec("1010" & "000000000000")       -- HLT
+            ));
+
+            info("fill flags");
+            reset_signals;
+            flags_enable_in <= '1';
+            bbus <= (others => '0');
+            wait until falling_edge(clk);
+            reset_signals;
+
+            info("fill r0");
+            reset_signals;
+            r_enable_in(0) <= '1';
+            bbus <= to_vec(1267);
+            wait until falling_edge(clk);
+            reset_signals;
+
+            info("fill r1");
+            reset_signals;
+            r_enable_in(1) <= '1';
+            bbus <= to_vec(-90);
+            wait until falling_edge(clk);
+            reset_signals;
+
+            info("start fetching");
+            while hlt = '0' loop
+                check(not timeouted, "timeouted!", failure);
+                one_iteration;
+            end loop;
+            reset_signals;
+
+            info("check r0");
+            r_enable_out(0) <= '1';
+            wait until falling_edge(clk);
+            check_equal(bbus, to_vec(1267));
+            reset_signals;
+
+            info("check r1");
+            r_enable_out(1) <= '1';
+            wait until falling_edge(clk);
+            check_equal(bbus, to_vec(-90));
+            reset_signals;
+        end if;
+
         wait for CLK_PERD/2;
         test_runner_cleanup(runner);
         wait;
