@@ -237,9 +237,9 @@ begin
 
             if ctrl_sigs(ICS_ADRS_OUT) = '1' then
                 if ir_data_out(15 downto 12) = "1101" then -- JSR
-                    bbus <= to_vec(0, 4) & ir_data_out(12 downto 0);
+                    bbus <= to_vec(0, 4) & ir_data_out(11 downto 0);
                 else -- BR
-                    bbus <= to_vec(0, 6) & ir_data_out(10 downto 0);
+                    bbus <= to_vec(0, 6) & ir_data_out(9 downto 0);
                 end if;
             end if;
             
