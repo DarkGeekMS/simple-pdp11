@@ -162,7 +162,7 @@ begin
                     carryInput := "0000000000000001";
                     --ALUOUT := std_logic_vector (resize(signed(B),17) - resize(signed(carryInput),17) );
                     ALUOUT := std_logic_vector (resize(signed(temp0),17) - resize(signed(carryInput),17) );
-                    --if(B = "000000000000") then
+                    --if(B = "0000000000000000") then
                     --    temp_flag_out(0) := '1';
                     --else
                     --    temp_flag_out(0) := '0';
@@ -173,7 +173,7 @@ begin
                     --else
                     --    temp_flag_out(4) := '0';
                     --end if;
-                    if(temp0 = "000000000000") then
+                    if(temp0 = "0000000000000000") then
                         temp_flag_out(0) := '1';
                     else
                         temp_flag_out(0) := '0';
