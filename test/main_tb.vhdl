@@ -619,7 +619,7 @@ begin
             info("check r1");
             r_enable_out(1) <= '1';
             wait until falling_edge(clk);
-            check_equal(bbus, to_vec(50-60));
+            check_equal(bbus, to_vec(60-50));
             reset_signals;
         end if;
 
