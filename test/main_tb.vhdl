@@ -1314,16 +1314,22 @@ begin
             end loop;
             reset_signals;
 
+            info("check pc");
+            r_enable_out(7) <= '1';
+            wait until falling_edge(clk);
+            check_equal(bbus, to_vec(3));
+            reset_signals;
+
             info("check r0");
             r_enable_out(0) <= '1';
             wait until falling_edge(clk);
-            check_equal(bbus, to_vec(2*123));
+            check_equal(bbus, to_vec(2*123), "JSR corrupted the values midway", warning);
             reset_signals;
 
             info("check r1");
             r_enable_out(1) <= '1';
             wait until falling_edge(clk);
-            check_equal(bbus, to_vec(123));
+            check_equal(bbus, to_vec(123), "JSR corrupted the values midway", warning);
             reset_signals;
         end if;
 
