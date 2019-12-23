@@ -27,6 +27,8 @@ begin
             NAF <= "011100";
         elsif address = "000100" then
             NAF <= "001111";
+        elsif address = "110000" and ir(15 downto 12 ) = "1001" then
+            NAF <= "000000";
         else
         -- check PLAout = 0 return NAF
         if out1(3) = '0'  then
