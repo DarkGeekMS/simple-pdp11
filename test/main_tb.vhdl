@@ -59,7 +59,7 @@ architecture tb of main_tb is
     signal num_iteration : unsigned(15 downto 0) := (others => 'Z');
 begin
     clk <= not clk after CLK_PERD / 2;
-    timeouted <= true after 300 ns;
+    timeouted <= true after 500 ns;
 
     r : for i in 0 to 7 generate
         ri : entity work.reg generic map (WORD_WIDTH => 16) port map (
@@ -1257,7 +1257,7 @@ begin
         
         if run("jsr") then
             fill_ram((
-                to_vec("1101" & to_vec(2, 12)),        -- JSR 2
+                to_vec("1101" & to_vec(2, 12)),       -- JSR 2
                 to_vec("1010" & "000000000000"),      -- HLT
                 to_vec("0001" & "000000" & "000001"), -- MOV R0 R1
                 to_vec("1010" & "000000000000")       -- HLT
@@ -1289,6 +1289,47 @@ begin
             check_equal(bbus, to_vec(1267));
             reset_signals;
         end if;
+
+        if run("rts") then
+            fill_ram((
+                to_vec("1101" & to_vec(3, 12)),       -- 0: JSR 3
+                to_vec("0010" & "000001" & "000000"), -- 1: ADD R1 R0
+                to_vec("1010" & "000000000000"),      -- 2: HLT
+                to_vec("0001" & "000000" & "000001"), -- 3: MOV R0 R1
+                to_vec("111001" & "0000000000"),      -- 4: RTS
+                to_vec("1010" & "000000000000")       -- 5: HLT
+            ));
+
+            info("fill r0");
+            reset_signals;
+            r_enable_in(0) <= '1';
+            bbus <= to_vec(123);
+            wait until falling_edge(clk);
+            reset_signals;
+
+            info("start fetching");
+            while hlt = '0' loop
+                check(not timeouted, "timeouted!", failure);
+                one_iteration;
+            end loop;
+            reset_signals;
+
+            info("check r0");
+            r_enable_out(0) <= '1';
+            wait until falling_edge(clk);
+            check_equal(bbus, to_vec(2*123));
+            reset_signals;
+
+            info("check r1");
+            r_enable_out(1) <= '1';
+            wait until falling_edge(clk);
+            check_equal(bbus, to_vec(123));
+            reset_signals;
+        end if;
+
+        -- TODO: int
+        -- TODO: int
+        -- TODO: iret
 
         if run("br") then
             fill_ram((
