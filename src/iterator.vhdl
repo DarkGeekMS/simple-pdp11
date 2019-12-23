@@ -212,9 +212,9 @@ begin
                     when "1101" =>                         -- JSR
                         NAF <=  out1(25 downto 20);
                     when "1110" =>
-                        if ir(11 downto 10) = "01" or ir(11 downto 10) = "10" then    --RTS or INTERRUPT
+                        if ir(11 downto 10) = "01" then    --RTS 
                             NAF <= "000000";
-                        else                               --IRET
+                        else                               --IRET or INTERRUPT
                             NAF <= out1(25 downto 20);
                         end if;
                     when OTHERS =>                        -- general case
