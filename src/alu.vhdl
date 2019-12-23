@@ -65,14 +65,17 @@ begin
                     --NOTE: A - B - C == A - (B+C) == A + (B+C)` + 1
                     --SO, temp0Bar = (B+C), whether C = 0 or 1
 
+                    --Check Carry condition
                     if (IR_Check = '1' and flagIn(0) = '1') then
                         carryInput := "0000000000000001"; 
                     else
                         carryInput := (OTHERS => '0');
                     end if;
 
-                    ALUOUT := std_logic_vector (resize(signed(B),17) - resize(signed(temp0),17) - resize(signed(carryInput),17) );
+                    --ALUOUT := std_logic_vector (resize(signed(B),17) - resize(signed(temp0),17) - resize(signed(carryInput),17) );
+                    ALUOUT := std_logic_vector (resize(signed(temp0),17) - resize(signed(B),17) - resize(signed(carryInput),17) );
                     
+                    --Overflow flag check
                     if(ALUOUT(16) = '1') then
                         temp_flag_out(0) :='1';
                     else
@@ -80,14 +83,24 @@ begin
                     end if;
 
                     --P - N = N
-                    if (B(n-1) = '0' and temp0(n-1) = '1' and ALUOUT(n-1) = '1') then
+                    --if (B(n-1) = '0' and temp0(n-1) = '1' and ALUOUT(n-1) = '1') then
+                    --    temp_flag_out(4) := '1';
+                    ----N-P = P
+                    --ELSIF (B(n-1) = '1' and temp0(n-1) = '0' and ALUOUT(n-1) = '0') then 
+                    --    temp_flag_out(4) := '1';
+                    --else
+                    --    temp_flag_out(4) := '0';
+                    --end if;
+                    --Check on parity flag
+                    if (temp0(n-1) = '0' and B(n-1) = '1' and ALUOUT(n-1) = '1') then
                         temp_flag_out(4) := '1';
                     --N-P = P
-                    ELSIF (B(n-1) = '1' and temp0(n-1) = '0' and ALUOUT(n-1) = '0') then 
+                    ELSIF (temp0(n-1) = '1' and B(n-1) = '0' and ALUOUT(n-1) = '0') then 
                         temp_flag_out(4) := '1';
                     else
                         temp_flag_out(4) := '0';
                     end if;
+
                 when "0010" =>
                     --AND
                     ALUOUT(15 downto 0) := temp0 and B;
@@ -147,15 +160,26 @@ begin
                     --DEC
                     --F = B - 1 == (B + 1), not 001 but 111
                     carryInput := "0000000000000001";
-                    ALUOUT := std_logic_vector (resize(signed(B),17) - resize(signed(carryInput),17) );
-
-                    if(B = "000000000000") then
+                    --ALUOUT := std_logic_vector (resize(signed(B),17) - resize(signed(carryInput),17) );
+                    ALUOUT := std_logic_vector (resize(signed(temp0),17) - resize(signed(carryInput),17) );
+                    --if(B = "000000000000") then
+                    --    temp_flag_out(0) := '1';
+                    --else
+                    --    temp_flag_out(0) := '0';
+                    --end if;
+                    
+                    --if (B="1000000000000000") then
+                    --    temp_flag_out(4) := '1';
+                    --else
+                    --    temp_flag_out(4) := '0';
+                    --end if;
+                    if(temp0 = "000000000000") then
                         temp_flag_out(0) := '1';
                     else
                         temp_flag_out(0) := '0';
                     end if;
                     
-                    if (B="1000000000000000") then
+                    if (temp0="1000000000000000") then
                         temp_flag_out(4) := '1';
                     else
                         temp_flag_out(4) := '0';
@@ -164,14 +188,26 @@ begin
                     --INC
                     --F = B + 1 == B + 0 and carry = 1
                     carryInput := "0000000000000001";
-                    ALUOUT := std_logic_vector (resize(signed(B),17) + resize(signed(carryInput),17) );
-                    if (B="1111111111111111") then
+                    --ALUOUT := std_logic_vector (resize(signed(B),17) + resize(signed(carryInput),17) );
+                    ALUOUT := std_logic_vector (resize(signed(temp0),17) + resize(signed(carryInput),17) );
+                    --if (B="1111111111111111") then
+                    --    temp_flag_out(0) := '1';
+                    --else
+                    --    temp_flag_out(0) := '0';
+                    --end if;
+                    
+                    --if (B="0111111111111111") then
+                    --    temp_flag_out(4) := '1';
+                    --else
+                    --    temp_flag_out(4) := '0';
+                    --end if;
+                    if (temp0="1111111111111111") then
                         temp_flag_out(0) := '1';
                     else
                         temp_flag_out(0) := '0';
                     end if;
                     
-                    if (B="0111111111111111") then
+                    if (temp0="0111111111111111") then
                         temp_flag_out(4) := '1';
                     else
                         temp_flag_out(4) := '0';
