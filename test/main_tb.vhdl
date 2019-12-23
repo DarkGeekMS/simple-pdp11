@@ -1285,7 +1285,47 @@ begin
             reset_signals;
         end if;
 
-        -- TODO: inc_atr0plus
+        if run("inc_atr0plus") then
+            fill_ram((
+                to_vec("11110000" & "00101000"), -- INC @(R0)+
+                to_vec("1010" & "000000000000"), -- HLT
+                to_vec(3),
+                to_vec(121)                      -- data
+            ));
+
+            info("fill r0");
+            reset_signals;
+            r_enable_in(0) <= '1';
+            bbus <= to_vec(2);
+            wait until falling_edge(clk);
+            reset_signals;
+
+            info("start fetching");
+            while hlt = '0' loop
+                check(not timeouted, "timeouted!", failure);
+                one_iteration;
+            end loop;
+            reset_signals;
+
+            info("check r0");
+            r_enable_out(0) <= '1';
+            wait until falling_edge(clk);
+            check_equal(bbus, to_vec(3));
+            reset_signals;
+
+            info("check data");
+            mar_enable_in <= '1';
+            bbus <= to_vec(3);
+            rd <= '1';
+            wait until falling_edge(clk);
+            reset_signals;
+
+            mdr_enable_out <= '1';
+            wait until falling_edge(clk);
+            check_equal(bbus, to_vec(122));
+            reset_signals;
+        end if;
+
         -- TODO: inc_atminusr0
         -- TODO: inc_atxr0
         
