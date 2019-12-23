@@ -44,7 +44,7 @@ begin
                     end if;
 
                     ALUOUT := std_logic_vector (resize(signed(B),17) + resize(signed(temp0),17) + resize(signed(carryInput),17) );
-                    if(ALUOUT(16) = '1') then
+                    if(ALUOUT(n) = '1') then
                         temp_flag_out(0) :='1';
                     else
                         temp_flag_out(0) :='0';
@@ -73,7 +73,7 @@ begin
 
                     ALUOUT := std_logic_vector (resize(signed(B),17) - resize(signed(temp0),17) - resize(signed(carryInput),17) );
                     
-                    if(ALUOUT(16) = '1') then
+                    if(ALUOUT(n) = '1') then
                         temp_flag_out(0) :='1';
                     else
                         temp_flag_out(0) :='0';
@@ -149,7 +149,7 @@ begin
                     carryInput := "0000000000000001";
                     ALUOUT := std_logic_vector (resize(signed(B),17) - resize(signed(carryInput),17) );
 
-                    if(B = "000000000000") then
+                    if(B = "0000000000000000") then
                         temp_flag_out(0) := '1';
                     else
                         temp_flag_out(0) := '0';
@@ -195,7 +195,7 @@ begin
             end if;
 
             --Check on Negative flag
-            if (ALUOUT(15 downto 0)(n-1)='1') then
+            if (ALUOUT(n-1)='1') then
                 flagOut(2) <= '1';
             else
                 flagOut(2) <= '0';
