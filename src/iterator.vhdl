@@ -213,12 +213,12 @@ begin
             end if;
 
         end if;
+    end if;
         hltop <= hlt;
         if hlt = '1' then
             out_inst <= "ZZZZZZZZZZZZZZZZZZZZZZZZZZ";
         else
             out_inst <= CONTROL_STORE(to_integer(unsigned(address)));
-        end if;
         end if;
     end process;
 
