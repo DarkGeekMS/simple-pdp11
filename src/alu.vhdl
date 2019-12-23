@@ -51,10 +51,10 @@ begin
                     end if;
 
                     --P + P = N
-                    if (B(n-1) = '0' and temp0(n-1) = '0' and ALUOUT(n-2) = '1') then
+                    if (B(n-1) = '0' and temp0(n-1) = '0' and ALUOUT(n-1) = '1') then
                         temp_flag_out(4) := '1';
                     --N+N = P
-                    ELSIF (B(n-1) = '1' and temp0(n-1) = '1' and ALUOUT(n-2) = '0') then 
+                    ELSIF (B(n-1) = '1' and temp0(n-1) = '1' and ALUOUT(n-1) = '0') then 
                         temp_flag_out(4) := '1';
                     else
                         temp_flag_out(4) := '0';
@@ -92,10 +92,10 @@ begin
                     --    temp_flag_out(4) := '0';
                     --end if;
                     --Check on parity flag
-                    if (temp0(n-1) = '0' and B(n-1) = '1' and ALUOUT(n-2) = '1') then
+                    if (temp0(n-1) = '0' and B(n-1) = '1' and ALUOUT(n-1) = '1') then
                         temp_flag_out(4) := '1';
                     --N-P = P
-                    ELSIF (temp0(n-1) = '1' and B(n-1) = '0' and ALUOUT(n-2) = '0') then 
+                    ELSIF (temp0(n-1) = '1' and B(n-1) = '0' and ALUOUT(n-1) = '0') then 
                         temp_flag_out(4) := '1';
                     else
                         temp_flag_out(4) := '0';
@@ -221,17 +221,17 @@ begin
             
             --Show new output on F
             --Check on the zero flag
-            F <= ALUOUT(15 downto 0);
+            F <= ALUOUT(n-1 downto 0);
             flagOut(0) <= temp_flag_out(0);
             flagOut(4) <= temp_flag_out(4);
-            if (ALUOUT(15 downto 0)="0000000000000000") then
+            if (ALUOUT(n-1 downto 0)="0000000000000000") then
                 flagOut(1) <= '1';
             else
                 flagOut(1) <= '0';
             end if;
 
             --Check on Negative flag
-            if (ALUOUT(n-2)='1') then
+            if (ALUOUT(n-1)='1') then
                 flagOut(2) <= '1';
             else
                 flagOut(2) <= '0';
