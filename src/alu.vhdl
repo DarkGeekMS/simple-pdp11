@@ -113,7 +113,7 @@ begin
                     temp_flag_out(4) := '0';
                 when "0100" =>
                     --NOT
-                    ALUOUT(n-1 downto 0) := not B;
+                    ALUOUT(n-1 downto 0) := not temp0;
                     temp_flag_out(0) := flagIn(0);
                     temp_flag_out(4) := '0';
                 when "0101" =>
@@ -123,38 +123,38 @@ begin
                     temp_flag_out(4) := '0';
                 when "0110" =>
                     --LSR: Logical shift Right
-                    ALUOUT(n-1 downto 0) := '0' & B(n-1 downto 1);
-                    temp_flag_out(0) := B(0);
+                    ALUOUT(n-1 downto 0) := '0' & temp0(n-1 downto 1);
+                    temp_flag_out(0) := temp0(0);
                     temp_flag_out(4) := flagIn(0) XOR flagIn(2);
                 when "0111" =>
                     --ROR
-                    ALUOUT(n-1 downto 0) := B(0) & B(n-1 downto 1);
-                    temp_flag_out(0) := B(0);
+                    ALUOUT(n-1 downto 0) := temp0(0) & temp0(n-1 downto 1);
+                    temp_flag_out(0) := temp0(0);
                     temp_flag_out(4) := flagIn(0) XOR flagIn(2);
                 when "1000" =>
                     --RRC
-                    ALUOUT(n-1 downto 0) := flagIn(0) & B(n-1 downto 1);
-                    temp_flag_out(0) := B(0);
+                    ALUOUT(n-1 downto 0) := flagIn(0) & temp0(n-1 downto 1);
+                    temp_flag_out(0) := temp0(0);
                     temp_flag_out(4) := flagIn(0) XOR flagIn(2);
                 when "1001" =>
                     --ASR: Arithmetic shift right
-                    ALUOUT(n-1 downto 0) := B(n-1) & B(n-1 downto 1);
-                    temp_flag_out(0) := B(0);
+                    ALUOUT(n-1 downto 0) := temp0(n-1) & temp0(n-1 downto 1);
+                    temp_flag_out(0) := temp0(0);
                     temp_flag_out(4) := flagIn(0) XOR flagIn(2);
                 when "1010" =>
                     --LSL: Logical Shift Left
-                    ALUOUT(n-1 downto 0) :=  B(n-2 downto 0) & '0'; 
-                    temp_flag_out(0) := B(n-1);
+                    ALUOUT(n-1 downto 0) :=  temp0(n-2 downto 0) & '0'; 
+                    temp_flag_out(0) := temp0(n-1);
                     temp_flag_out(4) := flagIn(0) XOR flagIn(2);
                 when "1011" =>
                     --ROL
-                    ALUOUT(n-1 downto 0) :=  B(n-2 downto 0) & B(n-1);
-                    temp_flag_out(0) := B(n-1);
+                    ALUOUT(n-1 downto 0) :=  temp0(n-2 downto 0) & temp0(n-1);
+                    temp_flag_out(0) := temp0(n-1);
                     temp_flag_out(4) := flagIn(0) XOR flagIn(2);
                 when "1100" =>
                     --RLC
-                    ALUOUT(n-1 downto 0) :=  B(n-2 downto 0) & flagIn(0);
-                    temp_flag_out(0) := B(n-1);
+                    ALUOUT(n-1 downto 0) :=  temp0(n-2 downto 0) & flagIn(0);
+                    temp_flag_out(0) := temp0(n-1);
                     temp_flag_out(4) := flagIn(0) XOR flagIn(2);
                 when "1101" =>
                     --DEC
