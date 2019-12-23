@@ -87,7 +87,7 @@ begin
 
     ir : entity work.ir_reg generic map (WORD_WIDTH => 16) port map (
         data_in => bbus, enable_in => ir_enable_in,
-        clk => clk, data_out => ir_data_out, rst => ir_reset
+        clk => clk, data_out => ir_data_out, rst => ir_reset, int => int, int_address => int_address
     );
 
     flags : entity work.flags_reg port map (
