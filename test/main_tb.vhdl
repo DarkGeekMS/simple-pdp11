@@ -59,7 +59,7 @@ architecture tb of main_tb is
     signal num_iteration : unsigned(15 downto 0) := (others => 'Z');
 begin
     clk <= not clk after CLK_PERD / 2;
-    timeouted <= true after 0.5 ms;
+    timeouted <= true after 300 ns;
 
     r : for i in 0 to 7 generate
         ri : entity work.reg generic map (WORD_WIDTH => 16) port map (
@@ -197,6 +197,7 @@ begin
         procedure hookup_signals is
         begin
             if hlt = '1' then return; end if;
+            reset_bus;
 
             check(not (ctrl_sigs(22) = '1' and ctrl_sigs(23) = '1'), "RD and WR cant be 1 at the same time", failure);
 
@@ -1274,6 +1275,12 @@ begin
                 check(not timeouted, "timeouted!", failure);
                 one_iteration;
             end loop;
+            reset_signals;
+
+            info("check r1");
+            r_enable_out(1) <= '1';
+            wait until falling_edge(clk);
+            check_equal(bbus, to_vec(1267));
             reset_signals;
 
             info("check r1");
