@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.93 (w)1999-2018 BSI
-[*] Sun Dec 22 21:50:15 2019
+[*] Mon Dec 23 16:06:04 2019
 [*]
-[dumpfile] "/home/mahmoud/study/arch/proj/out/test_output/pdp11.main_tb.mov_r0_r1_4c84f5e935f20d206c4071a58d9e04f453347bab/ghdl/wave.vcd"
-[dumpfile_mtime] "Sun Dec 22 21:46:26 2019"
-[dumpfile_size] 30460
+[dumpfile] "/home/mahmoud/study/arch/proj/out/test_output/pdp11.main_tb.jsr_ee06ba7c035bf463f079021d52f8677e41554947/ghdl/wave.vcd"
+[dumpfile_mtime] "Mon Dec 23 15:39:09 2019"
+[dumpfile_size] 57704
 [savefile] "/home/mahmoud/study/arch/proj/gtkwave_main_tb.sav"
-[timestart] 19500000
+[timestart] 151710000
 [size] 1440 900
 [pos] -1 -1
-*-24.658949 127500000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-23.658949 175360000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] main_tb.
 [treeopen] main_tb.r(0).
 [treeopen] main_tb.r(1).
@@ -22,8 +22,27 @@
 main_tb.num_iteration[15:0]
 @28
 main_tb.alu.clk
-@22
+@c00023
 main_tb.bbus[15:0]
+@28
+(0)main_tb.bbus[15:0]
+(1)main_tb.bbus[15:0]
+(2)main_tb.bbus[15:0]
+(3)main_tb.bbus[15:0]
+(4)main_tb.bbus[15:0]
+(5)main_tb.bbus[15:0]
+(6)main_tb.bbus[15:0]
+(7)main_tb.bbus[15:0]
+(8)main_tb.bbus[15:0]
+(9)main_tb.bbus[15:0]
+(10)main_tb.bbus[15:0]
+(11)main_tb.bbus[15:0]
+(12)main_tb.bbus[15:0]
+(13)main_tb.bbus[15:0]
+(14)main_tb.bbus[15:0]
+(15)main_tb.bbus[15:0]
+@1401201
+-group_end
 @200
 -
 @c00200
@@ -47,9 +66,18 @@ main_tb.ir_enable_in
 -
 @28
 main_tb.hlt
-@22
+@c00022
 main_tb.itr_current_adr[5:0]
 @28
+(0)main_tb.itr_current_adr[5:0]
+(1)main_tb.itr_current_adr[5:0]
+(2)main_tb.itr_current_adr[5:0]
+(3)main_tb.itr_current_adr[5:0]
+(4)main_tb.itr_current_adr[5:0]
+(5)main_tb.itr_current_adr[5:0]
+@1401200
+-group_end
+@22
 main_tb.itr_next_adr[5:0]
 @c00028
 main_tb.itr_out_inst[25:0]
@@ -169,6 +197,7 @@ main_tb.tmp0_to_alu[15:0]
 @28
 main_tb.tmp1_enable_in
 main_tb.tmp1_enable_out
+main_tb.alubuffer_enable_out
 @200
 -IR
 @28
@@ -203,8 +232,9 @@ main_tb.mar.enable_out_ram
 main_tb.mar.inout_ram[15:0]
 @200
 -MDR
-@28
+@22
 main_tb.mdr.data[15:0]
+@28
 main_tb.mdr.enable_in
 main_tb.mdr.enable_out
 main_tb.mdr.enable_in_ram
@@ -226,6 +256,15 @@ main_tb.alu.flagout[4:0]
 main_tb.alu.ir_check
 @24
 main_tb.alu.mode[3:0]
+@200
+-ALU_BUFFER
+@22
+main_tb.alu_buffer.data[15:0]
+main_tb.alu_buffer.data_in[15:0]
+main_tb.alu_buffer.data_out[15:0]
+@28
+main_tb.alu_buffer.enable_in
+main_tb.alu_buffer.enable_out
 @200
 -FLAGS
 @22
@@ -272,7 +311,7 @@ main_tb.r(7).ri.enable_out
 @28
 main_tb.r(0).ri.clk
 main_tb.r(0).ri.clr
-@25
+@24
 main_tb.r(0).ri.data[15:0]
 @22
 main_tb.r(0).ri.data_in[15:0]

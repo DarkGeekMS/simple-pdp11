@@ -302,8 +302,8 @@ begin
             ));
         end if;
 
-        ir <= "000001" & "0000000010";
         if run("beq_2_true") then
+            ir <= "000001" & "0000000010";
             flag_regs <= "00010";
 
             test_iterator((
