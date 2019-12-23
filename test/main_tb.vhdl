@@ -358,6 +358,10 @@ begin
 
         if run("alu_inc") then
             bbus <= to_vec(214);
+            tmp0_enable_in <= '1';
+            wait until falling_edge(clk);
+            reset_signals;
+
             alu_mode <= "1110";
             alu_enable <= '1';
             wait until falling_edge(clk);
@@ -397,6 +401,10 @@ begin
 
         if run("alu_lsl") then
             bbus <= to_vec('1');
+            tmp0_enable_in <= '1';
+            wait until falling_edge(clk);
+            reset_signals;
+
             alu_mode <= "1010";
             alu_enable <= '1';
             wait until falling_edge(clk);
