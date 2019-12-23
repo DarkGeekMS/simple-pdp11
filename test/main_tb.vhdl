@@ -1471,18 +1471,99 @@ begin
             info("check r0");
             r_enable_out(0) <= '1';
             wait until falling_edge(clk);
-            check_equal(bbus, to_vec(2*123), "JSR corrupted the values midway", warning);
+            check_equal(bbus, to_vec(2*123));
             reset_signals;
 
             info("check r1");
             r_enable_out(1) <= '1';
             wait until falling_edge(clk);
-            check_equal(bbus, to_vec(123), "JSR corrupted the values midway", warning);
+            check_equal(bbus, to_vec(123));
             reset_signals;
         end if;
 
-        -- TODO: int
-        -- TODO: iret
+        if run("int") then
+            fill_ram((
+                to_vec("111010" & to_vec(2, 10)),     -- 0: INT 2
+                to_vec("1010" & "000000000000"),      -- 1: HLT
+                to_vec("0001" & "000000" & "000001"), -- 2: MOV R0 R1
+                to_vec("1010" & "000000000000")       -- 3: HLT
+            ));
+
+            info("fill r0");
+            reset_signals;
+            r_enable_in(0) <= '1';
+            bbus <= to_vec(1267);
+            wait until falling_edge(clk);
+            reset_signals;
+
+            info("start fetching");
+            while hlt = '0' loop
+                check(not timeouted, "timeouted!", failure);
+                one_iteration;
+            end loop;
+            reset_signals;
+
+            info("check pc");
+            r_enable_out(7) <= '1';
+            wait until falling_edge(clk);
+            check_equal(bbus, to_vec(4));
+            reset_signals;
+
+            info("check r0");
+            r_enable_out(0) <= '1';
+            wait until falling_edge(clk);
+            check_equal(bbus, to_vec(1267));
+            reset_signals;
+
+            info("check r1");
+            r_enable_out(1) <= '1';
+            wait until falling_edge(clk);
+            check_equal(bbus, to_vec(1267));
+            reset_signals;
+        end if;
+
+        if run("iret") then
+            fill_ram((
+                to_vec("111010" & to_vec(3, 10)),     -- 0: INT 3
+                to_vec("0010" & "000001" & "000000"), -- 1: ADD R1 R0
+                to_vec("1010" & "000000000000"),      -- 2: HLT
+                to_vec("0001" & "000000" & "000001"), -- 3: MOV R0 R1
+                to_vec("111011" & "0000000000"),      -- 4: IRET
+                to_vec("1010" & "000000000000")       -- 5: HLT
+            ));
+
+            info("fill r0");
+            reset_signals;
+            r_enable_in(0) <= '1';
+            bbus <= to_vec(123);
+            wait until falling_edge(clk);
+            reset_signals;
+
+            info("start fetching");
+            while hlt = '0' loop
+                check(not timeouted, "timeouted!", failure);
+                one_iteration;
+            end loop;
+            reset_signals;
+
+            info("check pc");
+            r_enable_out(7) <= '1';
+            wait until falling_edge(clk);
+            check_equal(bbus, to_vec(3));
+            reset_signals;
+
+            info("check r0");
+            r_enable_out(0) <= '1';
+            wait until falling_edge(clk);
+            check_equal(bbus, to_vec(2*123));
+            reset_signals;
+
+            info("check r1");
+            r_enable_out(1) <= '1';
+            wait until falling_edge(clk);
+            check_equal(bbus, to_vec(123));
+            reset_signals;
+        end if;
 
         if run("br") then
             fill_ram((
