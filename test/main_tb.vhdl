@@ -742,6 +742,46 @@ begin
             reset_signals;
         end if;
 
+        if run("cmp_atxr0_r1") then
+            fill_ram((
+                to_vec("1001" & "111000" & "000001"), -- CMP @X(R0) R1
+                to_vec(50),
+                to_vec("1010" & "000000000000"),      -- HLT
+                to_vec(4),
+                to_vec(1000)
+            ));
+
+            info("fill r0");
+            reset_signals;
+            r_enable_in(0) <= '1';
+            bbus <= to_vec(-47);
+            wait until falling_edge(clk);
+            reset_signals;
+
+            info("fill r1");
+            reset_signals;
+            r_enable_in(1) <= '1';
+            bbus <= to_vec(329);
+            wait until falling_edge(clk);
+            reset_signals;
+
+            info("start fetching");
+            while hlt = '0' loop
+                check(timeout = false, "timeouted!", failure);
+                one_iteration;
+            end loop;
+            reset_signals;
+            
+            info("check flags");
+            flags_enable_out <= '1';
+            wait until falling_edge(clk);
+            check_equal(bbus(IFR_CARRY), '0', "carry");
+            check_equal(bbus(IFR_ZERO), '0', "zero");
+            check_equal(bbus(IFR_NEG), '1', "negative");
+            check_equal(bbus(IFR_OVERFLOW), '0', "overflow");
+            reset_signals;
+        end if;
+
         -- if run("fullrun") then
         --     fill_ram((
         --         to_vec("0001" & "000000" & "000001"), -- mov r0 r1
