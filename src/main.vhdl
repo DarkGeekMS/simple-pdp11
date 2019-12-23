@@ -4,22 +4,25 @@ use ieee.numeric_std.all;
 use work.common.all;
 use work.decoders.all;
 use work.vunit_alternative.all;
+use std.textio.all;
+use ieee.std_logic_textio.all;
 
-entity integration_entity is
+entity main is
     generic (
-        INPUT_FILE : string := "input.txt";
-        OUTPUT_FILE: string := "output.txt"
+        INPUT_FILE_PATH : string := "input.txt";
+        OUTPUT_FILE_PATH: string := "output.txt"
     );
 
     port (
-        Clk: in std_logic;
-        Rst: in std_logic;
-        INT: in std_logic;
-        BBus: inout std_logic_vector(15 downto 0)
+        clk: in std_logic;
+        rst: in std_logic;
+        int: in std_logic;
+        bbus: inout std_logic_vector(15 downto 0);
+        hlt: out std_logic
     );
 end entity; 
 
-architecture tb of integration_entity is
+architecture tb of main is
     constant RAM_SIZE: integer := 4*1024;-- 4k Words
     
     --externals
@@ -39,7 +42,7 @@ architecture tb of integration_entity is
         signal alubuffer_enable_out : std_logic;
 
         -- iterator
-        signal hlt : std_logic;
+        signal hlt_iterator : std_logic;
         signal itr_current_adr : std_logic_vector(5 downto 0);
         signal itr_next_adr : std_logic_vector(5 downto 0);
     --
@@ -58,11 +61,14 @@ architecture tb of integration_entity is
     signal ctrl_sigs : std_logic_vector(37 downto 0);
 
     signal num_iteration : unsigned(15 downto 0) := (others => 'Z');
+
+    signal tmp1_clr : std_logic;
+    signal r_clr : std_logic_vector(7 downto 0);
 begin
     r : for i in 0 to 7 generate
         ri : entity work.reg generic map (WORD_WIDTH => 16) port map (
             data_in => bbus, enable_in => r_enable_in(i), enable_out => r_enable_out(i),
-            clk => clk, data_out => bbus, clr => '0'
+            clk => clk, data_out => bbus, clr => r_clr(i)
         );
     end generate;
 
@@ -73,7 +79,7 @@ begin
 
     tmp1 : entity work.reg generic map (WORD_WIDTH => 16) port map (
         data_in => bbus, enable_in => tmp1_enable_in, enable_out => tmp1_enable_out,
-        clk => clk, data_out => bbus, clr => '0'
+        clk => clk, data_out => bbus, clr => tmp1_clr
     );
 
     ir : entity work.ir_reg generic map (WORD_WIDTH => 16) port map (
@@ -143,14 +149,16 @@ begin
         ir        => ir_data_out,        
         flag_regs => flags_always_out, 
         address   => itr_current_adr,   
-        hltop     => hlt,     
+        hltop     => hlt_iterator,     
         out_inst  => itr_out_inst,  
         NAF       => itr_next_adr 
     );
 
+    hlt <= hlt_iterator;
+
     ctrl_sigs <= decompress_control_signals(ir_data_out, itr_out_inst);
 
-    main: process (Clk, Rst, INT, BBus)
+    main: process (clk, rst, int, bbus)
         procedure reset_bus is
         begin
             info("reset bus");
@@ -190,11 +198,14 @@ begin
             itr_current_adr <= (others => '0');
 
             reset_bus;
+
+            tmp1_clr <= '0';
+            r_clr <= (others => '0');
         end procedure;
 
         procedure hookup_signals is
         begin
-            if hlt = '1' then return; end if;
+            if hlt_iterator = '1' then return; end if;
             reset_bus;
 
             check(not (ctrl_sigs(22) = '1' and ctrl_sigs(23) = '1'), "RD and WR cant be 1 at the same time", failure);
@@ -285,7 +296,42 @@ begin
 
             num_iteration <= num_iteration + to_unsigned(1, 16);
         end procedure;
+
+        impure function read_input return RamDataType is
+            file input_file: text;
+
+            variable tmp_in_line: line;
+            variable tmp_word : std_logic_vector(15 downto 0);
+            variable i: integer := 0;
+            variable data: RamDataType(0 to 4*1024);
+        begin
+            file_open(input_file, "../" & INPUT_FILE_PATH,  read_mode);
+
+            while not endfile(input_file) loop
+                readline(input_file, tmp_in_line);
+                read(tmp_in_line, tmp_word);
+
+                data(i) := tmp_word;
+            end loop;
+
+            file_close(input_file);
+        end function;
     begin
-        
+        if rst = '1' then
+            itr_current_adr <= (others => '0');
+
+            reset_signals;
+            ir_reset <= '1';
+            tmp1_clr <= '1';
+            tmp0_clr <= '1';
+            r_clr <= (others => '1');
+
+            num_iteration <= to_unsigned(0, 16);
+        elsif falling_edge(clk) then
+            itr_current_adr <= itr_next_adr; 
+            hookup_signals;
+            
+            num_iteration <= num_iteration + to_unsigned(1, 16);
+        end if;
     end process;
 end architecture;
