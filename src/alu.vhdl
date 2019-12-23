@@ -71,7 +71,7 @@ begin
                         carryInput := (OTHERS => '0');
                     end if;
 
-                    ALUOUT := std_logic_vector (resize(signed(B),17) - resize(signed(temp0),17) - resize(signed(carryInput),17) );
+                    ALUOUT := std_logic_vector (resize(signed(temp0),17) - resize(signed(B),17) - resize(signed(carryInput),17) );
                     
                     if(ALUOUT(n) = '1') then
                         temp_flag_out(0) :='1';
