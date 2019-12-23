@@ -34,7 +34,7 @@ begin
             data(IFR_CARRY) <= '1';
         end if;
 
-        if enable_from_alu = '1' then
+        if enable_from_alu = '1' and from_alu /= "ZZZZZ" and falling_edge(clk) then
             data <= from_alu;
         end if;
 
