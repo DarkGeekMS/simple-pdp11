@@ -1,0 +1,10 @@
+mem load -skip 0 -filltype value -filldata XXXX -fillradix hexadecimal /main/ram/data
+mem load -filltype value -filldata 1111000000000001 -fillradix binary /main/ram/data(0)
+mem load -filltype value -filldata 1111000000000001 -fillradix binary /main/ram/data(1)
+mem load -filltype value -filldata 1111000100000001 -fillradix binary /main/ram/data(2)
+mem load -filltype value -filldata 1111001000000001 -fillradix binary /main/ram/data(3)
+mem load -filltype value -filldata 1111000100000000 -fillradix binary /main/ram/data(4)
+mem load -filltype value -filldata 1111000100000000 -fillradix binary /main/ram/data(5)
+mem load -filltype value -filldata 1111010100000000 -fillradix binary /main/ram/data(6)
+mem load -filltype value -filldata 1111011100000000 -fillradix binary /main/ram/data(7)
+mem load -filltype value -filldata 1010000000000000 -fillradix binary /main/ram/data(8)
