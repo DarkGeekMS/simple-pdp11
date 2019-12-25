@@ -264,7 +264,7 @@ begin
         begin
             info("reset ir");
             ir_reset <= '1';
-            wait until falling_edge(clk);
+            --wait until falling_edge(clk);
             reset_signals;
         end procedure;
 
@@ -274,13 +274,13 @@ begin
             for i in ramdata'range loop
                 bbus <= to_vec(i);
                 mar_enable_in <= '1';
-                wait until falling_edge(clk);
+                --wait until falling_edge(clk);
                 reset_signals;
 
                 bbus <= ramdata(i);
                 mdr_enable_in <= '1';
                 wr <= '1';
-                wait until falling_edge(clk);
+                --wait until falling_edge(clk);
                 reset_signals;
             end loop;
             info("done filling ram");
@@ -292,9 +292,9 @@ begin
                 num_iteration <= to_unsigned(0, 16);
             end if;
 
-            wait for 1 fs; 
+            --wait for 1 fs; 
             hookup_signals;
-            wait until falling_edge(clk);
+            --wait until falling_edge(clk);
             itr_current_adr <= itr_next_adr; 
 
             num_iteration <= num_iteration + to_unsigned(1, 16);
