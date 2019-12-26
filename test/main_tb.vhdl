@@ -3,6 +3,8 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 use work.common.all;
 use work.decoders.all;
+use std.textio.all;
+use ieee.std_logic_textio.all;
 
 library vunit_lib;
 context vunit_lib.vunit_context;
@@ -272,6 +274,33 @@ begin
                 reset_signals;
             end loop;
             info("done filling ram");
+        end procedure;
+
+        procedure dump_ram is
+            type RamDataTypeLimited is array(0 to RAM_SIZE) of std_logic_vector(15 downto 0);
+            variable data: RamDataTypeLimited;
+
+            file file_handler     : text open write_mode is "ram.out";
+            Variable row          : line;
+        begin
+            info("start dumping ram");
+            for i in data'range loop
+                bbus <= to_vec(i);
+                mar_enable_in <= '1';
+                wait until falling_edge(clk);
+                reset_signals;
+
+                mdr_enable_out <= '1';
+                rd <= '1';
+                wait until falling_edge(clk);
+                data(i) := bbus;
+                reset_signals;
+
+                write(row, data(i));
+                writeline(file_handler, row);
+            end loop;
+            info("done dumping ram");
+
         end procedure;
 
         procedure one_iteration is
@@ -2242,6 +2271,8 @@ begin
                 one_iteration;
             end loop;
             info("end");
+
+            dump_ram;
         end if;
 
         wait for CLK_PERD/2;
