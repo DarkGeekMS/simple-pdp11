@@ -1,27 +1,19 @@
 # Simple PDP11
-Simple PDP11-equivalent CPU implemented in vhdl. Comp. Arch. School project
+Simple PDP11-equivalent CPU (w/ assembler) implemented in vhdl. Computer Architecture School project.
 
-# How to simulate the main integration entity in modelsim:
+# Dependencies
 
-1. Make sure you compile all files in src/ before compiling src/main.vhdl, solve dependency issues by compiling dependecies first.
+0. Gtkwave
+0. Docker
+0. Bash
 
-0. Start by running main in modelsim gui.
+## Make sure docker can invoke `run` without sudo.
 
-0. Load ram with one of the files in assembler/io.
-
-0. Enfore a clock in `clk` .
-
-0. Enforce zeros in `int` , `int_address` .
-
-0. Enforce Z in `bbus` which is the bus.
-
-0. `rst` must be set for one clock cycle at least one time to reset the system.
-
-* In the middle of the simulation, you can make a hardware interrupt by enforcing 1 in `int` and putting interrupt address in `int_address` , you should'nt interrupt while the CU performs an instruction, but before the instruction is loaded or after it's finished executing.
-
-* `hlt` out signal is set to 1 by CU when the cpu halts.
-
-* `num_iteration` internal signal can be used to keep track of the number of current iteration.
+```bash
+$ sudo groupadd docker
+$ sudo usermod -aG docker $USER
+$ newgrp docker 
+```
 
 # To run all tests:
 
@@ -73,9 +65,9 @@ $ ./wave <test file name>.<test case name>
 
 # To run the assembler on a given program
 
-* Place the program in "assembler/io" as "program.txt"
+* Place the program in "assembler/io"
 
 ``` bash
-$ python assembler/assembler.py 
+$ python assembler/assembler.py --input_file <filename>
 ```
 

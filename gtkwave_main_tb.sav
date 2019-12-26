@@ -1,18 +1,21 @@
 [*]
 [*] GTKWave Analyzer v3.3.93 (w)1999-2018 BSI
-[*] Mon Dec 23 16:06:04 2019
+[*] Thu Dec 26 10:21:52 2019
 [*]
-[dumpfile] "/home/mahmoud/study/arch/proj/out/test_output/pdp11.main_tb.jsr_ee06ba7c035bf463f079021d52f8677e41554947/ghdl/wave.vcd"
-[dumpfile_mtime] "Mon Dec 23 15:39:09 2019"
-[dumpfile_size] 57704
+[dumpfile] "/home/mahmoud/study/arch/proj/out/test_output/pdp11.main_tb.playground_8fc3758de7c677c568b7ddb31bd906fa231f40b0/ghdl/wave.vcd"
+[dumpfile_mtime] "Thu Dec 26 10:18:59 2019"
+[dumpfile_size] 10712693
 [savefile] "/home/mahmoud/study/arch/proj/gtkwave_main_tb.sav"
-[timestart] 151710000
+[timestart] 1304740000
 [size] 1440 900
 [pos] -1 -1
-*-23.658949 175360000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-23.658949 1325670000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] main_tb.
 [treeopen] main_tb.r(0).
 [treeopen] main_tb.r(1).
+[treeopen] main_tb.r(2).
+[treeopen] main_tb.r(3).
+[treeopen] main_tb.r(4).
 [treeopen] main_tb.r(7).
 [sst_width] 223
 [signals_width] 340
@@ -22,7 +25,7 @@
 main_tb.num_iteration[15:0]
 @28
 main_tb.alu.clk
-@c00023
+@c00022
 main_tb.bbus[15:0]
 @28
 (0)main_tb.bbus[15:0]
@@ -41,7 +44,7 @@ main_tb.bbus[15:0]
 (13)main_tb.bbus[15:0]
 (14)main_tb.bbus[15:0]
 (15)main_tb.bbus[15:0]
-@1401201
+@1401200
 -group_end
 @200
 -
@@ -332,5 +335,32 @@ main_tb.r(1).ri.data_out[15:0]
 @28
 main_tb.r(1).ri.enable_in
 main_tb.r(1).ri.enable_out
+@200
+-R2
+@22
+main_tb.r(2).ri.data[15:0]
+main_tb.r(2).ri.data_in[15:0]
+main_tb.r(2).ri.data_out[15:0]
+@28
+main_tb.r(2).ri.enable_in
+main_tb.r(2).ri.enable_out
+@200
+-R3
+@22
+main_tb.r(3).ri.data[15:0]
+main_tb.r(3).ri.data_in[15:0]
+main_tb.r(3).ri.data_out[15:0]
+@28
+main_tb.r(3).ri.enable_in
+main_tb.r(3).ri.enable_out
+@200
+-R4
+@22
+main_tb.r(4).ri.data[15:0]
+main_tb.r(4).ri.data_in[15:0]
+main_tb.r(4).ri.data_out[15:0]
+@28
+main_tb.r(4).ri.enable_in
+main_tb.r(4).ri.enable_out
 [pattern_trace] 1
 [pattern_trace] 0
